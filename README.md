@@ -43,6 +43,9 @@ The spiral will be stretched form the first to the second object, adapting their
 ### 5. Select an open path and 1 or 2 other shapes or objects
 This final option will also stretch the spiral along the route of the path, like #3, but the dimensions will be set by the selected objects.
 
+## Bugs and known issues
+I think the plugin is bug-free. If you find one, let me know! There are however a few minor known issues. Paths are made with bézier curves and they are great but magical. If the number of points per loop is to low for length of the path or the curves of the route the may end up with unexpected bends. Also, if your route on an open path as sharp turns you will probably see those turns in the final result. In any case you may alter the number of loops, and points for a better result. You don't need too many point though. 4 will be great in most cases.
+
 ## Free but not free
 This plugin is free. You can use it as long as the Sketch API will stay unchanged and you may also use it's code for developing your own plugin. If you like it you may also consider [buying me a coffee](https://www.buymeacoffee.com/Mastermek).
 

@@ -4,6 +4,8 @@ Produce amazing spirals between objects and along open paths in [Sketch](https:w
 ## TODO's
 - sent all data to webview and back (location info and target.id)
 - Create spiral
+- Plugin setting
+- var theme = UI.getTheme();if (theme === 'dark') {} else {}
 - Make rotation work correctly
 - Store spiral path
 - Clear stored path on new selection

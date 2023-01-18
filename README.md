@@ -1,10 +1,8 @@
 # ddSpiral
 Produce amazing spirals between objects and along open paths in [Sketch](https:www.sketch.com).
 
-## On the  whislist
-- sent all data to webview and back
-  1. location info
-  2. target.id
+## TODO's
+- sent all data to webview and back (location info and target.id)
 - Create spiral
 - Make rotation work correctly
 - Store spiral path
@@ -25,32 +23,35 @@ It was made with [Sketch Plugin Manager](https://github.com/skpm/skpm).
 Download and double-click the plugin. Or drop it on the Sketch app.
 
 ## What it does
-You can make almost any spiral you want. Just select a maximum of 2 objects and/or an open path and run ddSpiral from the plugin menu. The plugin will present you an overlay for adjustments. You can update the spiral as long as you stay in the overlay.
+You can make almost any spiral you want. Just select up to 2 objects and/or an open path and run ddSpiral from the plugin menu. The plugin presents you with an overlay for adjustments. You can update the spiral as long as you stay in the overlay.
 
 ## How it works
-You can select a maximum of 2 objects and an open path. The spiral will behave somewhat different accordingly. In any case you can change the direction (clockwise or counterclockwise), the number of rotations (loops), the number of points per loop (tangents), the timing (linear, ease, ease-in or ease-out) and the smoothness (0=sharp, 100=smooth, >100=experimental). Size and rotation of both start and finish will be set by the selected object(s) but you can change those numbers also.
+You can select up to 2 objects and an open path. The spiral will behave slightly differently accordingly. In any case, you can change the direction (clockwise or counterclockwise), the number of rotations (loops), the number of points per loop (tangents), the timing (linear, ease, ease-in or ease-out) and change the smoothness (0=sharp, 100=smooth, >100=experimental). The size and rotation of both start and finish is determined by the selected object(s), but you can also change these numbers.
 
 ### 1. Select a singel object, like an image, a group or symbol
-If you select one object, not a path, the spiral will rotate from the bounding box to the center of the object. It will be drawn on top of the object in the same group.
+If you select a single object, not a path, the spiral rotates from the bounding box to the center of the object. It is drawn on top of the object in the same group.
 
 ### 2. Select a closed shape, like a rectangle, oval, star, polygon or any other custom closed path
-If you select a single closed path the spiral will be streched from top to bottom and squeezed within the outline of the object, for as far as possible. By unchecking the Squeeze-option the shape will become a normal object, like #1. By selecting a rectangle, the Squeeze-option will be off by default, just to make it easier/faster to generate a normal spiral and also because the squeezed spiral within a rectangle isn't that exciting. Squeezed spirals cannot be rotated at forehand. If you need a squeezed spiral in a different direction you can first rotate your selected object, then flatten the shape before running ddSpiral.
+Selecting a single closed path stretches the spiral from top to bottom, squeezing it as far as possible inside the object's outline. Disabling the Squeeze option will make the shape a normal object, such as #1. By selecting a rectangle, the Squeeze option is turned off by default, just to make it easier/faster to generate a normal spiral and also because the squeezed spiral in a rectangle is not as exciting. If you need a squeezed spiral in a different direction, you should first rotate your selected object and then flatten the shape before running ddSpiral.
 
 ### 3. Select an open path, thus a line
-By selecting an open path the spiral will be stretched along that line. The start size and rotation will also be used for the end. The second set, normally the end will be used for the half-way-point in this case.
+Choosing an open path stretches the spiral along that line. The start size and rotation are also used for the end. The second set, normally the end, is used for the halfway point in this case.
 
 ### 4. Select two shapes or objects
-The spiral will be stretched form the first to the second object, adapting their coordinates, size and rotation. The first object is the one behind all others, not necessarily the one selected first. The spiral will be draw on document level, on top of everything, if both object belong to a different group.
+The spiral is stretched from the first object to the second, using their coordinates, size and rotation. The first object is the object behind all others, not necessarily the first selected object. The spiral is drawn at the document level, on top of everything, if both objects belong to a different group.
 
 ### 5. Select an open path and 1 or 2 other shapes or objects
-This final option will also stretch the spiral along the route of the path, like #3, but the dimensions will be set by the selected objects.
+This last option will also stretch the spiral along the path's route, like #3, but the dimensions are determined by the selected objects.
 
 ## Bugs and known issues
 I think the plugin is bug-free. If you find one, let me know! There are a few known issues.
-• If you run ddSpiral and the setting are shown you can still update any of the select objects in Sketch. As long as the actual selection is not changed those settings will not be 'seen' by ddSpiral. Just don't do that.
-• Paths are made with bézier curves. The smoothness depends on both the number of loops and the  points per loop. If one of them is too low you may end up with unexpected bends. Especially if the route along an open path contains sharp turns. Try altering the number of loops, and points for a better result. You don't need too many points though.
+- If you run ddSpiral and the setting appears, you can still update any of the selected objects in Sketch. As long as the actual selection is not changed, those settings will not be 'seen' by ddSpiral. Just don't.
+- Paths are made with bézier curves. The smoothness depends on both the number of loops and the number of points per loop. If one of them is too low, you can get unexpected bends. Especially if the route along an open path contains sharp turns. Try changing the number of loops and points for a better result.
 
-## Free but not free
-This plugin is free. You can use it as long as the Sketch API will stay unchanged and you may also use it's code for developing your own plugin. If you like it you may also consider [buying me a coffee](https://www.buymeacoffee.com/Mastermek).
+## Free
+This plugin is free. You can use it as long as the Sketch API remains unchanged and you may also use the code to develop your own plugin. However, my code is not completely consistent. The Sketch API's documentation is as bad as our environmental concerns, to say the least, so it took quite a bit of duct tape to get it to work the way I wanted it to. If you keep the hood closed you won't notice it.
 
-_Have fun and thanks._
+If you like it you may also consider [buying me a coffee](https://www.buymeacoffee.com/Mastermek).
+
+Have fun and thanks.
+Mek

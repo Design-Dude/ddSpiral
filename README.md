@@ -2,7 +2,9 @@
 Produce amazing spirals between objects and along open paths in [Sketch](https:www.sketch.com).
 
 ## On the  whislist
-- Update shape names in list
+- sent all data to webview and back
+  1. location info
+  2. target.id
 - Create spiral
 - Make rotation work correctly
 - Store spiral path
@@ -44,7 +46,9 @@ The spiral will be stretched form the first to the second object, adapting their
 This final option will also stretch the spiral along the route of the path, like #3, but the dimensions will be set by the selected objects.
 
 ## Bugs and known issues
-I think the plugin is bug-free. If you find one, let me know! There are however a few minor known issues. Paths are made with bézier curves and they are great but magical. If the number of points per loop is to low for length of the path or the curves of the route the may end up with unexpected bends. Also, if your route on an open path as sharp turns you will probably see those turns in the final result. In any case you may alter the number of loops, and points for a better result. You don't need too many point though. 4 will be great in most cases.
+I think the plugin is bug-free. If you find one, let me know! There are a few known issues.
+• If you run ddSpiral and the setting are shown you can still update any of the select objects in Sketch. As long as the actual selection is not changed those settings will not be 'seen' by ddSpiral. Just don't do that.
+• Paths are made with bézier curves. The smoothness depends on both the number of loops and the  points per loop. If one of them is too low you may end up with unexpected bends. Especially if the route along an open path contains sharp turns. Try altering the number of loops, and points for a better result. You don't need too many points though.
 
 ## Free but not free
 This plugin is free. You can use it as long as the Sketch API will stay unchanged and you may also use it's code for developing your own plugin. If you like it you may also consider [buying me a coffee](https://www.buymeacoffee.com/Mastermek).

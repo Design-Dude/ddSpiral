@@ -18,11 +18,12 @@ Produce amazing spirals between objects and along open paths in [Sketch](https:w
 - Publish
 
 ## Dependencies
-This is a plugin for [Sketch](https://www.sketch.com).
-It was made with [Sketch Plugin Manager](https://github.com/skpm/skpm).
+This is a plugin for Sketch, so you need [Sketch](https://www.sketch.com). No other tool needed.
+
+It was created with Sketch Plugin Manager, so if you use the source code you'll probably need [SKPM](https://github.com/skpm/skpm) too.
 
 ## Installation
-Download and double-click the plugin. Or drop it on the Sketch app.
+Download and double-click the plugin. Or drop it on the Sketch app. 
 
 ## What it does
 You can make almost any spiral you want. Just select up to 2 objects and/or an open path and run ddSpiral from the plugin menu. The plugin presents you with an overlay for adjustments. You can update the spiral as long as you stay in the overlay.

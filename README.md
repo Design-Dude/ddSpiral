@@ -46,12 +46,12 @@ The spiral is stretched from the first object to the second, using their coordin
 This last option will also stretch the spiral along the path's route, like #3, but the dimensions are determined by the selected objects.
 
 ## Bugs and known issues
-I think the plugin is bug-free. If you find one, let me know! There are a few known issues.
-- If you run ddSpiral and the setting appears, you can still update any of the selected objects in Sketch. As long as the actual selection is not changed, those settings will not be 'seen' by ddSpiral. Just don't.
-- Paths are made with bézier curves. The smoothness depends on both the number of loops and the number of points per loop. If one of them is too low, you can get unexpected bends. Especially if the route along an open path contains sharp turns. Try changing the number of loops and points for a better result.
+The plugin should be bug free. If you find one, let me know! There are a few known issues though.
+- When you run ddSpiral the settings overlay appears. You can then still return to Sketch and update any of the selected objects without loosing the selection. Actions in Sketch are not completely reliable, as objects in Sketch can be updated in different ways, not all of which trigger an action. For instance if you resize a rectangle by pulling the boundaries ddSpiral will get noticed. On the other hand, if you change the size using the inspector ddSpiral will not be noticed. This is only a problem if an existing and selected object is changed. Get in the habit of deselecting and reselecting objects after any changes before returning to the ddSpiral overlay. Running ddSpiral again CTRL-SHIFT-s will also always work.
+- Paths are made with bézier curves. The smoothness depends on both the number of loops and the number of points per loop. If one of them is too low, you can get unexpected bends. Especially if the route along an open path contains sharp turns. Try changing the path, the number of loops and points for a better result.
 
 ## Free
-This plugin is free. You can use it as long as the Sketch API remains unchanged and you may also use the code to develop your own plugin. However, my code is not completely consistent. The Sketch API's documentation is as bad as our environmental concerns, to say the least, so it took quite a bit of duct tape to get it to work the way I wanted it to. If you keep the hood closed you won't notice it.
+This plugin is free. You can use it as long as the Sketch API remains unchanged and you can also use the code to develop your own plugin. However, the code is not very consistent. The Sketch API's documentation is as bad as our environmental awareness, to say the least, so it took quite a bit of duct tape to get it to work the way it should. Keep the hood closed and you won't notice.
 
 If you like it you may also consider [buying me a coffee](https://www.buymeacoffee.com/Mastermek).
 

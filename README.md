@@ -19,6 +19,7 @@ Produce amazing spirals between objects and along open paths in [Sketch](https:w
 
 ## Dependencies
 This is a plugin for Sketch, so you need [Sketch](https://www.sketch.com). No other tool needed.
+
 It was created with Sketch Plugin Manager, so if you use the source code you'll probably need [SKPM](https://github.com/skpm/skpm) too.
 
 ## Installation

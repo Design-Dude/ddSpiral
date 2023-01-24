@@ -33,6 +33,7 @@ You can select up to 2 objects and an open path. The spiral will behave slightly
 
 ### 1. Select a singel object, like an image, a group or symbol
 If you select a single object, not a path, the spiral rotates from the bounding box to the center of the object. It is drawn on top of the object in the same group.
+
 ![Screenshot](single-object.svg)
 
 ### 2. Select a closed shape, like a rectangle, oval, star, polygon or any other custom closed path

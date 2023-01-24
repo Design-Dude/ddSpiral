@@ -40,12 +40,14 @@ If you select a single object, not a path, the spiral rotates from the bounding 
 Selecting a single closed path is basically the same as #1 but the option 'Force spiral into shape' becomes available. Once checked, the spiral extends from top to bottom, staying within the outline of the object as much as possible rather than inside the bounding box. If you need a forced spiral in a different direction within the closed shape, you must first rotate your selected object and then flatten the shape before running ddSpiral.
 
 ### 3. Select an open path, thus a line
-Choosing an open path stretches the spiral along that line. The start size and rotation are also used for the end. The second set, normally the end, is used for the halfway point in this case.
+Choosing an open path stretches the spiral along that line. Along with the timing option 'Ease in/out' the start size and rotation are also used for the end. The second set, normally the end, is used for the halfway point in this case.
 
 ![Screenshot](line.svg)
 
 ### 4. Select two shapes or objects
 The spiral is stretched from the first object to the second, using their coordinates, size and rotation. The first object is the object behind all others, not necessarily the first selected object. The spiral is drawn at the document level, on top of everything, if both objects belong to a different group.
+
+![Screenshot](two-objects.svg)
 
 ### 5. Select an open path and 1 or 2 other shapes or objects
 This last option will also stretch the spiral along the path's route, like #3, but the dimensions are determined by the selected objects.

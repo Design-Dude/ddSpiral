@@ -33,6 +33,7 @@ You can select up to 2 objects and an open path. The spiral will behave slightly
 
 ### 1. Select a singel object, like an image, a group or symbol
 If you select a single object, not a path, the spiral rotates from the bounding box to the center of the object. It is drawn on top of the object in the same group.
+![Screenshot](single-object.svg)
 
 ### 2. Select a closed shape, like a rectangle, oval, star, polygon or any other custom closed path
 Selecting a single closed path stretches the spiral from top to bottom, squeezing it as far as possible inside the object's outline. Disabling the Squeeze option will make the shape a normal object, such as #1. By selecting a rectangle, the Squeeze option is turned off by default, just to make it easier/faster to generate a normal spiral and also because the squeezed spiral in a rectangle is not as exciting. If you need a squeezed spiral in a different direction, you should first rotate your selected object and then flatten the shape before running ddSpiral.

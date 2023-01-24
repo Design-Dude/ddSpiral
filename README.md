@@ -52,7 +52,7 @@ The spiral is stretched from the first object to the second, using their coordin
 ### 5. Select an open path and 1 or 2 other shapes or objects
 This last option will also stretch the spiral along the path's route, like #3, but the dimensions are determined by the selected objects.
 
-[![Screenshot](two-objects-on-line.svg)](https://www.buymeacoffee.com/Mastermek)
+![Screenshot](two-objects-on-line.svg)
 
 ## Bugs and known issues
 The plugin should be bug free. If you find one, let me know! There is a known issues though. Paths are made with bézier curves. The smoothness depends on both the number of loops and the number of points per loop. If one of them is too low, you can get unexpected bends. Especially if the route along an open path contains sharp turns. Try changing the path, the number of loops and points for a better result. Updating the tangents manually later is of course also an option.
@@ -61,7 +61,8 @@ The plugin should be bug free. If you find one, let me know! There is a known is
 This plugin is free. You can use it as long as the Sketch API remains unchanged and you can also use the code to develop your own plugin. The code is as consistent as possible. ddSpiral was my first plugin and the Sketch API documentation is, well, as good as it gets. Important bits and pieces are missing, the examples that exist online are mostly outdated, and the forum has recently been abandoned. Fortunately, there are quite a few well-written example plugins around that you can learn from also.
 
 If you like it you may also consider [buying me a coffee](https://www.buymeacoffee.com/Mastermek).
-![Screenshot](buymeacoffee.svg)
+
+[![Screenshot](buymeacoffee.svg)](https://www.buymeacoffee.com/Mastermek)
 
 Have fun and thanks.
 Mek

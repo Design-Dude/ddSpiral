@@ -42,6 +42,8 @@ Selecting a single closed path is basically the same as #1 but the option 'Force
 ### 3. Select an open path, thus a line
 Choosing an open path stretches the spiral along that line. The start size and rotation are also used for the end. The second set, normally the end, is used for the halfway point in this case.
 
+![Screenshot](line.svg)
+
 ### 4. Select two shapes or objects
 The spiral is stretched from the first object to the second, using their coordinates, size and rotation. The first object is the object behind all others, not necessarily the first selected object. The spiral is drawn at the document level, on top of everything, if both objects belong to a different group.
 

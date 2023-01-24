@@ -20,7 +20,7 @@ check - Add buymeacoffee
 ## Dependencies
 This is a plugin for Sketch, so you need [Sketch](https://www.sketch.com). No other tool needed.
 
-It was created with Sketch Plugin Manager, so if you use the source code you'll probably need [SKPM](https://github.com/skpm/skpm) too.
+It was created with Sketch Plugin Manager, so if you use the source code you'll probably need [SKPM](https://github.com/skpm/skpm) too. Together with [Sketch module web view](https://github.com/skpm/sketch-module-web-view/tree/master/docs).
 
 ## Installation
 Download and double-click the plugin. Or drop it on the Sketch app. 

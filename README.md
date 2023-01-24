@@ -37,7 +37,7 @@ If you select a single object, not a path, the spiral rotates from the bounding 
 ![Screenshot](single-object.svg)
 
 ### 2. Select a closed shape, like a rectangle, oval, star, polygon or any other custom closed path
-Selecting a single closed path stretches the spiral from top to bottom, squeezing it as far as possible inside the object's outline. Disabling the Squeeze option will make the shape a normal object, such as #1. By selecting a rectangle, the Squeeze option is turned off by default, just to make it easier/faster to generate a normal spiral and also because the squeezed spiral in a rectangle is not as exciting. If you need a squeezed spiral in a different direction, you should first rotate your selected object and then flatten the shape before running ddSpiral.
+Selecting a single closed path is basically the same as #1 but the option 'Force spiral into shape' becomes available. Once checked, the spiral extends from top to bottom, staying within the outline of the object as much as possible rather than inside the bounding box. If you need a forced spiral in a different direction within the closed shape, you must first rotate your selected object and then flatten the shape before running ddSpiral.
 
 ### 3. Select an open path, thus a line
 Choosing an open path stretches the spiral along that line. The start size and rotation are also used for the end. The second set, normally the end, is used for the halfway point in this case.

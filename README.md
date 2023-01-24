@@ -32,20 +32,20 @@ You can make almost any spiral you want. Just select up to 2 objects and/or an o
 You can select up to 2 objects and an open path. The spiral will behave slightly differently accordingly. In any case, you can change the direction (clockwise or counterclockwise), the number of rotations (loops), the number of points per loop (tangents), the timing (linear, ease, ease-in or ease-out) and change the smoothness (0=sharp, 100=smooth, >100=experimental). The size and rotation of both start and finish is determined by the selected object(s), but you can also change these numbers.
 
 ### 1. Select a singel object, like an image, a group or symbol
-If you select a single object, not a path, the spiral rotates from the bounding box to the center of the object. It is drawn on top of the object in the same group.
+If you select a single object, not a path, the spiral rotates from the bounding box to the center of the object. Position, size and rotation are inherited from the selected object. The spiral is drawn on top of the object in the same group.
 
 ![Screenshot](single-object.svg)
 
 ### 2. Select a closed shape, like a rectangle, oval, star, polygon or any other custom closed path
-Selecting a single closed path is basically the same as #1 but the option 'Force spiral into shape' becomes available. Once checked, the spiral extends from top to bottom, staying within the outline of the object as much as possible rather than inside the bounding box. If you need a forced spiral in a different direction within the closed shape, you must first rotate your selected object and then flatten the shape before running ddSpiral.
+Selecting a single closed path is basically the same as #1 but the option 'Force spiral into shape' becomes available. If the option is checked, the spiral extends from top to bottom, staying within the outer circumference of the object as much as possible rather than inside the bounding box. If you need a forced spiral in a different direction within the closed shape, you must first rotate your selected object and then flatten the shape before running ddSpiral.
 
 ### 3. Select an open path, thus a line
-Choosing an open path stretches the spiral along that line. The 'Ease in/out' timing option swaps the end point and half way point, creating a symmetrical spiral.
+Choosing an open path stretches the spiral along the line. The 'Ease in/out' timing option swaps the end point and half way point, creating a symmetrical spiral.
 
 ![Screenshot](line.svg)
 
 ### 4. Select two shapes or objects
-The spiral is stretched from the first object to the second, using their coordinates, size and rotation. The first object is the object behind all others, not necessarily the first selected object. The spiral is drawn at the document level, on top of everything, if both objects belong to a different group.
+The spiral is stretched from the first object to the second, using their coordinates, size and rotation. The first object is the object behind all others, not necessarily the first selected object. The spiral is drawn at the document level if both objects belong to a different group.
 
 ![Screenshot](two-objects.svg)
 

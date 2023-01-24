@@ -20,7 +20,7 @@ check - Add buymeacoffee
 ## Dependencies
 This is a plugin for Sketch, so you need [Sketch](https://www.sketch.com). No other tool needed.
 
-It was created with Sketch Plugin Manager, so if you use the source code you'll probably need [SKPM](https://github.com/skpm/skpm) too. Together with [sketch-module-web-view](https://github.com/skpm/sketch-module-web-view/tree/master/docs).
+ddSpiral was created with Sketch Plugin Manager, so if you are planning to use the source code you'll probably need [SKPM](https://github.com/skpm/skpm) too. Together with [sketch-module-web-view](https://github.com/skpm/sketch-module-web-view/tree/master/docs).
 
 ## Installation
 Download and double-click the plugin. Or drop it on the Sketch app. 
@@ -61,6 +61,7 @@ The plugin should be bug free. If you find one, let me know! There is a known is
 This plugin is free. You can use it as long as the Sketch API remains unchanged and you can also use the code to develop your own plugin. The code is as consistent as possible. ddSpiral was my first plugin and the Sketch API documentation is, well, as good as it gets. Important bits and pieces are missing, the examples that exist online are mostly outdated, and the forum has recently been abandoned. Fortunately, there are quite a few well-written example plugins around that you can learn from also.
 
 If you like it you may also consider [buying me a coffee](https://www.buymeacoffee.com/Mastermek).
+![Screenshot](buymeacoffee.svg)
 
 Have fun and thanks.
 Mek

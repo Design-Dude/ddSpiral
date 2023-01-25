@@ -36,7 +36,7 @@ If you select a single object, not a path, the spiral rotates from the bounding 
 
 ![Screenshot](single-object.svg)
 
-### 2. Select a closed shape, like a rectangle, oval, star, polygon or any other custom closed path, and then run ddSpiral
+### 2. Select a closed shape, like a rectangle, oval or any other custom closed path, and then run ddSpiral
 Selecting a single closed path is basically the same as #1 but the option 'Force spiral into shape' becomes available. If the option is checked, the spiral extends from top to bottom, staying within the outer circumference of the object as much as possible rather than inside the bounding box. If you need a forced spiral in a different direction within the closed shape, you must first rotate your selected object and then flatten the shape before running ddSpiral.
 
 ### 3. Select an open path, thus a line, and then run ddSpiral

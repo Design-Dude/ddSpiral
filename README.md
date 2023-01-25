@@ -54,7 +54,7 @@ This last option will also stretch the spiral along the path's route, like #3, b
 
 ![Screenshot](two-objects-on-line.svg)
 
-## Ideas and improvements?
+## Do you have any ideas or improvements?
 The plugin must be bug free. If you find one, please let me know!
 
 ## Known issues

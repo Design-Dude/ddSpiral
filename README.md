@@ -59,10 +59,11 @@ The spiral is stretched from the first object to the second, using their coordin
 ## Additional features
 - Darkmode is supported
 - You can leave the overlay open. It floats in anticipation of a new selection.
-- The plugin will receive the changeSelection event form Sketch while inactive but without any further action.
+- The plugin won't respond to event form Sketch while inactive (closed overlay).
 - Check the option 'Auto update' and you don't have to click the 'Update' button anymore.
 
 ## Wishlist
+- Store options like 'Auto update' in a setting
 - Logarithmic scale for transition options.
 - Some visual info button to this readme file.
 - Rotating version of the forced spiral.

@@ -29,7 +29,13 @@ Download and double-click the plugin. Or drop it on the Sketch app.
 You can make almost any spiral you want. Just select up to 2 objects and/or an open path and run ddSpiral from the plugin menu. The plugin presents you with an overlay for adjustments. You can update the spiral as long as you stay in the overlay.
 
 ## How it works
-You can select up to 2 objects and an open path. The spiral will behave slightly differently accordingly. In any case, you can change the direction (clockwise or counterclockwise), the number of rotations (loops), the number of points per loop (tangents), the timing (linear, ease, ease-in or ease-out) and change the smoothness (0=sharp, 100=smooth, >100=experimental). The size and rotation of both start and finish is determined by the selected object(s), but you can also change these numbers.
+You can select up to 2 objects and an open path. The spiral will behave slightly differently accordingly. In every case, you can change:
+- direction (clockwise or counterclockwise),
+- number of revelutions (loops),
+- number of points per loop (tangents),
+- timing (linear, ease, ease-in or ease-out),
+- and change the smoothness (0=sharp, 100=smooth, >100=experimental).
+The size and rotation of both start and finish is determined by the selected object(s), but these number can also be changed.
 
 ### 1. Select a single object, such as an image, group, or symbol, and then run ddSpiral
 If you select a single object, not a path, the spiral rotates from the bounding box to the center of the object. Position, size and rotation are inherited from the selected object. The spiral is drawn on top of the object in the same group.

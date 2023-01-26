@@ -33,8 +33,9 @@ You can select up to 2 objects and an open path. The spiral will behave slightly
 - direction (clockwise or counterclockwise),
 - number of revelutions (loops),
 - number of points per loop (tangents),
-- timing (linear, ease, ease-in or ease-out),
-- and change the smoothness (0=sharp, 100=smooth, >100=experimental).
+- transition (linear, ease, ease-in or ease-out),
+- and smoothness (0=sharp corners, 100=perfect curves, >100=experimental).
+
 The size and rotation of both start and finish is determined by the selected object(s), but these number can also be changed.
 
 ### 1. Select a single object, such as an image, group, or symbol, and then run ddSpiral
@@ -61,6 +62,9 @@ The spiral is stretched from the first object to the second, using their coordin
 - The plugin will receive the changeSelection event form Sketch while inactive but without any further action.
 - Check the option 'Auto update' and you don't have to click the 'Update' button anymore.
 - Check 'remove selection' and it will. Be careful not to destroy any important design work!
+
+## Wishlist
+- Logarithmic scale for transition options
 
 ## Known issue
 There is a known side effect that you can resolve yourself. Paths are made with bézier curves. The smoothness depends on the length of the path, in combination with the number of loops as well as the number of points per loop. If the combination doesn't match you can get unexpected turns. Especially if the route along an open path contains long or sharp turns. Try changing the path, number of loops or points for a better result. If you set the number of points very high, which you should not do of course, then you can see how the curve should actually run. Manually updating the tangents afterwards is of course also an option.

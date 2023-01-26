@@ -29,7 +29,7 @@ Download and double-click the latest version of the plugin. Or drop it on the Sk
 You can make almost any spiral you want. Just select up to 2 objects and/or an open path and run ddSpiral from the plugin menu. The plugin presents you with an overlay for adjustments. You can update the spiral as long as you stay in the overlay.
 
 ## How it works
-You can select up to 2 objects and an open path. The spiral will behave slightly differently accordingly. In every case, you can change:
+The spiral will behave slightly differently depending on the selected objects. In every case, you can change:
 - direction (clockwise or counterclockwise),
 - number of revelutions (loops),
 - number of points per loop (tangents),

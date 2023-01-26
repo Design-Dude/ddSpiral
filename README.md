@@ -37,27 +37,23 @@ If you select a single object, not a path, the spiral rotates from the bounding 
 ![Screenshot](single-object.svg)
 
 ### 2. Select a closed shape, like a rectangle, oval or any other custom closed path, and then run ddSpiral
-Selecting a single closed path is basically the same as #1 but the option 'Force spiral into shape' becomes available. If the option is checked, the spiral extends from top to bottom, staying within the outer circumference of the object as much as possible rather than inside the bounding box. If you need a forced spiral in a different direction within the closed shape, you must first rotate your selected object and then flatten the shape before running ddSpiral.
+Selecting a single closed path is basically the same as #1 but the option experimental 'Force into shape' becomes available. If the option is checked, the spiral extends from top to bottom, staying within the outer circumference of the object as much as possible rather than inside the bounding box. If you need a forced spiral in a different direction within the closed shape, you must first rotate your selected object and then flatten the shape before running ddSpiral.
 
 ### 3. Select an open path, thus a line, and then run ddSpiral
-Choosing an open path and the spiral will stretch along the line. The 'Ease in/out' timing option swaps the end point and half way point, creating a symmetrical spiral.
+Choosing an open path and the spiral will stretch along the line. By optionally selecting 1 or 2 other shapes or objects along with the open path, the size and rotation of these objects will be used as a preset. The option 'Mirror around midpoint' swaps the end point and half way point, creating a symmetrical spiral.
 
-![Screenshot](line.svg)
+![Screenshot](two-objects-on-line.svg)
 
 ### 4. Select two shapes or objects, and then run ddSpiral
 The spiral is stretched from the first object to the second, using their coordinates, size and rotation. The first object is the object behind all others, not necessarily the first selected object. The spiral is drawn at the document level if both objects belong to a different group.
 
 ![Screenshot](two-objects.svg)
 
-### 5. Select an open path and 1 or 2 other shapes or objects, and then run ddSpiral
-This last option will also stretch the spiral along the path's route, like #3, but the dimensions are determined by the selected objects.
-
-![Screenshot](two-objects-on-line.svg)
-
 ## Additional features
 - Darkmode is supported
 - You can leave the overlay open. It floats in anticipation of a new selection.
-- Check the 'auto update' option and you don't have to click 'update' anymore.
+- The plugin will receive the changeSelection event form Sketch while inactive but without any further action.
+- Check the option 'Auto update' and you don't have to click the 'Update' button anymore.
 - Check 'remove selection' and it will. Be careful not to destroy any important design work!
 
 ## Known issue

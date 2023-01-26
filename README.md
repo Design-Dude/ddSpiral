@@ -20,7 +20,7 @@ Make almost any kind of spiral appear magically in [Sketch](https:www.sketch.com
 ## Dependencies
 This is a plugin for Sketch, so you need [Sketch](https://www.sketch.com). No other tools needed.
 
-ddSpiral was created with Sketch Plugin Manager, so if you are planning to use the source code you'll probably need [SKPM](https://github.com/skpm/skpm) too. Together with [sketch-module-web-view](https://github.com/skpm/sketch-module-web-view/tree/master/docs).
+ddSpiral was created with Sketch Plugin Manager, so if you are planning to use the source code you'll probably need [SKPM](https://github.com/skpm/skpm) too. Together with [sketch-module-web-view](https://github.com/skpm/sketch-module-web-view/tree/master/docs) as a bridge between the plugin and the overley for user input.
 
 ## Installation
 Download and double-click the plugin. Or drop it on the Sketch app. 

@@ -79,7 +79,7 @@ The plugin should be bug free. If you find one, please let me know!
 ## Free
 This plugin is free. You can use it as long as the Sketch API remains unchanged and you can also use the code to develop your own plugin. The code is not minified with lot's of comments. It was written with the best of knowledge. ddSpiral was my first plugin and the Sketch API documentation is, well, as good as it gets: important bits and pieces are missing, the examples that exist online are mostly outdated and the forum has recently been abandoned. Fortunately, there are quite a few well-written example plugins around that you can learn from also.
 
-If you like it you may also consider [buying me a coffee](https://www.buymeacoffee.com/Mastermek).
+If you like it you may consider [buying me a coffee](https://www.buymeacoffee.com/Mastermek).
 
 [![Screenshot](buymeacoffee.svg)](https://www.buymeacoffee.com/Mastermek)
 

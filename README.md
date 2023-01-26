@@ -1,5 +1,5 @@
 # ddSpiral
-Produce amazing spirals between objects and along open paths in [Sketch](https:www.sketch.com).
+Make almost any kind of spiral appear magically in Sketch [Sketch](https:www.sketch.com).
 
 ## TODO's
 - check - sent all data to webview and back (location info and target.id)

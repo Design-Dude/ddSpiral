@@ -23,7 +23,7 @@ This is a plugin for Sketch, so you need [Sketch](https://www.sketch.com). No ot
 ddSpiral was created with Sketch Plugin Manager, so if you are planning to use the source code you'll probably need [SKPM](https://github.com/skpm/skpm) too. Together with [sketch-module-web-view](https://github.com/skpm/sketch-module-web-view/tree/master/docs) as a bridge between the plugin and the overley for user input.
 
 ## Installation
-Download and double-click the plugin. Or drop it on the Sketch app. 
+Download and double-click the latest version of the plugin. Or drop it on the Sketch app icon. 
 
 ## What it does
 You can make almost any spiral you want. Just select up to 2 objects and/or an open path and run ddSpiral from the plugin menu. The plugin presents you with an overlay for adjustments. You can update the spiral as long as you stay in the overlay.

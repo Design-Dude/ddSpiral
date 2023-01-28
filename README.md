@@ -35,8 +35,8 @@ The spiral will behave slightly differently depending on the selected objects. A
 - number of revelutions (loops),
 - number of points per loop (tangents),
 - curve (0%=sharp corners, 100%=perfect curves, >100%=experimental).
-- transition (linear, ease, ease-in or ease-out),
-- and (easing) velocity (0%=linear, 30%=smooth, 100%=exponetial).
+- transition (linear, ease in and out, ease-in or ease-out),
+- and (easing) velocity (0%=linear after all, 30%=smooth, 100%=exponetial).
 
 ### 1. Select a single object, such as an image, group, or symbol, and then run ddSpiral
 If you select 1 object, not a path, the spiral rotates from the bounding box to the center of the object. Position, size and rotation are inherited from the selected object. The spiral is drawn on top of the object in the same group.

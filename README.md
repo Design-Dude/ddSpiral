@@ -11,7 +11,9 @@ Make almost any kind of spiral appear magically in [Sketch](https:www.sketch.com
 - check - Clear stored path on new selection
 - check - Make exception for 2 object spiral -> draw in document instead of parent
 - check - Add buymeacoffee
-- Add squeeze (force) option (see below)
+- check - Store options like 'Auto update' in a setting
+- Stable forced spiral.
+- Rotating version of the forced spiral.
 - Update github
 - Create logo
 - Create examples
@@ -65,10 +67,7 @@ The spiral is stretched from the first object to the second, using their coordin
 - Darkmode.
 
 ## Perhaps in the next version
-- Store options like 'Auto update' in a setting
-- Stable forced spiral.
-- Rotating version of the forced spiral.
-- 'Clear selected objects' option to remove the preselected objects automatically.
+- Clear selected objects option to remove the preselected objects automatically.
 - Update notice for new versions or other information.
 
 ## Known issues

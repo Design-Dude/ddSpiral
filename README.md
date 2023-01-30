@@ -61,6 +61,7 @@ The spiral is stretched from the first object to the second, using their coordin
 - No overhead, the plugin won't respond to events form Sketch as long as the overlay is closed.
 - You can leave the overlay open in anticipation of a new selection.
 - Adjustable logarithmic scale for transition options.
+- User input is saved
 - Darkmode.
 
 ## Wishlist
@@ -68,7 +69,7 @@ The spiral is stretched from the first object to the second, using their coordin
 - Stable forced spiral.
 - Rotating version of the forced spiral.
 - 'Clear selected objects' option to remove the preselected objects automatically (really?).
-- Update notice for new versions or other information.
+- Update notice for new versions or other information (why?).
 
 ## Known issues
 There is a known side effect that you can resolve yourself. Paths are made with bézier curves. The smoothness depends on the length of the path, in combination with the number of loops as well as the number of points per loop. If the combination doesn't match you can get unexpected turns and bends. Especially if the route along an open path contains long or sharp turns. Try changing the path, number of loops or points for a better result. If you set the number of points very high (for example at 100) you can see how the curve should actually run. However, that many points is completely unnecessary. 4 tangents is more than enough in most cases. Manually updating the tangents afterwards is also always an option.

@@ -13,7 +13,6 @@ Make almost any kind of spiral appear magically in [Sketch](https:www.sketch.com
 - check - Add buymeacoffee
 - check - Store options like 'Auto update' in a setting
 - Stable forced spiral.
-- Rotating version of the forced spiral.
 - Update github
 - Create logo
 - Create examples
@@ -69,6 +68,7 @@ The spiral is stretched from the first object to the second, using their coordin
 ## Perhaps in the next version
 - Clear selected objects option to remove the preselected objects automatically.
 - Update notice for new versions or other information.
+- Rotating version of the forced spiral.
 
 ## Known issues
 There is a known side effect that you can resolve yourself. Paths are made with bézier curves. The smoothness depends on the length of the path, in combination with the number of loops as well as the number of points per loop. If the combination doesn't match you can get unexpected turns and bends. Especially if the route along an open path contains long or sharp turns. Try changing the path, number of loops or points for a better result. If you set the number of points very high (for example at 100) you can see how the curve should actually run. However, that many points is completely unnecessary. 4 tangents is more than enough in most cases. Manually updating the tangents afterwards is also always an option.

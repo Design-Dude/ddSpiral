@@ -77,19 +77,19 @@ The spiral is stretched from the first object to the second, using their coordin
 ## Known issues
 There is a known side effect that you can resolve yourself. Paths are made with bézier curves. The smoothness depends on the length of the path, in combination with the number of loops as well as the number of points per loop. If the combination doesn't match you can get unexpected turns and bends. Especially if the route along an open path contains long or sharp turns. Try changing the path, number of loops or points for a better result. If you set the number of points very high (for example at 100) you can see how the curve should actually run. However, that many points is completely unnecessary. 4 tangents is more than enough in most cases. Manually updating the tangents afterwards is also always an option.
 
-The option 'Force into shape' is a work in progress. For now, the spiral will only stretch from top to bottom, not in any other direction. If the source object or the parent group is rotated, the perimeter seems indetermind with funny spirals as a result. If you need a forced spiral in a different direction within the closed shape, you must first rotate your selected object and then flatten the shape before running ddSpiral.
+The 'Force into shape' option is a work in progress. For now, the spiral will only run from top to bottom, not in any other direction. You can of course rotate your object before running ddSpiral. Remember, ddSpiral is not very good in tight spaces with many changing diameters, especially at the beginning and end where the direction is indeterminate. Subsequent adjustments are often necessary.
 
 ## Do you have any ideas or improvements?
 The plugin should be bug free. If you find one, please let me know!
 
-## Free
+## Have fun
 You can use it as long as the Sketch API remains unchanged and you can also use the code to develop your own plugin. The code is not minified with lot's of comments. It was written with the best of knowledge. ddSpiral was my first plugin and the Sketch API documentation is, well, as good as it gets: important bits and pieces are missing, the examples that exist online are mostly outdated and the forum has recently been abandoned. Fortunately, there are quite a few well-written example plugins around that you can learn from also. Don't hesitate to ask your questions.
 
 If you like it you may consider [buying me a coffee](https://www.buymeacoffee.com/Mastermek).
 
 [![Screenshot](coffee.svg)](https://www.buymeacoffee.com/Mastermek)
 
-Have fun and thank you for using ddSpiral.
+Thank you for using ddSpiral.
 Mek
 
 

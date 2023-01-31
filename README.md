@@ -90,7 +90,7 @@ You can use it as long as the Sketch API remains unchanged and you can also use 
 
 If you like it you may consider [buying me a coffee](https://www.buymeacoffee.com/Mastermek).
 
-[![Screenshot](./repository_images/coffee.svg)](https://www.buymeacoffee.com/Mastermek)
+[![Screenshot](coffee.svg)](https://www.buymeacoffee.com/Mastermek)
 
 Thank you for using ddSpiral.
 

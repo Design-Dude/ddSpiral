@@ -1,7 +1,7 @@
 # ddSpiral
 Make almost any kind of spiral appear magically in [Sketch](https:www.sketch.com).
 
-![Screenshot](overlay.svg)
+![Screenshot](overlay.png)
 
 ## TODO's
 - check - sent all data to webview and back (location info and target.id)

@@ -86,6 +86,10 @@ The 'Force into shape' option is a work in progress.
 - Remember, ddSpiral is not very good in tight spaces with many changing diameters, especially at the beginning and end where the direction is indeterminate. Subsequent adjustments are often necessary.
 - Filling large objects with ddSpiral can take some time because the perimeter has to be checked first.
 
+## On the drawing board
+- Sketch plugin for smoothing hand-drawn paths.
+- Plugin for decorating paths and repeating object in various patterns.
+
 ## Do you have any ideas or improvements?
 Please contact me if you have any other advice or creative idea. Also, ddSpiral should be bug free. If you find one, please let me know! 
 

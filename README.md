@@ -14,10 +14,10 @@ Make almost any kind of spiral appear magically in [Sketch](https:www.sketch.com
 - check - Make exception for 2 object spiral -> draw in document instead of parent
 - check - Add buymeacoffee
 - check - Store options like 'Auto update' in a setting
-- Stable forced spiral.
+- check - Stable forced spiral
+- check - Create logo
+- check - Create examples
 - Update github
-- Create logo
-- Create examples
 - Publish
 
 ## Dependencies

@@ -1,6 +1,8 @@
 # ddSpiral
 Make almost any kind of spiral appear magically in [Sketch](https:www.sketch.com).
 
+![Screenshot](overlay.svg)
+
 ## TODO's
 - check - sent all data to webview and back (location info and target.id)
 - check - Create spiral
@@ -42,20 +44,22 @@ The spiral will behave slightly differently depending on the selected objects. A
 ### 1. Select a single object, such as an image, group, or symbol, and then run ddSpiral
 If you select 1 object, not a path, the spiral rotates from the bounding box to the center of the object. Position, size and rotation are inherited from the selected object. The spiral is drawn on top of the object in the same group.
 
-![Screenshot](single-object.svg)
+![Screenshot](object.svg)
 
 ### 2. Select a closed shape, like a rectangle, oval or any other custom closed path, and then run ddSpiral
 Selecting a closed path is basically the same as #1 but the experimental option 'Force into shape' becomes available. When checked, the spiral extends from top to bottom, roughly staying within the object's outer perimeter rather than inside the bounding box.
 
+![Screenshot](shape.svg)
+
 ### 3. Select an open path, i.e. a line, and then run ddSpiral
 Choosing an open path, the spiral will stretch along the route of the line. By optionally selecting 1 or 2 other shapes/objects along with the open path, the size and rotation of these objects will be used as a preset. The option 'Mirror around midpoint' swaps the end point and half way point, creating a symmetrical spiral.
 
-![Screenshot](two-objects-on-line.svg)
+![Screenshot](path.svg)
 
 ### 4. Select two shapes or objects, and then run ddSpiral
 The spiral is stretched from the first object to the second, using their coordinates, size and rotation. The first object is the object behind all others, not necessarily the first selected object. The spiral is drawn at the document level if both objects belong to a different group.
 
-![Screenshot](two-objects.svg)
+![Screenshot](objects.svg)
 
 ## Additional features
 - Automatic update option (you can also press RETURN for a quick update).
@@ -83,7 +87,7 @@ You can use it as long as the Sketch API remains unchanged and you can also use 
 
 If you like it you may consider [buying me a coffee](https://www.buymeacoffee.com/Mastermek).
 
-[![Screenshot](buymeacoffee.svg)](https://www.buymeacoffee.com/Mastermek)
+[![Screenshot](coffee.svg)](https://www.buymeacoffee.com/Mastermek)
 
 Have fun and thank you for using ddSpiral.
 Mek

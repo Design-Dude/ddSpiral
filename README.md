@@ -86,7 +86,7 @@ The 'Force into shape' option is a work in progress.
 - Logically, this option also suffers from the sharp corners and varying radii described above. ddSpiral is not very good in tight spaces, especially at the beginning and end where the direction is indeterminate. Subsequent adjustments are often necessary. Keep it simple is the motto.
 - The spiral is never interrupted, so no gaps or notches are taken into account.
 - For now, the spiral will only run from top to bottom, not in any other direction. You can of course rotate your object before running ddSpiral.
-- Filling large objects with ddSpiral can take some time because the perimeter has to be checked first.
+- Filling large objects with ddSpiral can take some time because the perimeter must first be meticulously unraveled in its entirety. Turn off auto update if that is the case.
 
 ## On the drawing board
 - Sketch plugin for smoothing hand-drawn paths.

@@ -1,0 +1,38 @@
+{
+  "name": "ddSpiral",
+  "version": "1.0",
+  "engines": {
+    "sketch": ">=3.0"
+  },
+  "skpm": {
+    "name": "ddSpiral",
+    "manifest": "src/manifest.json",
+    "main": "ddSpiral.sketchplugin",
+    "assets": [
+      "assets/**/*"
+    ],
+    "sketch-assets-file": "sketch-assets/icons.sketch"
+  },
+  "scripts": {
+    "build": "skpm-build",
+    "watch": "skpm-build --watch",
+    "start": "skpm-build --watch",
+    "postinstall": "npm run build && skpm-link"
+  },
+  "devDependencies": {
+    "@skpm/builder": "^0.7.4",
+    "@skpm/extract-loader": "^2.0.2",
+    "css-loader": "^3.2.0",
+    "html-loader": "^0.5.5"
+  },
+  "resources": [
+    "resources/**/*.js"
+  ],
+  "dependencies": {
+    "sketch-module-web-view": "^3.1.4"
+  },
+  "author": "Mek van't Hoff <master.mek@design-dude.nl>",
+  "repository": "https://github.com/Design-Dude/ddSpiral.git",
+  "description": "Make almost any kind of spiral appear magically in Sketch.",
+  "license": "MIT"
+}

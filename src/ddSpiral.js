@@ -146,7 +146,7 @@ function handleSelection() {
 	}
 	for(let i in settingIdentifiers) {
 		let getSetting = Settings.settingForKey(uniqueSettingIdentifier+settingIdentifiers[i]);
-		selection[settingIdentifiers[i]] = getSetting ? getSetting : 'undefined';
+		selection[settingIdentifiers[i]] = getSetting || getSetting === false ? getSetting : 'undefined';
 	}
 	let start_val = {
 		x:0,
@@ -479,10 +479,10 @@ function spiral(data) {
 		
 		// Total distance
 		let distanceY = rad.length.y;
-		let radiusY = distanceY / (ret_settings.loops + 0);
+		let radiusY = (distanceY / (ret_settings.loops + 0));
 
 		// Prepare vertical translation
-		const easeRadius = ret_settings.timing == 'linear' ? false : false;
+		const easeRadius = ret_settings.timing == 'linear' ? false : true;
 		trans = {
 			center: new Vector2d(
 				outl.array[outl.top].center,
@@ -565,7 +565,10 @@ function spiral(data) {
 		// Rescale radius to max
 		if(easeRadius) {
 			for(let i=0; i<rad.array.length; i++) {
-				rad.array[i].y *= (radiusY / largestStep) * 1.5;
+				// if(i < rad.array.length - 1) {
+				// 	rad.array[i].x = (rad.array[i].x + rad.array[i+1].x) / 2;
+				// }
+				rad.array[i].y *= (radiusY / largestStep);
 			}
 		}
 	}

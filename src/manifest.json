@@ -9,7 +9,7 @@
   "commands": [
     {
       "name": "ddSpiral",
-      "shortcut": "control shift s",
+      "shortcut": "control alt command s",
       "identifier": "ddSpiral.design-dude.identifier",
       "script": "./ddSpiral.js",
       "handlers": {

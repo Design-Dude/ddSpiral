@@ -94,7 +94,7 @@ The 'Force into shape' option is a work in progress.
 - Unit calculator (there is a plugin for that, perhaps it's good enough).
 
 ## Do you have any ideas or improvements?
-Please contact me if you have any other advice or creative idea. Also, ddSpiral should be bug free. If you find one, please let me know! 
+Please contact me if you have any other advice or creative idea. Also, ddSpiral is hopefully bug free. If you find one, please let me know! 
 
 ## Have fun
 You can use it as long as the Sketch API remains unchanged and you can also use the code to develop your own plugin. The code is not minified with lot's of comments. It was written with the best of knowledge. ddSpiral was my first plugin and the Sketch API documentation is, well, as good as it gets: important bits and pieces are missing, the examples that exist online are mostly outdated and the forum has recently been abandoned. Fortunately, there are quite a few well-written example plugins around that you can learn from also. Don't hesitate to ask your questions.

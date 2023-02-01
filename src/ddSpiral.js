@@ -64,6 +64,11 @@ export default function (context) {
 		// Handle current selection and tell webview 
 		handleSelection();
 	});
+	
+	// Listener for link requests from the webview
+	webContents.on('followLink', url => {
+		NSWorkspace.sharedWorkspace().openURL(NSURL.URLWithString(url));
+	});
 
 	// Listener for calls from the webview
 	webContents.on('internalRequest', requestData => {
@@ -403,9 +408,9 @@ function spiral(data) {
 		start: new Vector2d(),
 		length: 0
 	}
+	
 	// Squeeze spiral into shape
 	if(ret_settings.squeeze) {
-
 		// Get the shape as js object
 		const jsShape = document.getLayerWithID(ret_settings.startID);
 		const nativeShape = jsShape.sketchObject;

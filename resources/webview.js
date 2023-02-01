@@ -47,8 +47,8 @@ var update = false;
 const elements = ['start_width','start_height','start_rotation','end_width','end_height','end_rotation','loops','points','timing','smooth','power','squeeze','clockwise', 'mirror', 'auto'];
 
 // Math extension
-Math.decimal = function (num, places = 0) {
-	return Math.round(num * (Math.pow(10, places))) / Math.pow(10, places);
+Math.decimal = function (num, precision = 0) {
+	return Math.round(num * (Math.pow(10, precision))) / Math.pow(10, precision);
 };
 Math.degrees = function (deg) {
 	return (deg + 360) % 360;
@@ -463,7 +463,7 @@ document.getElementById("start_width").addEventListener("change", e => {
 			document.getElementById("start_height").value = start_val.h;
 		} else {
 			let f = start_val.w ? newVal / start_val.w : 1;
-			start_val.h = Math.round(start_val.h * f * 1000) / 1000;
+			start_val.h = Math.round(start_val.h * f * 100) / 100;
 			document.getElementById("start_height").value = start_val.h;
 		}
 	}
@@ -484,7 +484,7 @@ document.getElementById("start_height").addEventListener("change", e => {
 			document.getElementById("start_width").value = start_val.w;
 		} else {
 			let f = start_val.h ? newVal / start_val.h : 1;
-			start_val.w = Math.round(start_val.w * f * 1000) / 1000;
+			start_val.w = Math.round(start_val.w * f * 100) / 100;
 			document.getElementById("start_width").value = start_val.w;
 		}
 	}
@@ -527,7 +527,7 @@ document.getElementById("end_width").addEventListener("change", e => {
 			document.getElementById("end_height").value = end_val.h;
 		} else {
 			let f = end_val.w ? newVal / end_val.w : 1;
-			end_val.h = Math.round(end_val.h * f * 1000) / 1000;
+			end_val.h = Math.round(end_val.h * f * 100) / 100;
 			document.getElementById("end_height").value = end_val.h;
 		}
 	}
@@ -548,7 +548,7 @@ document.getElementById("end_height").addEventListener("change", e => {
 			document.getElementById("end_width").value = end_val.w;
 		} else {
 			let f = end_val.h ? newVal / end_val.h : 1;
-			end_val.w = Math.round(end_val.w * f * 1000) / 1000;
+			end_val.w = Math.round(end_val.w * f * 100) / 100;
 			document.getElementById("end_width").value = end_val.w;
 		}
 	}
@@ -581,6 +581,7 @@ document.getElementById("link_end_container").addEventListener("click", e => {
 });
 document.getElementById("loops").addEventListener("change", e => {
 	let newVal = Math.abs(parseFloat(e.target.value));
+	newVal = Math.decimal(Math.round(newVal * 4) / 4, 2);
 	if(isNaN(newVal)) newVal = loops;
 	if(newVal > 250) newVal = 250; // max 250 loops
 	if(newVal <= 0.25) newVal = 0.25;
@@ -604,15 +605,6 @@ document.getElementById("points").addEventListener("change", e => {
 	
 });
 document.getElementById("timing").addEventListener("change", e => {
-	// if(selection.type == 4 && (e.target.value == 'ease' || timing == 'ease')) {
-	// 	switchStart();
-	// 	document.getElementById('start_width').value = start_val.w;
-	// 	document.getElementById('start_height').value = start_val.h;
-	// 	document.getElementById('start_rotation').value = start_val.deg;
-	// 	document.getElementById('end_width').value = end_val.w;
-	// 	document.getElementById('end_height').value = end_val.h;
-	// 	document.getElementById('end_rotation').value = end_val.deg;
-	// }
 	timing = e.target.value;
 	allOn();
 	if(auto && update) {
@@ -687,107 +679,3 @@ document.getElementById("auto").addEventListener("change", e => {
 		spiralise();
 	}
 });
-
-// var outline = {
-// 	top: false,
-// 	bottom: 0,
-// 	array: []
-// }
-// for(let o=0; o<50; o++) {
-// 
-// 	let j = Math.ceil(Math.random() * 20);
-// 	let y = Math.random() * 50 - 25;
-// 	//console.log(o, j, y)
-// 	
-// 	const high = Math.ceil( outline.array[j] ? y > outline.array[j].high ? y : outline.array[j].high : y );
-// 	const low = Math.floor( outline.array[j] ? y < outline.array[j].low ? y : outline.array[j].low : y );
-// 	const radius = (high - low) / 2;
-// 	const center = low + radius;
-// 	outline.top = j < outline.top || outline.top === false ? j : outline.top;
-// 	outline.bottom = j > outline.bottom ? j : outline.bottom;
-// 	outline.array[j] = {
-// 		high: high,
-// 		low: low,
-// 		center: center,
-// 		radius: radius
-// 	}
-// }
-// //console.log(outline);
-// 
-// Math.ease = function (timing, steps) {
-// 	var transition = {
-// 		start: 0,
-// 		step: 0,
-// 		latter: 0,
-// 		factor: 1,
-// 		points: new Array()
-// 	}
-// 	switch(timing) {
-// 		case "ease":
-// 			transition.step = Math.PI / steps;
-// 			transition.factor = 2;
-// 			break;
-// 		case "ease-in":
-// 			transition.start = Math.PI / 2,
-// 			transition.step = Math.PI / 2 / steps;
-// 			break;
-// 		case "ease-out":
-// 			transition.step = Math.PI / 2 / steps;
-// 			break;
-// 		default:
-// 	}
-// 	if(transition.step) {
-// 		transition.latter = (Math.cos(transition.start) + 1) / transition.factor;
-// 		for(var i = 0; i <= steps; i++) {
-// 			var cos = (Math.cos(transition.start) + 1) / transition.factor;
-// 			var dif = i == 0 ? 0 : Math.abs(cos - transition.latter);
-// 			transition.start += transition.step;
-// 			transition.latter = cos;
-// 			if(i) {
-// 				transition.points.push(dif);
-// 			}
-// 		}
-// 		transition.points.push(0);
-// 		return transition.points;
-// 	} else {
-// 		return false;
-// 	}
-// }
-// 
-// Math.easePower = function (timing, power, steps) {
-// 	if(timing == 'linear') return false;
-// 	var transition = new Array();
-// 	var total = 0;
-// 	for(let x=0; x<=steps; x++) {
-// 		let y = timing == 'ease' && x > steps / 2 ? Math.pow( steps + 1 - x, power ) : Math.pow( x, power );
-// 		if(x) {
-// 			total += y;
-// 			if(timing == 'ease-in') {
-// 				transition[steps-x] = y;
-// 			} else {
-// 				transition.push(y);
-// 			}
-// 		}
-// 	}
-// 	for(let i=0; i<steps; i++) {
-// 		transition[i] /= total;
-// 	}
-// 	transition.push(0);
-// 	return transition;
-// }
-// 
-// var testOud = Math.ease('ease', 10);
-// var testNew = Math.easePower('ease', 1, 10);
-// 
-// var t = 0;
-// for(let x=0; x<10; x++) {
-// 	t+=testOud[x];
-// }
-// console.log('total oud',t)
-// t = 0;
-// for(let x=0; x<10; x++) {
-// 	t+=testNew[x];
-// }
-// console.log('total new ',t)
-// console.log(testOud)
-// console.log(testNew)

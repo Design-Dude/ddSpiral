@@ -132,7 +132,6 @@ function spiralise() {
 		endID: selection.endID,
 		parentID: selection.parentID
 	}
-	console.log(settings)
 	// Create message
 	var message = { start_val, end_val, settings, action: "spiralise" };
 	//console.log(JSON.stringify(message));
@@ -140,7 +139,6 @@ function spiralise() {
 		// Send message to plugin
 		window.postMessage('internalRequest', JSON.stringify(message));
 	} else {
-		console.log(JSON.stringify(message));
 		allOn();
 	}
 	// Reset world rotation for next update
@@ -197,9 +195,7 @@ function handleSelection(response) {
 	document.getElementById("button").innerHTML = "Spiralise!";
 	update = false;
 
-
 	selection = response.selection;
-	console.log(selection)
 	start_val = response.start_val;
 	end_val = response.end_val;
 	loops = selection.loops != 'undefined' && selection.loops ? selection.loops : loops;
@@ -209,7 +205,6 @@ function handleSelection(response) {
 	smooth = selection.smooth != 'undefined' && selection.smooth ? selection.smooth : smooth;
 	document.getElementById('smooth').value = smooth;
 	timing = selection.timing != 'undefined' && selection.timing ? selection.timing : timing;
-	console.log('timing', timing)
 	document.getElementById('timing').value = timing;
 	power = selection.power != 'undefined' && selection.power ? selection.power : power;
 	document.getElementById('power').value = power;
@@ -571,7 +566,6 @@ document.getElementById("timing").addEventListener("change", e => {
 	// }
 	timing = e.target.value;
 	allOn();
-	console.log(timing)
 	if(auto && update) {
 		spiralise();
 	}

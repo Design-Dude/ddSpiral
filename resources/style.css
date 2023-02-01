@@ -280,12 +280,15 @@ html {
   	font-size: 11px;
   	font-weight: normal;
   }
-  img#github {
+  img#github, img#githubdark {
   	width: 44px;
   	height: 44px;
   	float: right;
   	cursor: hand;
   	cursor: pointer;
+  }
+  img#githubdark {
+    display:none;
   }
   #coffeelink {
   	display: flex;
@@ -304,6 +307,7 @@ html {
 	font-weight: normal;
 	align-self: center;
 	text-align: left;
+  	padding-left:8px;
   }
   li {
   	font-size: 12px;
@@ -359,4 +363,10 @@ body.__skpm-dark {
   }
   .__skpm-dark .darkbmac {
 	  display: table-cell;
+  }
+  .__skpm-dark img#github {
+		display:none;
+  }
+  .__skpm-dark img#githubdark {
+	display:inherit;
   }

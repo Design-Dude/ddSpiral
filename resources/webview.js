@@ -3,6 +3,7 @@
 
 // Settings
 const local = false;
+const server = 'https://www.design-dude.nl/apps/ddSpiral/';
 
 var selection = {
 	type: 4,
@@ -68,15 +69,63 @@ window.internalResponse = (requestedData) => {
 // Page loaded
 window.addEventListener("load", () => {
 	say("Loading...", "#FF5B02");
+	// Link to readme
 	document.getElementById("github").addEventListener("click", e => {
-		window.open("https://github.com/Design-Dude/ddSpiral", "_github");
+		followLink("https://github.com/Design-Dude/ddSpiral");
 	});
+	// Link to info from footer
+	document.getElementById("coffeelink").style.display = "none";
+	document.getElementById("coffeelink").setAttribute('goto', 'https://buymeacoffee.com/mastermek');
 	document.getElementById("coffeelink").addEventListener("click", e => {
-		window.open("https://buymeacoffee.com/mastermek", "_coffeelink");
+		let targetUrl = e.target.parentElement.getAttribute('goto');
+		followLink(targetUrl);
 	});
 	// Get selection from plugin
 	getSelection();
+	
+	// Get info from server for footer info
+	requestUpdateInfo(server + 'info.php')
+	.then(data => {
+		data = JSON.parse(data);
+		document.getElementById("bmac").innerHTML = data[0].info;
+		document.getElementById("bmacimg").setAttribute('src', server + data[0].image);
+		document.getElementById("bmacimgdark").setAttribute('src', server + data[0].image_dark);
+		document.getElementById("coffeelink").setAttribute('goto', data[0].link);
+		document.getElementById("coffeelink").style.display = "flex";
+	})
+	.catch((error) => {
+		document.getElementById("coffeelink").style.display = "flex";
+	})
+	
 });
+
+// Open link from webview
+function followLink(url) {
+	if(local) {
+		console.log('followLink', url);
+	} else {
+		window.postMessage('followLink', url);
+	}
+}
+
+const requestUpdateInfo = (url) => {
+	return new Promise((resolve, reject) => {
+		if(!url || url == '') {
+			reject('No url provided')
+		} else {
+			fetch(url)
+			.then((response) => {
+				resolve(response.text())
+			})
+			.then((result) => {
+				resolve(result ? JSON.parse(result) : {})
+			})
+			.catch((error) => {
+				reject(error);
+			})
+		}
+	})
+}
 
 // On plugin blur
 window.addEventListener("blur", e => {

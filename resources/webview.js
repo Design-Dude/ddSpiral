@@ -1,0 +1,750 @@
+// TODOS
+
+
+// Settings
+const local = false;
+
+var selection = {
+	type: 4,
+	shape: '',
+	isSpiral: false,
+	pathID: '',
+	startID: '',
+	endID: '',
+	parentID: '',
+	theme: ''
+}
+var start_val = {
+	x:0,
+	y:0,
+	w:0,
+	h:0,
+	deg:0,
+	worldDeg: 0
+}
+var end_val = {
+	x:0,
+	y:0,
+	w:0,
+	h:0,
+	deg:0,
+	worldDeg: 0
+}
+var loops = 10;
+var points = 4;
+var timing = 'linear';
+var smooth = 100;
+var power = 30;
+var clockwise = true;
+var squeeze = false;
+var mirror = false;
+var auto = false;
+
+var hasFocus = false;
+var update = false;
+
+const elements = ['start_width','start_height','start_rotation','end_width','end_height','end_rotation','loops','points','timing','smooth','power','squeeze','clockwise', 'mirror', 'auto'];
+
+// Math extension
+Math.decimal = function (num, places = 0) {
+	return Math.round(num * (Math.pow(10, places))) / Math.pow(10, places);
+};
+Math.degrees = function (deg) {
+	return (deg + 360) % 360;
+};
+
+// Disable the context menu
+document.addEventListener('contextmenu', (e) => {
+	// Disable for testing in Sketch
+	// You start the inspector from the webview's context menu
+	//if(!local) e.preventDefault()
+})
+
+// Default receiver from plugin
+window.internalResponse = (requestedData) => {
+	console.log('requestedData', requestedData);
+};
+
+// Page loaded
+window.addEventListener("load", () => {
+	say("Loading...", "#FF5B02");
+	document.getElementById("github").addEventListener("click", e => {
+		window.open("https://github.com/Design-Dude/ddSpiral", "_github");
+	});
+	document.getElementById("coffeelink").addEventListener("click", e => {
+		window.open("https://buymeacoffee.com/mastermek", "_coffeelink");
+	});
+	// Get selection from plugin
+	getSelection();
+});
+
+// On plugin blur
+window.addEventListener("blur", e => {
+	hasFocus = false;
+	allOff();
+});
+
+// On plugin focus
+window.addEventListener("focus", e => {
+	hasFocus = true;
+	if(!local) {
+		window.postMessage('internalRequest', JSON.stringify({
+			action: "getSelection"
+		}));
+	}
+	allOn();
+});
+
+// Send
+document.getElementById("button").addEventListener("click", e => {
+	e.preventDefault();
+	spiralise();
+});
+
+//	Add ENTER key shortcut
+document.body.addEventListener("keyup", e => {
+	if(e.keyCode !== 13) return;
+	spiralise();
+});
+
+// Tell plugin to draw spiral
+function spiralise() {
+	// Next submit will be an update
+	document.getElementById("button").innerHTML = "Update";
+	update = true;
+	// Set world rotation back to local
+	start_val.deg = Math.degrees( start_val.deg - start_val.worldDeg );
+	end_val.deg = Math.degrees( end_val.deg - end_val.worldDeg );
+	// Collect settings
+	let settings = {
+		loops: loops,
+		points: points,
+		smooth: smooth,
+		timing: timing,
+		power: power,
+		squeeze: document.getElementById('squeeze').disabled == false && squeeze ? true : false,
+		mirror: document.getElementById('mirror').disabled == false && mirror ? true : false,
+		clockwise: clockwise,
+		auto: auto,
+		type: selection.type,
+		pathID: selection.pathID,
+		startID: selection.startID,
+		endID: selection.endID,
+		parentID: selection.parentID
+	}
+	console.log(settings)
+	// Create message
+	var message = { start_val, end_val, settings, action: "spiralise" };
+	//console.log(JSON.stringify(message));
+	if(!local) {
+		// Send message to plugin
+		window.postMessage('internalRequest', JSON.stringify(message));
+	} else {
+		console.log(JSON.stringify(message));
+		allOn();
+	}
+	// Reset world rotation for next update
+	start_val.deg = Math.degrees( start_val.deg + start_val.worldDeg );
+	end_val.deg = Math.degrees( end_val.deg + end_val.worldDeg );
+}
+
+// Ask plugin for selected objects
+function getSelection() {
+	if(local) { // local test data
+		handleSelection({
+			selection: {
+				type: 2,
+				shape: '',
+				isSpiral: true,
+				theme: '',
+				startID: '',
+				endID: '',
+				pathID: '',
+				parentID: ''
+			},
+			start_val: {
+				x:0,
+				y:0,
+				w:51,
+				h:52,
+				deg:0,
+				worldDeg: 0
+			},
+			end_val: {
+				x:0,
+				y:0,
+				w:50,
+				h:50,
+				deg:0,
+				worldDeg: 0
+			}
+		});
+	} else {
+		window.postMessage('internalRequest', JSON.stringify({
+			action: "getSelection"
+		}));
+	}
+}
+
+// Set form info with selection info from plugin
+window.setSelection = (requestedData) => {
+	handleSelection(requestedData);
+}
+
+// Handle selection response
+function handleSelection(response) {
+
+	document.getElementById("button").innerHTML = "Spiralise!";
+	update = false;
+
+
+	selection = response.selection;
+	console.log(selection)
+	start_val = response.start_val;
+	end_val = response.end_val;
+	loops = selection.loops != 'undefined' && selection.loops ? selection.loops : loops;
+	document.getElementById('loops').value = loops;
+	points = selection.points != 'undefined' && selection.points ? selection.points : points;
+	document.getElementById('points').value = points;
+	smooth = selection.smooth != 'undefined' && selection.smooth ? selection.smooth : smooth;
+	document.getElementById('smooth').value = smooth;
+	timing = selection.timing != 'undefined' && selection.timing ? selection.timing : timing;
+	console.log('timing', timing)
+	document.getElementById('timing').value = timing;
+	power = selection.power != 'undefined' && selection.power ? selection.power : power;
+	document.getElementById('power').value = power;
+	squeeze = selection.squeeze != 'undefined' ? selection.squeeze : squeeze;
+	if(squeeze && (selection.type == 1 || selection.type > 3)) squeeze = false;
+	if(selection.type == 2 && !squeeze) selection.type = 3;
+	document.getElementById('squeeze').checked = squeeze;
+	mirror = selection.mirror != 'undefined' ? selection.mirror : mirror;
+	document.getElementById('mirror').checked = mirror;
+	clockwise = selection.clockwise != 'undefined' ? selection.clockwise : clockwise;
+	document.getElementById('clockwise').checked = clockwise;
+	auto = selection.auto != 'undefined' ? selection.auto : auto;
+	document.getElementById('auto').checked = auto;
+	if(selection.type == 4 && mirror) {
+		switchStart();
+	}
+	// Use world rotation (easier for user - wysiwyg)
+	start_val.deg = Math.degrees( start_val.deg + start_val.worldDeg );
+	end_val.deg = Math.degrees( end_val.deg + end_val.worldDeg );
+	// Fill form
+	document.getElementById('start_width').value = Math.decimal(start_val.w, 2);
+	document.getElementById('start_height').value = Math.decimal(start_val.h, 2);
+	document.getElementById('start_rotation').value = Math.decimal(start_val.deg, 2);
+	document.getElementById('end_width').value = Math.decimal(end_val.w, 2);
+	document.getElementById('end_height').value = Math.decimal(end_val.h, 2);
+	document.getElementById('end_rotation').value = Math.decimal(end_val.deg, 2);
+	// Update user info text
+	setTypeText();
+	// Set theme
+	settings.theme = selection.theme;
+	if(settings.theme === 'dark') {
+		document.body.classList.add("dark");
+	} else {
+		document.body.classList.remove("dark");
+	}
+	// Focus
+	if(hasFocus && selection.type) {
+		allOn();
+	} else {
+		allOff();
+	}
+}
+
+// Switch start & end
+function switchStart() {
+	let w = start_val.w;
+	let h = start_val.h;
+	let d = start_val.deg;
+	start_val.w = end_val.w;
+	start_val.h = end_val.h;
+	start_val.deg = end_val.deg;
+	end_val.w = w;
+	end_val.h = h;
+	end_val.deg = d;
+}
+
+// Spiral types and user info's
+function setTypeText() {
+	// object count
+	// no of shapes
+	// no of objects
+	// no of open paths
+	// squeeze: count=1 shape=1 class!=rect
+	let objType = selection.isSpiral ? 'spiral!' : 'line';
+	switch(selection.type) {
+	case 1:
+		// single object, not a shape
+		say('Wind <span>around the center</span> of that object', settings.theme === 'dark' ? '#DFDFDF' : 'black');
+		break;
+	case 2:
+		// single shape, squeeze
+		say('Force <span>inside</span> that '+selection.shape, settings.theme === 'dark' ? '#DFDFDF' : 'black');
+		break;
+	case 3:
+		// single shape, no squeeze
+		say('Bend <span>around the center</span> of that '+selection.shape, settings.theme === 'dark' ? '#DFDFDF' : 'black');
+		break;
+	case 4:
+		// zero or single object + open path (center ease allowed)
+		say('Twist <span>around</span> that ' + objType, settings.theme === 'dark' ? '#DFDFDF' : 'black');
+		break;
+	case 5:
+		// two objects, no open path
+		say('Stretch <span>between</span> those objects', settings.theme === 'dark' ? '#DFDFDF' : 'black');
+		break;
+	case 6:
+		// open path=1, object+shape=>1
+		say('Curve <span>along the route</span> of that ' + objType, settings.theme === 'dark' ? '#DFDFDF' : 'black');
+		break;
+	default:
+		say('<span>Select a maximum of 2 objects and/or 1 open path!</span>', '#FF5B02');
+		allOff();
+	} 
+}
+
+// Inform user
+function say(txt, col) {
+	document.getElementById('info').innerHTML = txt;
+	document.getElementById('info').style.color = col;
+}
+
+// Disable all form elements
+function allOff() {
+	for(let i=0; i<elements.length; i++) {
+		document.getElementById(elements[i]).setAttribute('disabled', '');
+		if(!selection.type || ((squeeze && (elements[i].indexOf('start') > -1 || elements[i].indexOf('end') > -1)) || ((selection.type < 2 || selection.type > 3) && elements[i] == 'squeeze'))) {
+			document.getElementById(elements[i]).style.opacity = elements[i] == 'squeeze' || elements[i] == 'clockwise' || elements[i] == 'mirror' || elements[i] == 'auto' ? 0.5 : 0;
+		} else {
+			document.getElementById(elements[i]).style.opacity = elements[i] == 'squeeze' || elements[i] == 'clockwise' || elements[i] == 'mirror' || elements[i] == 'auto' ? 0.5 : 0.3;
+		}
+		let parent = document.getElementById(elements[i]).parentElement;
+		if(parent.classList.contains('textfield')) {
+			parent.setAttribute('disabled', 'disabled');
+			parent.style.backgroundColor = settings.theme === 'dark' ? '#282828' : '#F6F6F6';
+		}
+	}
+	document.getElementById('link_start').setAttribute('disabled', 'disabled');
+	document.getElementById('link_start').style.opacity = 0.3;
+	document.getElementById('link_end').setAttribute('disabled', 'disabled');
+	document.getElementById('link_end').style.opacity = 0.3;
+	document.getElementById('button').setAttribute('disabled', 'disabled');
+	document.getElementById('button').style.opacity = 0.3;
+	document.getElementById('squeeze_text').style.opacity = 0.2;
+	document.getElementById('clockwise_text').style.opacity = 0.2;
+	document.getElementById('mirror_text').style.opacity = 0.2;
+	document.getElementById('auto_text').style.opacity = 0.2;
+}
+
+// Enable all active form elements
+function allOn() {
+	var squeeze = document.getElementById('squeeze').checked;
+	document.getElementById('mirror_text').style.opacity = 1;
+	for(let i=0; i<elements.length; i++) {
+		if(elements[i] == 'power' && timing == 'linear') {
+			document.getElementById(elements[i]).setAttribute('disabled', '');
+			document.getElementById(elements[i]).style.opacity = 0;
+			let parent = document.getElementById(elements[i]).parentElement;
+			if(parent.classList.contains('textfield')) {
+				parent.setAttribute('disabled', 'disabled');
+				parent.style.backgroundColor = settings.theme === 'dark' ? '#282828' : '#F6F6F6';
+			}
+			
+		} else if(elements[i] == 'mirror' && selection.type != 4) {
+			document.getElementById(elements[i]).disabled = true;
+			document.getElementById('mirror_text').style.opacity = 0.2;
+		} else if((squeeze && (elements[i].indexOf('start') > -1 || elements[i].indexOf('end') > -1)) || ((selection.type < 2 || selection.type > 3) && elements[i] == 'squeeze')) {
+			document.getElementById(elements[i]).setAttribute('disabled', '');
+			document.getElementById(elements[i]).style.opacity = elements[i] == 'squeeze' || elements[i] == 'clockwise' ? 0.5 : 0;
+			let parent = document.getElementById(elements[i]).parentElement;
+			if(parent.classList.contains('textfield')) {
+				parent.setAttribute('disabled', 'disabled');
+				parent.style.backgroundColor = settings.theme === 'dark' ? '#282828' : '#F6F6F6';
+			}
+		} else {
+			document.getElementById(elements[i]).disabled = false;
+			document.getElementById(elements[i]).style.opacity = 1;
+			let parent = document.getElementById(elements[i]).parentElement;
+			if(parent.classList.contains('textfield')) {
+				parent.setAttribute('disabled', '');
+				parent.style.backgroundColor = settings.theme === 'dark' ? '#2E2E2E' : '#EDEDED';
+			}
+		}
+	}
+	if(squeeze) {
+		document.getElementById('link_start').setAttribute('disabled', 'disabled');
+		document.getElementById('link_start').style.opacity = 0.3;
+		document.getElementById('link_end').setAttribute('disabled', 'disabled');
+		document.getElementById('link_end').style.opacity = 0.3;
+	} else {
+		document.getElementById('link_start').setAttribute('disabled', '');
+		document.getElementById('link_start').style.opacity = 1;
+		document.getElementById('link_end').setAttribute('disabled', '');
+		document.getElementById('link_end').style.opacity = 1;
+	}
+	if(auto && update) {
+		document.getElementById('button').setAttribute('disabled', 'disabled');
+		document.getElementById('button').style.opacity = 0.3;
+	} else {
+		document.getElementById('button').disabled = false;
+		document.getElementById('button').style.opacity = 1;
+	}
+	if(selection.type == 2 || selection.type == 3) {
+		document.getElementById('squeeze_text').style.opacity = 1;
+	} else {
+		document.getElementById('squeeze_text').style.opacity = 0.2;
+	}
+	document.getElementById('clockwise_text').style.opacity = 1;
+	if(selection.type == 4 && mirror) {
+		document.getElementById('start_text').innerHTML = 'Start / end';
+		document.getElementById('end_text').innerHTML = 'Half way';
+	} else {
+		document.getElementById('start_text').innerHTML = 'Start';
+		document.getElementById('end_text').innerHTML = 'End';
+	}
+	document.getElementById('auto_text').style.opacity = 1;
+}
+	
+// Handle form elements
+document.getElementById("start_width").addEventListener("change", e => {
+	let newVal = Math.abs(parseFloat(e.target.value));
+	if(isNaN(newVal)) newVal = start_val.w;
+	e.target.value = newVal;
+	let link = document.getElementById("link_start").className;
+	if(link == 'linked') {
+		if(start_val.w == 0 && start_val.h == 0) {
+			start_val.h = newVal;
+			document.getElementById("start_height").value = start_val.h;
+		} else {
+			let f = start_val.w ? newVal / start_val.w : 1;
+			start_val.h = Math.round(start_val.h * f * 1000) / 1000;
+			document.getElementById("start_height").value = start_val.h;
+		}
+	}
+	start_val.w = newVal;
+	if(auto && update) {
+		spiralise();
+	}
+	
+});
+document.getElementById("start_height").addEventListener("change", e => {
+	let newVal = Math.abs(parseFloat(e.target.value));
+	if(isNaN(newVal)) newVal = start_val.h;
+	e.target.value = newVal;
+	let link = document.getElementById("link_start").className;
+	if(link == 'linked') {
+		if(start_val.w == 0 && start_val.h == 0) {
+			start_val.w = newVal;
+			document.getElementById("start_width").value = start_val.w;
+		} else {
+			let f = start_val.h ? newVal / start_val.h : 1;
+			start_val.w = Math.round(start_val.w * f * 1000) / 1000;
+			document.getElementById("start_width").value = start_val.w;
+		}
+	}
+	start_val.h = newVal;
+	if(auto && update) {
+		spiralise();
+	}
+	
+});
+document.getElementById("start_rotation").addEventListener("change", e => {
+	let newVal = Math.abs((parseFloat(e.target.value)+360)%360);
+	if(isNaN(newVal)) newVal = start_val.deg;
+	e.target.value = newVal;
+	start_val.deg = newVal;
+	if(auto && update) {
+		spiralise();
+	}
+	
+});
+document.getElementById("link_start_container").addEventListener("click", e => {
+	if(document.getElementById("link_start").getAttribute('disabled') != 'disabled') {
+		let link = document.getElementById("link_start").className;
+		if(link == 'linked') {
+			document.getElementById("link_start").className = 'unlinked';
+		} else {
+			document.getElementById("link_start").className = 'linked';
+		}
+	}
+	
+});
+// end
+document.getElementById("end_width").addEventListener("change", e => {
+	let newVal = Math.abs(parseFloat(e.target.value));
+	if(isNaN(newVal)) newVal = end_val.w;
+	e.target.value = newVal;
+	let link = document.getElementById("link_end").className;
+	if(link == 'linked') {
+		if(end_val.w == 0 && end_val.h == 0) {
+			end_val.h = newVal;
+			document.getElementById("end_height").value = end_val.h;
+		} else {
+			let f = end_val.w ? newVal / end_val.w : 1;
+			end_val.h = Math.round(end_val.h * f * 1000) / 1000;
+			document.getElementById("end_height").value = end_val.h;
+		}
+	}
+	end_val.w = newVal;
+	if(auto && update) {
+		spiralise();
+	}
+	
+});
+document.getElementById("end_height").addEventListener("change", e => {
+	let newVal = Math.abs(parseFloat(e.target.value));
+	if(isNaN(newVal)) newVal = end_val.h;
+	e.target.value = newVal;
+	let link = document.getElementById("link_end").className;
+	if(link == 'linked') {
+		if(end_val.w == 0 && end_val.h == 0) {
+			end_val.w = newVal;
+			document.getElementById("end_width").value = end_val.w;
+		} else {
+			let f = end_val.h ? newVal / end_val.h : 1;
+			end_val.w = Math.round(end_val.w * f * 1000) / 1000;
+			document.getElementById("end_width").value = end_val.w;
+		}
+	}
+	end_val.h = newVal;
+	if(auto && update) {
+		spiralise();
+	}
+	
+});
+document.getElementById("end_rotation").addEventListener("change", e => {
+	let newVal = Math.abs((parseFloat(e.target.value)+360)%360);
+	if(isNaN(newVal)) newVal = end_val.deg;
+	e.target.value = newVal;
+	end_val.deg = newVal;
+	if(auto && update) {
+		spiralise();
+	}
+	
+});
+document.getElementById("link_end_container").addEventListener("click", e => {
+	if(document.getElementById("link_end").getAttribute('disabled') != 'disabled') {
+		let link = document.getElementById("link_end").className;
+		if(link == 'linked') {
+			document.getElementById("link_end").className = 'unlinked';
+		} else {
+			document.getElementById("link_end").className = 'linked';
+		}
+	}
+	
+});
+document.getElementById("loops").addEventListener("change", e => {
+	let newVal = Math.abs(parseFloat(e.target.value));
+	if(isNaN(newVal)) newVal = loops;
+	if(newVal > 250) newVal = 250; // max 250 loops
+	if(newVal <= 0.25) newVal = 0.25;
+	loops = newVal;
+	e.target.value = loops;
+	if(auto && update) {
+		spiralise();
+	}
+	
+});
+document.getElementById("points").addEventListener("change", e => {
+	let newVal = Math.abs(Math.round(parseFloat(e.target.value)));
+	if(isNaN(newVal)) newVal = points;
+	if(newVal > 250) newVal = 250; // max 250 tangents
+	if(newVal < 2) newVal = 2;
+	points = newVal;
+	e.target.value = points;
+	if(auto && update) {
+		spiralise();
+	}
+	
+});
+document.getElementById("timing").addEventListener("change", e => {
+	// if(selection.type == 4 && (e.target.value == 'ease' || timing == 'ease')) {
+	// 	switchStart();
+	// 	document.getElementById('start_width').value = start_val.w;
+	// 	document.getElementById('start_height').value = start_val.h;
+	// 	document.getElementById('start_rotation').value = start_val.deg;
+	// 	document.getElementById('end_width').value = end_val.w;
+	// 	document.getElementById('end_height').value = end_val.h;
+	// 	document.getElementById('end_rotation').value = end_val.deg;
+	// }
+	timing = e.target.value;
+	allOn();
+	console.log(timing)
+	if(auto && update) {
+		spiralise();
+	}
+	
+});
+document.getElementById("mirror").addEventListener("change", e => {
+	if(selection.type == 4) {
+		switchStart();
+		document.getElementById('start_width').value = Math.decimal(start_val.w, 2);
+		document.getElementById('start_height').value = Math.decimal(start_val.h, 2);
+		document.getElementById('start_rotation').value = Math.decimal(start_val.deg, 2);
+		document.getElementById('end_width').value = Math.decimal(end_val.w, 2);
+		document.getElementById('end_height').value = Math.decimal(end_val.h, 2);
+		document.getElementById('end_rotation').value = Math.decimal(end_val.deg, 2);
+		mirror = !mirror;
+		allOn();
+		if(auto && update) {
+			spiralise();
+		}
+	}
+	
+});
+document.getElementById("smooth").addEventListener("change", e => {
+	let newVal = Math.abs(Math.round(parseFloat(e.target.value)));
+	if(isNaN(newVal)) newVal = smooth;
+	if(newVal > 500) newVal = 500;
+	if(newVal < 0) newVal = 0;
+	smooth = newVal;
+	e.target.value = smooth;
+	if(auto && update) {
+		spiralise();
+	}
+	
+});
+document.getElementById("power").addEventListener("change", e => {
+	let newVal = Math.abs(Math.round(parseFloat(e.target.value)));
+	if(isNaN(newVal)) newVal = smooth;
+	if(newVal > 100) newVal = 100;
+	if(newVal < 0) newVal = 0;
+	power = newVal;
+	e.target.value = power;
+	if(auto && update) {
+		spiralise();
+	}
+	
+});
+document.getElementById("squeeze").addEventListener("change", e => {
+	squeeze = e.target.checked;
+	if(squeeze && selection.type == 3) selection.type = 2;
+	if(!squeeze && selection.type == 2) selection.type = 3;
+	setTypeText();
+	allOn();
+	if(auto && update) {
+		spiralise();
+	}
+	
+});
+document.getElementById("clockwise").addEventListener("change", e => {
+	clockwise = e.target.checked;
+	if(auto && update) {
+		spiralise();
+	}
+	
+});
+
+document.getElementById("auto").addEventListener("change", e => {
+	auto = e.target.checked;
+	allOn();
+	if(auto && update) {
+		spiralise();
+	}
+});
+
+// var outline = {
+// 	top: false,
+// 	bottom: 0,
+// 	array: []
+// }
+// for(let o=0; o<50; o++) {
+// 
+// 	let j = Math.ceil(Math.random() * 20);
+// 	let y = Math.random() * 50 - 25;
+// 	//console.log(o, j, y)
+// 	
+// 	const high = Math.ceil( outline.array[j] ? y > outline.array[j].high ? y : outline.array[j].high : y );
+// 	const low = Math.floor( outline.array[j] ? y < outline.array[j].low ? y : outline.array[j].low : y );
+// 	const radius = (high - low) / 2;
+// 	const center = low + radius;
+// 	outline.top = j < outline.top || outline.top === false ? j : outline.top;
+// 	outline.bottom = j > outline.bottom ? j : outline.bottom;
+// 	outline.array[j] = {
+// 		high: high,
+// 		low: low,
+// 		center: center,
+// 		radius: radius
+// 	}
+// }
+// //console.log(outline);
+// 
+// Math.ease = function (timing, steps) {
+// 	var transition = {
+// 		start: 0,
+// 		step: 0,
+// 		latter: 0,
+// 		factor: 1,
+// 		points: new Array()
+// 	}
+// 	switch(timing) {
+// 		case "ease":
+// 			transition.step = Math.PI / steps;
+// 			transition.factor = 2;
+// 			break;
+// 		case "ease-in":
+// 			transition.start = Math.PI / 2,
+// 			transition.step = Math.PI / 2 / steps;
+// 			break;
+// 		case "ease-out":
+// 			transition.step = Math.PI / 2 / steps;
+// 			break;
+// 		default:
+// 	}
+// 	if(transition.step) {
+// 		transition.latter = (Math.cos(transition.start) + 1) / transition.factor;
+// 		for(var i = 0; i <= steps; i++) {
+// 			var cos = (Math.cos(transition.start) + 1) / transition.factor;
+// 			var dif = i == 0 ? 0 : Math.abs(cos - transition.latter);
+// 			transition.start += transition.step;
+// 			transition.latter = cos;
+// 			if(i) {
+// 				transition.points.push(dif);
+// 			}
+// 		}
+// 		transition.points.push(0);
+// 		return transition.points;
+// 	} else {
+// 		return false;
+// 	}
+// }
+// 
+// Math.easePower = function (timing, power, steps) {
+// 	if(timing == 'linear') return false;
+// 	var transition = new Array();
+// 	var total = 0;
+// 	for(let x=0; x<=steps; x++) {
+// 		let y = timing == 'ease' && x > steps / 2 ? Math.pow( steps + 1 - x, power ) : Math.pow( x, power );
+// 		if(x) {
+// 			total += y;
+// 			if(timing == 'ease-in') {
+// 				transition[steps-x] = y;
+// 			} else {
+// 				transition.push(y);
+// 			}
+// 		}
+// 	}
+// 	for(let i=0; i<steps; i++) {
+// 		transition[i] /= total;
+// 	}
+// 	transition.push(0);
+// 	return transition;
+// }
+// 
+// var testOud = Math.ease('ease', 10);
+// var testNew = Math.easePower('ease', 1, 10);
+// 
+// var t = 0;
+// for(let x=0; x<10; x++) {
+// 	t+=testOud[x];
+// }
+// console.log('total oud',t)
+// t = 0;
+// for(let x=0; x<10; x++) {
+// 	t+=testNew[x];
+// }
+// console.log('total new ',t)
+// console.log(testOud)
+// console.log(testNew)

@@ -37,7 +37,7 @@ The spiral will behave slightly differently depending on the selected objects. A
 - direction (clockwise or counterclockwise),
 - number of revelutions (loops),
 - number of points per loop (tangents),
-- curve (0%=sharp corners, 100%=perfect curves, >100%=experimental).
+- curve (0%=sharp corners, 100%=optimal curves, >100%=experimental).
 - transition (linear, ease in and out, ease-in or ease-out),
 - and (easing) velocity (0%=same as linear, 30%=smooth, 100%=exponetial).
 
@@ -47,12 +47,12 @@ If you select 1 object, not a path, the spiral rotates from the bounding box to 
 ![Screenshot](repository_images/object.svg)
 
 ### 2. Select a closed shape, like a rectangle, oval or any other custom closed path, and then run ddSpiral
-Selecting a closed path is basically the same as #1 but the experimental option 'Force into shape' becomes available. When checked, the spiral extends from top to bottom, roughly staying within the object's outer perimeter rather than inside the bounding box.
+Selecting a closed path is basically the same as #1 but the experimental option 'Force into shape' becomes available. When checked, the spiral runs from top to bottom, roughly staying within the object's outer perimeter rather than inside the bounding box.
 
 ![Screenshot](repository_images/shape.svg)
 
 ### 3. Select an open path, i.e. a line, and then run ddSpiral
-Choosing an open path, the spiral will stretch along the route of the line. By optionally selecting 1 or 2 other shapes/objects along with the open path, the size and rotation of these objects will be used as a preset. The option 'Mirror around midpoint' swaps the end point and half way point, creating a symmetrical spiral.
+Choose an open path and the spiral will stretch along the route of selected line. By optionally selecting 1 or 2 other shapes/objects along with the open path, the size and rotation of these objects will be used as a preset. The option 'Mirror around midpoint' swaps the end point and half way point, creating a symmetrical spiral.
 
 ![Screenshot](repository_images/path.svg)
 
@@ -63,8 +63,8 @@ The spiral is stretched from the first object to the second, using their coordin
 
 ## Additional features
 - Automatic update option (you can also press RETURN for a quick update).
-- No overhead, the plugin does not respond to events from Sketch as long as the overlay is closed.
-- You can leave the overlay open and make a new selection for another spiral.
+- Little overhead, the plugin does not respond to events from Sketch as long as the overlay is closed.
+- You can leave the overlay open and make a new selection for another spiral or make a new spiral on the same selection.
 - Adjustable logarithmic scale for transition options.
 - User input is saved for the next spiral.
 - Thoughtful user experience in a pleasant user interface.
@@ -72,23 +72,26 @@ The spiral is stretched from the first object to the second, using their coordin
 
 ## Perhaps in the next version
 - Option to clear the preselected objects.
+- Spin option for real arti results.
 - Rotating version of the forced spiral.
 - Update notice for new versions or other information.
 
 ## Privacy
-ddPlugin will ping the ddServer for updates upon activation. No data is sent to the server. By using the plugin, you automatically agree to this fait accompli.
+ddPlugin will ping the ddServer for updates upon activation. No data is sent to the server. By using the plugin, you automatically agree to this fait accompli (or you can strip the functionality and build your own version of the plugin).
 
 ## Known issues
-There is a known side effect that you can resolve yourself. Paths are made with bézier curves. The smoothness depends on the length of the path, in combination with the number of loops as well as the number of points per loop. If the combination doesn't match you can get unexpected turns and bends. Especially if the route along an open path contains long or sharp turns. Try changing the path, number of loops or points for a better result. If you set the number of points very high (for example at 100) you can see how the curve should actually run. However, that many points is completely unnecessary. 4 tangents is more than enough in most cases. Manually updating the tangents afterwards is also always an option.
+There is a known side effect that you can sometimes resolve yourself. Paths are made with bézier curves. The smoothness depends on the length of the path, in combination with the number of loops as well as the number of points per loop. If the combination doesn't match you can get unexpected turns and bends. Especially if the route along an open path contains long or sharp turns. Try changing the path, number of loops or points for a better result. If you set the number of points very high you can see how the curve should actually run. However, many points is completely unnecessary. 4 tangents is more than enough in most cases. Manually removing and adjusting the tangents afterwards is also always an option.
 
 The 'Force into shape' option is a work in progress.
+- Logically, this option also suffers from the sharp corners and varying radii described above. ddSpiral is not very good in tight spaces, especially at the beginning and end where the direction is indeterminate. Subsequent adjustments are often necessary. Keep it simple is the motto.
+- The spiral is never interrupted, so no gaps or notches are taken into account.
 - For now, the spiral will only run from top to bottom, not in any other direction. You can of course rotate your object before running ddSpiral.
-- Remember, ddSpiral is not very good in tight spaces with many changing diameters, especially at the beginning and end where the direction is indeterminate. Subsequent adjustments are often necessary.
 - Filling large objects with ddSpiral can take some time because the perimeter has to be checked first.
 
 ## On the drawing board
 - Sketch plugin for smoothing hand-drawn paths.
 - Plugin for decorating paths and repeating object in various patterns.
+- Unit calculator (there is a plugin for that, perhaps it's good enough).
 
 ## Do you have any ideas or improvements?
 Please contact me if you have any other advice or creative idea. Also, ddSpiral should be bug free. If you find one, please let me know! 

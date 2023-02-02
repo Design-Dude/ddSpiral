@@ -6,6 +6,9 @@
   },
   "skpm": {
     "name": "ddSpiral",
+    "title": "ddSpiral",
+    "identifier": "ddSpiral",
+    "appcast": "https://raw.githubusercontent.com/Design-Dude/ddSpiral/master/.appcast.xml",
     "manifest": "src/manifest.json",
     "main": "ddSpiral.sketchplugin",
     "assets": [

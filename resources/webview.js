@@ -1,6 +1,3 @@
-// TODOS
-
-
 // Settings
 const local = false;
 const server = 'https://www.design-dude.nl/apps/ddSpiral/';
@@ -58,7 +55,7 @@ Math.degrees = function (deg) {
 document.addEventListener('contextmenu', (e) => {
 	// Disable for testing in Sketch
 	// You start the inspector from the webview's context menu
-	//if(!local) e.preventDefault()
+	if(!local) e.preventDefault()
 })
 
 // Default receiver from plugin
@@ -87,10 +84,12 @@ window.addEventListener("load", () => {
 	requestUpdateInfo(server + 'info.php')
 	.then(data => {
 		data = JSON.parse(data);
-		document.getElementById("bmac").innerHTML = data[0].info;
-		document.getElementById("bmacimg").setAttribute('src', server + data[0].image);
-		document.getElementById("bmacimgdark").setAttribute('src', server + data[0].image_dark);
-		document.getElementById("coffeelink").setAttribute('goto', data[0].link);
+		if(data && (data.action == 'update' || data.action == 'info')) {
+			document.getElementById("bmac").innerHTML = data[0].info;
+			document.getElementById("bmacimg").setAttribute('src', server + data[0].image);
+			document.getElementById("bmacimgdark").setAttribute('src', server + data[0].image_dark);
+			document.getElementById("coffeelink").setAttribute('goto', data[0].link);
+		}
 		document.getElementById("coffeelink").style.display = "flex";
 	})
 	.catch((error) => {
@@ -453,7 +452,7 @@ function allOn() {
 	
 // Handle form elements
 document.getElementById("start_width").addEventListener("change", e => {
-	let newVal = Math.abs(parseFloat(e.target.value));
+	let newVal =  Math.decimal(Math.abs(parseFloat(e.target.value)) ,2);
 	if(isNaN(newVal)) newVal = start_val.w;
 	e.target.value = newVal;
 	let link = document.getElementById("link_start").className;
@@ -463,7 +462,7 @@ document.getElementById("start_width").addEventListener("change", e => {
 			document.getElementById("start_height").value = start_val.h;
 		} else {
 			let f = start_val.w ? newVal / start_val.w : 1;
-			start_val.h = Math.round(start_val.h * f * 100) / 100;
+			start_val.h = Math.decimal(start_val.h * f ,2);
 			document.getElementById("start_height").value = start_val.h;
 		}
 	}
@@ -474,7 +473,7 @@ document.getElementById("start_width").addEventListener("change", e => {
 	
 });
 document.getElementById("start_height").addEventListener("change", e => {
-	let newVal = Math.abs(parseFloat(e.target.value));
+	let newVal =  Math.decimal(Math.abs(parseFloat(e.target.value)) ,2);
 	if(isNaN(newVal)) newVal = start_val.h;
 	e.target.value = newVal;
 	let link = document.getElementById("link_start").className;
@@ -484,7 +483,7 @@ document.getElementById("start_height").addEventListener("change", e => {
 			document.getElementById("start_width").value = start_val.w;
 		} else {
 			let f = start_val.h ? newVal / start_val.h : 1;
-			start_val.w = Math.round(start_val.w * f * 100) / 100;
+			start_val.w = Math.decimal(start_val.w * f ,2);
 			document.getElementById("start_width").value = start_val.w;
 		}
 	}
@@ -517,7 +516,7 @@ document.getElementById("link_start_container").addEventListener("click", e => {
 });
 // end
 document.getElementById("end_width").addEventListener("change", e => {
-	let newVal = Math.abs(parseFloat(e.target.value));
+	let newVal =  Math.decimal(Math.abs(parseFloat(e.target.value)) ,2);
 	if(isNaN(newVal)) newVal = end_val.w;
 	e.target.value = newVal;
 	let link = document.getElementById("link_end").className;
@@ -527,7 +526,7 @@ document.getElementById("end_width").addEventListener("change", e => {
 			document.getElementById("end_height").value = end_val.h;
 		} else {
 			let f = end_val.w ? newVal / end_val.w : 1;
-			end_val.h = Math.round(end_val.h * f * 100) / 100;
+			end_val.h = Math.decimal(end_val.h * f ,2);
 			document.getElementById("end_height").value = end_val.h;
 		}
 	}
@@ -538,7 +537,7 @@ document.getElementById("end_width").addEventListener("change", e => {
 	
 });
 document.getElementById("end_height").addEventListener("change", e => {
-	let newVal = Math.abs(parseFloat(e.target.value));
+	let newVal =  Math.decimal(Math.abs(parseFloat(e.target.value)) ,2);
 	if(isNaN(newVal)) newVal = end_val.h;
 	e.target.value = newVal;
 	let link = document.getElementById("link_end").className;
@@ -548,7 +547,7 @@ document.getElementById("end_height").addEventListener("change", e => {
 			document.getElementById("end_width").value = end_val.w;
 		} else {
 			let f = end_val.h ? newVal / end_val.h : 1;
-			end_val.w = Math.round(end_val.w * f * 100) / 100;
+			end_val.w = Math.decimal(end_val.w * f ,2);
 			document.getElementById("end_width").value = end_val.w;
 		}
 	}
@@ -559,7 +558,7 @@ document.getElementById("end_height").addEventListener("change", e => {
 	
 });
 document.getElementById("end_rotation").addEventListener("change", e => {
-	let newVal = Math.abs((parseFloat(e.target.value)+360)%360);
+	let newVal = Math.decimal(Math.abs((parseFloat(e.target.value)+360)%360) ,2);
 	if(isNaN(newVal)) newVal = end_val.deg;
 	e.target.value = newVal;
 	end_val.deg = newVal;
@@ -580,8 +579,7 @@ document.getElementById("link_end_container").addEventListener("click", e => {
 	
 });
 document.getElementById("loops").addEventListener("change", e => {
-	let newVal = Math.abs(parseFloat(e.target.value));
-	newVal = Math.decimal(Math.round(newVal * 4) / 4, 2);
+	let newVal = Math.decimal(Math.abs(parseFloat(e.target.value)), 2);
 	if(isNaN(newVal)) newVal = loops;
 	if(newVal > 250) newVal = 250; // max 250 loops
 	if(newVal <= 0.25) newVal = 0.25;

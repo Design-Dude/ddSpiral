@@ -28,11 +28,8 @@ The plugin was created with Sketch Plugin Manager, so if you are planning to use
 ## Installation
 Download and double-click the latest version. Or drop it on the Sketch app icon. 
 
-## What it does
-You can make almost any spiral you can imagine. Just select up to 2 objects and/or an open path and run 🌀 ddSpiral from 🧰 ddTools in the plugin menu. You can also hit CTRL-ALT-SHIFT-S (All future ddTools wil use CTRL-ALT-SHIFT). The plugin presents you with an overlay for adjustments.
-
 ## How it works
-The spiral will behave slightly differently depending on the selected objects. As long as you stay in the overlay you can update the spiral by altering:
+Just select up to 2 objects and/or an open path and run 🌀 ddSpiral from 🧰 ddTools in the plugin menu. You can also hit CTRL-ALT-SHIFT-S (All future ddTools wil use CTRL-ALT-SHIFT). The plugin presents you with an overlay for adjustments. The spiral will behave slightly differently depending on the selected objects. As long as you stay in the overlay you can update the spiral by altering:
 - size and rotation (preset by the selected objects)
 - direction (clockwise or counterclockwise),
 - number of revelutions (loops),

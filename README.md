@@ -3,9 +3,6 @@ Make almost any kind of spiral appear magically in [Sketch](https:www.sketch.com
 
 ![Screenshot](repository_images/overlay.png)
 
-## TODO's
-- Publish
-
 ## Dependencies
 ddSpiral is a plugin for Sketch, so you just need [Sketch](https://www.sketch.com).
 
@@ -55,24 +52,25 @@ The spiral is stretched from the first object to the second, using their coordin
 
 ## Perhaps in the next version
 - Option to clear the preselected objects.
-- Spin option for real arti results.
+- Spinning option for real arti results.
 - Rotating version of the forced spiral.
-- Update notice for new versions or other information.
 
 ## Privacy
 ddPlugin will ping the ddServer for updates upon activation. No data is sent to the server. By using the plugin, you automatically agree to this fait accompli (or you can strip the functionality and build your own version of the plugin).
 
 ## Known issues
-There is a known side effect that you can sometimes resolve yourself. Paths are made with bézier curves. The smoothness depends on the length of the path, in combination with the number of loops as well as the number of points per loop. If the combination doesn't match you can get unexpected turns and bends. Especially if the route along an open path contains long or sharp turns. Try changing the path, number of loops or points for a better result. If you set the number of points very high you can see how the curve should actually run. However, many points is completely unnecessary. 4 tangents is more than enough in most cases. Manually removing and adjusting the tangents afterwards is also always an option.
+1. There seems to be a slight calculation error with rotating spirals (more than 180°) against there natural direction. We're on it.
 
-The 'Force into shape' option is a work in progress.
+2. There is a known side effect that you can sometimes resolve yourself. Paths are made with bézier curves. The smoothness depends on the length of the path, in combination with the number of loops as well as the number of points per loop. If the combination doesn't match you can get unexpected turns and bends. Especially if the route along an open path contains long or sharp turns. Try changing the path, number of loops or points for a better result. If you set the number of points very high you can see how the curve should actually run. However, many points is completely unnecessary. 4 tangents is more than enough in most cases. Manually removing and adjusting the tangents afterwards is also always an option.
+
+3. The 'Force into shape' option is a work in progress.
 - Logically, this option also suffers from the sharp corners and varying radii described above. ddSpiral is not very good in tight spaces, especially at the beginning and end where the direction is indeterminate. Subsequent adjustments are often necessary. Keep it simple is the motto.
 - The spiral is never interrupted, so no gaps or notches are taken into account.
 - For now, the spiral will only run from top to bottom, not in any other direction. You can of course rotate your object before running ddSpiral.
 - Filling large objects with ddSpiral can take some time because the perimeter must first be meticulously unraveled in its entirety. Turn off auto update if that is the case.
 
 ## On the drawing board
-- Sketch plugin for smoothing hand-drawn paths.
+- Plugin for smooth hand-drawn paths.
 - Plugin for decorating paths and repeating object in various patterns.
 - Unit calculator (there is a plugin for that, perhaps it's good enough).
 

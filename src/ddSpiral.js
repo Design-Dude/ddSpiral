@@ -411,6 +411,14 @@ function spiral(data) {
 	
 	// Squeeze spiral into shape
 	if(ret_settings.squeeze) {
+
+
+		// Adjust loop setting
+		ret_settings.loops = Math.round(ret_settings.loops) + 0.5;
+		steps = ret_settings.loops * ret_settings.points;
+		transition = Math.easePower(ret_settings.timing, ret_settings.power / 35, steps);
+
+		
 		// Get the shape as js object
 		const jsShape = document.getLayerWithID(ret_settings.startID);
 		const nativeShape = jsShape.sketchObject;
@@ -478,9 +486,6 @@ function spiral(data) {
 		// Rotation
 		rot.angle = 0;
 		rot.target = 0;
-
-		// Adjust loop setting
-		ret_settings.loops = Math.round(ret_settings.loops) + 0.5;
 		
 		// Total distance
 		let distanceY = rad.length.y;
@@ -583,9 +588,9 @@ function spiral(data) {
 
 	// Rotation
 	rot.step = ( Math.degrees(360 + rot.target) - Math.degrees(360 + rot.angle) ); // rotation from first to second object
-	if( rot.step > 180 ) {
+	if( rot.step > 180 && !ret_settings.clockwise) {
 		rot.step = -(360 - rot.step);
-	} else if( rot.step < -180 ) {
+	} else if( rot.step < -180 && ret_settings.clockwise) {
 		rot.step = 360 + rot.step;
 	}
 	rot.step /= steps;
@@ -703,7 +708,7 @@ function spiral(data) {
 			// Calculate translation vector
 			let vTranslate = new Vector2d(0,0);
 			if(trans.array.length) {
-				if( s != steps ) {
+				if( s != Math.floor(steps) ) {
 					vTranslate = new Vector2d(
 						(trans.array[s+1].x - trans.array[s].x) * stepFactor,
 						(trans.array[s+1].y - trans.array[s].y) * stepFactor
@@ -741,7 +746,7 @@ function spiral(data) {
 			const radiusAngle = centerVector2d.angle(); // - deg;
 			//const radiusAngle = deg;
 			if(rad.array.length) {
-				if( s != steps ) {
+				if( s != Math.floor(steps) ) {
 					radiusTangent = new Vector2d(
 						(rad.array[s+1].x - rad.array[s].x) * stepFactor,
 						(rad.array[s+1].y - rad.array[s].y) * stepFactor
@@ -842,7 +847,7 @@ function spiral(data) {
 		// Add steps
 		rot.angle += rot.step;
 		if(trans.array.length) {
-			if( s != steps ) {
+			if( s != Math.floor(steps) ) {
 				trans.center = new Vector2d(
 					trans.array[s+1].x,
 					trans.array[s+1].y
@@ -862,7 +867,7 @@ function spiral(data) {
 			}
 		}
 		if(rad.array.length) {
-			if( s != steps ) {
+			if( s != Math.floor(steps) ) {
 				rad.length = new Vector2d(
 					rad.array[s+1].x,
 					rad.array[s+1].y

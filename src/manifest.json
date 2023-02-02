@@ -2,14 +2,14 @@
   "compatibleVersion": 3,
   "bundleVersion": 1,
   "icon": "icon.png",
-  "description" : "Make almost any kind of spiral appear magically in Sketch.",
+  "description" : "Make almost any kind of spiral magically appear.",
   "version" : "1.0",
   "author" : "Mek van’t Hoff",
   "authorEmail": "master.mek@design-dude.nl",
   "commands": [
     {
-      "name": "ddSpiral",
-      "shortcut": "control alt command s",
+      "name": "🌀 ddSpiral",
+      "shortcut": "control alt shift s",
       "identifier": "ddSpiral.design-dude.identifier",
       "script": "./ddSpiral.js",
       "handlers": {
@@ -22,10 +22,10 @@
     }
   ],
   "menu": {
-    "title": "ddSpiral",
+    "title": "💼 ddTools",
     "items": [
       "ddSpiral.design-dude.identifier"
     ],
-    "isRoot": true
+    "isRoot": false
   }
 }

@@ -70,7 +70,7 @@ Math.easePower = function (timing, power, steps) {
 		if(x) {
 			total += y;
 			if(timing == 'ease-in') {
-				transition[steps-x] = y;
+				transition.unshift(y);
 			} else {
 				transition.push(y);
 			}

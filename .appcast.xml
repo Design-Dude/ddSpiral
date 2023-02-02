@@ -4,5 +4,8 @@
     <item>
       <enclosure url="https://github.com/Design-Dude/ddSpiral/releases/download/v1.0.0/ddSpiral.sketchplugin.zip" sparkle:version="1.0.0"/>
     </item>
+    <item>
+      <enclosure url="https://github.com/Design-Dude/ddSpiral/releases/download/v1.0.0/ddSpiral.sketchplugin.zip" sparkle:version="1.0.0"/>
+    </item>
   </channel>
 </rss>

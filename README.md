@@ -4,20 +4,6 @@ Make almost any kind of spiral appear magically in [Sketch](https:www.sketch.com
 ![Screenshot](repository_images/overlay.png)
 
 ## TODO's
-- check - sent all data to webview and back (location info and target.id)
-- check - Create spiral
-- check - Plugin setting
-- check - var theme = UI.getTheme();if (theme === 'dark') {} else {}
-- check - Make rotation work correctly
-- check - Store spiral path
-- check - Clear stored path on new selection
-- check - Make exception for 2 object spiral -> draw in document instead of parent
-- check - Add buymeacoffee
-- check - Store options like 'Auto update' in a setting
-- check - Stable forced spiral
-- check - Create logo
-- check - Create examples
-- Update github
 - Publish
 
 ## Dependencies

@@ -78,7 +78,7 @@ ddPlugin will ping the ddServer for updates upon activation. No data is sent to 
 Please [contact](https://github.com/Design-Dude/ddSpiral/discussions) me if you have any other advice or creative idea. Also, ddSpiral is hopefully bug free. If you find one, [please let me know! ](https://github.com/Design-Dude/ddSpiral/issues)
 
 ## Have fun
-You can use it as long as the Sketch API remains unchanged and you can also use the code to develop your own plugin. The code is not minified with lot's of comments. It was written with the best of knowledge. ddSpiral was my first plugin and the Sketch API documentation is, well, as good as it gets: important bits and pieces are missing, the examples that exist online are mostly outdated and the forum has recently been abandoned. Fortunately, there are quite a few well-written example plugins around that you can learn from also. Don't hesitate to ask your questions.
+You can use it as long as the Sketch API remains unchanged and you can also use the source code with lots of comments to develop your own plugin. It was written with the best of knowledge. ddSpiral was my first plugin and the Sketch API documentation is, well, as good as it gets: important bits and pieces are missing, the examples that exist online are mostly outdated and the forum has recently been abandoned. Fortunately, there are quite a few well-written example plugins around that you can learn from also. Don't hesitate to ask your questions.
 
 If you like it you may consider [buying me a coffee](https://www.buymeacoffee.com/Mastermek).
 

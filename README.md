@@ -1,15 +1,15 @@
 # ddSpiral
-Make almost any kind of spiral appear magically in [Sketch](https:www.sketch.com).
+Make almost any kind of spiral appear magically in [Sketch.](https:www.sketch.com)
 
 ![Screenshot](repository_images/overlay.png)
 
 ## Dependencies
-ddSpiral is a plugin for Sketch, so you just need [Sketch](https://www.sketch.com).
+ddSpiral is a plugin for Sketch, so you just need [Sketch.](https://www.sketch.com)
 
 The plugin was created with Sketch Plugin Manager, so if you are planning to use the source code you'll probably need [SKPM](https://github.com/skpm/skpm) too. Together with [sketch-module-web-view](https://github.com/skpm/sketch-module-web-view/tree/master/docs) as a bridge between the plugin and the overlay for user input.
 
 ## Installation
-Download and double-click the [latest version](https://github.com/Design-Dude/ddSpiral/releases/latest). Or drop it on the Sketch app icon. 
+Download and double-click the [latest version.](https://github.com/Design-Dude/ddSpiral/releases/latest) Or drop it on the Sketch app icon. 
 
 ## How it works
 Just select up to 2 objects and/or an open path and run 🌀 ddSpiral from 🧰 ddTools in the plugin menu. You can also hit CTRL-ALT-SHIFT-S (All future ddTools wil use CTRL-ALT-SHIFT). The plugin presents you with an overlay for adjustments. The spiral will behave slightly differently depending on the selected objects. As long as you stay in the overlay you can update the spiral by altering:
@@ -32,7 +32,7 @@ Selecting a closed path is basically the same as #1 but the experimental option 
 ![Screenshot](repository_images/shape.svg)
 
 ### 3. Select an open path, i.e. a line, and then run ddSpiral
-Choose an open path and the spiral will stretch along the route of selected line. By optionally selecting 1 or 2 other shapes/objects along with the open path, the size and rotation of these objects will be used as a preset. The option 'Mirror around midpoint' swaps the end point and half way point, creating a symmetrical spiral.
+Choose an open path and the spiral will stretch along the route of the selected line. By optionally selecting 1 or 2 other shapes/objects along with the open path, the size and rotation of these objects will be used as a preset. The option 'Mirror around midpoint' swaps the end point and half way point, creating a symmetrical spiral.
 
 ![Screenshot](repository_images/path.svg)
 

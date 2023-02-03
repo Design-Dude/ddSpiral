@@ -70,8 +70,9 @@ ddPlugin will ping the ddServer for updates upon activation. No data is sent to 
 - Filling large objects with ddSpiral can take some time because the perimeter must first be meticulously unraveled in its entirety. Turn off auto update if that is the case.
 
 ## On the drawing board
-- Plugin for smooth hand-drawn paths.
-- Plugin for decorating paths and repeating object in various patterns.
+- Smooth hand-drawn paths.
+- Turn lines into pencil drawing
+- Decorating paths and repeating object in various patterns.
 - Unit calculator (there is a plugin for that, perhaps it's good enough).
 
 ## Do you have any ideas or improvements?

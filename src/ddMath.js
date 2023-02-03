@@ -77,7 +77,7 @@ Math.easePower = function (timing, power, steps) {
 		}
 	}
 	for(let i=0; i<steps; i++) {
-		transition[i] /= total;
+		transition[i] = Math.decimal(transition[i] /= total, 6);
 	}
 	transition.push(0);
 	return transition;

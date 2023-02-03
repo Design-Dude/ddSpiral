@@ -345,7 +345,12 @@ function worldOrientation(obj) {
 	return coor;
 }
 
+//////////////////////////////////////////////
+// 
 // Create actual spiral
+// 
+//////////////////////////////////////////////
+
 function spiral(data) {
 
 	// Get selected document and layers from Sketch API
@@ -588,9 +593,9 @@ function spiral(data) {
 
 	// Rotation
 	rot.step = ( Math.degrees(360 + rot.target) - Math.degrees(360 + rot.angle) ); // rotation from first to second object
-	if( rot.step > 180 && !ret_settings.clockwise) {
+	if( rot.step > 180) {
 		rot.step = -(360 - rot.step);
-	} else if( rot.step < -180 && ret_settings.clockwise) {
+	} else if( rot.step < -180) {
 		rot.step = 360 + rot.step;
 	}
 	rot.step /= steps;

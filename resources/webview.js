@@ -1,6 +1,6 @@
 // Settings
 const local = false;
-const version = "v1.0.1";
+const currentVersion = "v1.0.1";
 const server = 'https://www.design-dude.nl/apps/ddSpiral/';
 
 var selection = {
@@ -52,13 +52,6 @@ Math.degrees = function (deg) {
 	return (deg + 360) % 360;
 };
 
-// Disable the context menu
-document.addEventListener('contextmenu', (e) => {
-	// Disable for testing in Sketch
-	// You start the inspector from the webview's context menu
-	if(!local) e.preventDefault()
-})
-
 // Default receiver from plugin
 window.internalResponse = (requestedData) => {
 	console.log('requestedData', requestedData);
@@ -66,11 +59,23 @@ window.internalResponse = (requestedData) => {
 
 // Page loaded
 window.addEventListener("load", () => {
+
 	say("Loading...", "#FF5B02");
+
+	// Disable the context menu
+	document.addEventListener('contextmenu', (e) => {
+		// Disable for testing in Sketch
+		// You start the inspector from the webview's context menu
+		if(!local && e) {
+			e.preventDefault();
+		}
+	})
+
 	// Link to readme
 	document.getElementById("github").addEventListener("click", e => {
 		followLink("https://github.com/Design-Dude/ddSpiral");
 	});
+
 	// Link to info from footer
 	document.getElementById("coffeelink").style.display = "none";
 	document.getElementById("coffeelink").setAttribute('goto', 'https://buymeacoffee.com/mastermek');
@@ -78,11 +83,12 @@ window.addEventListener("load", () => {
 		let targetUrl = e.target.parentElement.getAttribute('goto');
 		followLink(targetUrl);
 	});
+
 	// Get selection from plugin
 	getSelection();
 
 	// Set version
-	document.getElementById("ddVersion").setAttribute('version', version);
+	document.getElementById("ddVersion").setAttribute('version', currentVersion);
 	
 	// Get info from server for footer info
 	requestUpdateInfo(server + 'info.php')
@@ -96,7 +102,7 @@ window.addEventListener("load", () => {
 		}
 		var card = false;
 		for(let c in data) {
-			if(data[c].version && (data[c].version === version || data[c].version === 'any')) {
+			if(data[c] && data[c].version && (data[c].version === currentVersion || data[c].version === 'any')) {
 				if(card === false || card.version === 'any') {
 					card = data[c];
 				}

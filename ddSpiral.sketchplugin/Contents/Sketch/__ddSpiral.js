@@ -2541,7 +2541,7 @@ module.exports.sendToWebview = function sendToWebview(identifier, evalString) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "file://" + String(context.scriptPath).split(".sketchplugin/Contents/Sketch")[0] + ".sketchplugin/Contents/Resources/_webpack_resources/2d0b03ec69826711922c987a4de8f11f.html";
+module.exports = "file://" + String(context.scriptPath).split(".sketchplugin/Contents/Sketch")[0] + ".sketchplugin/Contents/Resources/_webpack_resources/a943e8ad5c51b7de4ff33f6c817b4501.html";
 
 /***/ }),
 
@@ -2629,7 +2629,7 @@ Math.easePower = function (timing, power, steps) {
     }
   }
   for (var i = 0; i < steps; i++) {
-    transition[i] /= total;
+    transition[i] = Math.decimal(transition[i] /= total, 6);
   }
   transition.push(0);
   return transition;
@@ -3045,7 +3045,12 @@ function worldOrientation(obj) {
   return coor;
 }
 
+//////////////////////////////////////////////
+// 
 // Create actual spiral
+// 
+//////////////////////////////////////////////
+
 function spiral(data) {
   // Get selected document and layers from Sketch API
   var document = sketch.getSelectedDocument();
@@ -3239,9 +3244,9 @@ function spiral(data) {
 
   // Rotation
   rot.step = Math.degrees(360 + rot.target) - Math.degrees(360 + rot.angle); // rotation from first to second object
-  if (rot.step > 180 && !ret_settings.clockwise) {
+  if (rot.step > 180) {
     rot.step = -(360 - rot.step);
-  } else if (rot.step < -180 && ret_settings.clockwise) {
+  } else if (rot.step < -180) {
     rot.step = 360 + rot.step;
   }
   rot.step /= steps;

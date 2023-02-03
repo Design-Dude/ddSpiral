@@ -95,7 +95,7 @@
 
 // Settings
 var local = false;
-var version = "v1.0.1";
+var currentVersion = "v1.0.1";
 var server = 'https://www.design-dude.nl/apps/ddSpiral/';
 var selection = {
   type: 4,
@@ -145,13 +145,6 @@ Math.degrees = function (deg) {
   return (deg + 360) % 360;
 };
 
-// Disable the context menu
-document.addEventListener('contextmenu', function (e) {
-  // Disable for testing in Sketch
-  // You start the inspector from the webview's context menu
-  if (!local) e.preventDefault();
-});
-
 // Default receiver from plugin
 window.internalResponse = function (requestedData) {
   console.log('requestedData', requestedData);
@@ -160,10 +153,21 @@ window.internalResponse = function (requestedData) {
 // Page loaded
 window.addEventListener("load", function () {
   say("Loading...", "#FF5B02");
+
+  // Disable the context menu
+  document.addEventListener('contextmenu', function (e) {
+    // Disable for testing in Sketch
+    // You start the inspector from the webview's context menu
+    if (!local && e) {
+      e.preventDefault();
+    }
+  });
+
   // Link to readme
   document.getElementById("github").addEventListener("click", function (e) {
     followLink("https://github.com/Design-Dude/ddSpiral");
   });
+
   // Link to info from footer
   document.getElementById("coffeelink").style.display = "none";
   document.getElementById("coffeelink").setAttribute('goto', 'https://buymeacoffee.com/mastermek');
@@ -171,11 +175,12 @@ window.addEventListener("load", function () {
     var targetUrl = e.target.parentElement.getAttribute('goto');
     followLink(targetUrl);
   });
+
   // Get selection from plugin
   getSelection();
 
   // Set version
-  document.getElementById("ddVersion").setAttribute('version', version);
+  document.getElementById("ddVersion").setAttribute('version', currentVersion);
 
   // Get info from server for footer info
   requestUpdateInfo(server + 'info.php').then(function (data) {
@@ -188,7 +193,7 @@ window.addEventListener("load", function () {
     }
     var card = false;
     for (var c in data) {
-      if (data[c].version && (data[c].version === version || data[c].version === 'any')) {
+      if (data[c] && data[c].version && (data[c].version === currentVersion || data[c].version === 'any')) {
         if (card === false || card.version === 'any') {
           card = data[c];
         }

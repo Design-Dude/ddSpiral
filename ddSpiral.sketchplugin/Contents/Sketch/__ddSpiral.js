@@ -3249,6 +3249,12 @@ function spiral(data) {
   } else if (rot.step < -180) {
     rot.step = 360 + rot.step;
   }
+  if (rot.step > 0 && !ret_settings.clockwise) {
+    rot.step -= 360;
+  }
+  if (rot.step < 0 && ret_settings.clockwise) {
+    rot.step += 360;
+  }
   rot.step /= steps;
   // Translation
   trans.total = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](trans.target.x - trans.center.x, trans.target.y - trans.center.y);

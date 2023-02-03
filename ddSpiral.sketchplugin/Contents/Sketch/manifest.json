@@ -1,9 +1,13 @@
 {
+  "name": "ddSpiral",
+  "identifier": "ddSpiral",
+  "disableCocoaScriptPreprocessor": true,
+  "appcast": "https://raw.githubusercontent.com/Design-Dude/ddSpiral/master/.appcast.xml",
   "compatibleVersion": 3,
   "bundleVersion": 1,
   "icon": "icon.png",
   "description": "Make almost any kind of spiral magically appear.",
-  "version": "1.0",
+  "version": "1.0.0",
   "author": "Mek van’t Hoff",
   "authorEmail": "master.mek@design-dude.nl",
   "commands": [
@@ -27,9 +31,5 @@
       "ddSpiral.design-dude.identifier"
     ],
     "isRoot": false
-  },
-  "name": "ddSpiral",
-  "identifier": "ddSpiral",
-  "disableCocoaScriptPreprocessor": true,
-  "appcast": "https://raw.githubusercontent.com/Design-Dude/ddSpiral/master/.appcast.xml"
+  }
 }

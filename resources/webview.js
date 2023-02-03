@@ -1,5 +1,6 @@
 // Settings
 const local = false;
+const version = "v1.0.1";
 const server = 'https://www.design-dude.nl/apps/ddSpiral/';
 
 var selection = {
@@ -79,6 +80,9 @@ window.addEventListener("load", () => {
 	});
 	// Get selection from plugin
 	getSelection();
+
+	// Set version
+	document.getElementById("ddVersion").setAttribute('version', version);
 	
 	// Get info from server for footer info
 	requestUpdateInfo(server + 'info.php')
@@ -89,6 +93,28 @@ window.addEventListener("load", () => {
 			document.getElementById("bmacimg").setAttribute('src', server + data[0].image);
 			document.getElementById("bmacimgdark").setAttribute('src', server + data[0].image_dark);
 			document.getElementById("coffeelink").setAttribute('goto', data[0].link);
+		}
+		var card = false;
+		for(let c in data) {
+			if(data[c].version && (data[c].version === version || data[c].version === 'any')) {
+				if(card === false || card.version === 'any') {
+					card = data[c];
+				}
+			}
+		}
+		if(card) {
+			document.getElementById("bmac").innerHTML = card.info;
+			if(card.image && card.image_dark) {
+				document.getElementById("bmacimg").setAttribute('src', server + card.image);
+				document.getElementById("bmacimgdark").setAttribute('src', server + card.image_dark);
+			} else {
+				document.getElementById("bmacimg").remove();
+				document.getElementById("bmacimgdark").remove();
+				document.getElementById("bmac").style.height = '44px';
+				document.getElementById("bmac").style.paddingLeft = '0';
+				document.getElementById("bmac").style.paddingTop = '9px';
+			}
+			document.getElementById("coffeelink").setAttribute('goto', card.link);
 		}
 		document.getElementById("coffeelink").style.display = "flex";
 	})
@@ -102,6 +128,7 @@ window.addEventListener("load", () => {
 function followLink(url) {
 	if(local) {
 		console.log('followLink', url);
+		window.open(url, "_followLink");
 	} else {
 		window.postMessage('followLink', url);
 	}

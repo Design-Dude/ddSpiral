@@ -2,7 +2,7 @@
   "name": "ddSpiral",
   "identifier": "ddSpiral",
   "disableCocoaScriptPreprocessor": true,
-  "appcast": "https://raw.githubusercontent.com/Design-Dude/ddSpiral/master/.appcast.xml"
+  "appcast": "https://raw.githubusercontent.com/Design-Dude/ddSpiral/master/.appcast.xml",
   "compatibleVersion": 3,
   "bundleVersion": 1,
   "icon": "icon.png",

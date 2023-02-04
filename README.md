@@ -15,7 +15,7 @@ Download and double-click the [latest version.](https://github.com/Design-Dude/d
 Just select up to 2 objects and/or an open path and run 🌀 ddSpiral from 🧰 ddTools in the plugin menu. You can also hit CTRL-ALT-SHIFT-S (All future ddTools wil use CTRL-ALT-SHIFT). The plugin presents you with an overlay for adjustments. The spiral will behave slightly differently depending on the selected objects. As long as you stay in the overlay you can update the spiral by altering:
 - size and rotation (preset by the selected objects)
 - direction (clockwise or counterclockwise),
-- number of revelutions (loops),
+- number of revolutions (loops),
 - number of points per loop (tangents),
 - curve (0%=sharp corners, 100%=optimal curves, >100%=experimental).
 - transition (linear, ease in and out, ease-in or ease-out),
@@ -51,9 +51,10 @@ The spiral is stretched from the first object to the second, using their coordin
 - Dark mode support.
 
 ## Whislist for future versions
-- Rename revelutions to loops
-- Rename
-- Option to clear the preselected objects.
+- Rename revolutions to loops.
+- Rename curve to tension and possibly change scale to -1 / 0 / 1+ instead of %.
+- Rename velocity to rate or speed (of change) and change scale to 0 / 1 / 1+ instead of %.
+- Option to clear the preselected objects at blur.
 - Spinning option for real arti results.
 - Rotating version of the forced spiral.
 

@@ -50,7 +50,9 @@ The spiral is stretched from the first object to the second, using their coordin
 - Thoughtful user experience in a pleasant user interface.
 - Dark mode support.
 
-## Perhaps in the next version
+## Whislist for future versions
+- Rename revelutions to loops
+- Rename
 - Option to clear the preselected objects.
 - Spinning option for real arti results.
 - Rotating version of the forced spiral.

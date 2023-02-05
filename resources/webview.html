@@ -63,8 +63,8 @@
 		<hr />
 		
 		<div class="textfield-row two-row">
-			<h2>Revolutions</h2>
-			<h2>Points p/rev.</h2>
+			<h2>Loops</h2>
+			<h2>Points per loop</h2>
 		</div>
 		
 		<form class="textfield-row two-row" id="settings">
@@ -83,16 +83,16 @@
 		<hr/ >
 		
 		<div class="textfield-row">
-			<h2>Curve</h2>
+			<h2>Tension</h2>
 			<h2></h2>
 			<h2>Transition</h2>
-			<h2>Velocity</h2>
+			<h2>Rate</h2>
 		</div>
 			
 		<form class="textfield-row" id="easing">
 			<label>
-				<div class="textfield" data-unit="%">
-					<input type="number" value="100" name="smooth" id="smooth" class="w" />
+				<div class="textfield" data-unit="">
+					<input type="number" value="1" name="smooth" id="smooth" class="full" />
 				</div>
 			</label>
 			<label id="link_container">
@@ -108,8 +108,8 @@
 				</div>
 			</label>
 			<label>
-				<div class="textfield" data-unit="%">
-					<input type="number" value="30" name="power" id="power" class="w" />
+				<div class="textfield" data-unit="">
+					<input type="number" value="1" name="power" id="power" class="full" />
 					<input type="number" value="" style="opacity:0;height:0;width:0;display:block;" />
 				</div>
 			</label>
@@ -118,7 +118,7 @@
 		<hr/ >
 
 		
-		<form class="textfield-full">
+		<form class="textfield-full" style="margin-top: 3px;">
 			<label>
 				<input type="checkbox" value="squeeze" name="squeeze" id="squeeze" />
 				<span id="squeeze_text">Force (kinda) into shape</span>
@@ -137,8 +137,7 @@
 			</label>
 		</form>
 
-
-		<form class="textfield-row two-row" style="margin-bottom: 8px;">
+		<form class="textfield-row two-row" style="margin-bottom: 9px;">
 			<label>
 				<input type="checkbox" value="auto" name="auto" id="auto" />
 				<span id="auto_text">Auto update</span>
@@ -147,6 +146,13 @@
 				<div style="text-align: right" data-unit="">
 					<button id="button">Spiralise!</button>
 				</div>
+			</label>
+		</form>
+
+		<form class="textfield-full" style="margin-bottom: -2px;">
+			<label>
+				<input type="checkbox" value="clear" name="clear" id="clear" />
+				<span id="clear_text">Remove pre-selected object(s) when done</span>
 			</label>
 		</form>
 		

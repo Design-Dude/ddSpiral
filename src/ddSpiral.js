@@ -32,7 +32,7 @@ export default function (context) {
 	const options = {
 		identifier: uniqueCommIdentifier,
 		width: 240,
-		height: 517,
+		height: 534,
 		show: false,
 		backgroundColor: '#ffffffff',
 		alwaysOnTop: true,
@@ -82,6 +82,10 @@ export default function (context) {
 				case "spiralise":
 					// The webview may ask for the current selection
 					spiral(requestData);
+					break;
+				case "clear":
+					// The webview may ask for the current selection
+					clearSelection(requestData);
 					break;
 			}
 		}
@@ -405,7 +409,7 @@ function spiral(data) {
 	var steps = ret_settings.loops * ret_settings.points;
 
 	// Ease timing
-	var transition = Math.easePower(ret_settings.timing, ret_settings.power / 35, steps);
+	var transition = Math.easePower(ret_settings.timing, ret_settings.power * 0.85, steps);
 
 	// GAP, fix for half paths from rectangles
 	var gap = {
@@ -812,8 +816,8 @@ function spiral(data) {
 			newTangent.add(radiusTangent);
 
 			// Scale according to smoothness
-			newTangent.x *= (ret_settings.smooth / 100);
-			newTangent.y *= (ret_settings.smooth / 100);
+			newTangent.x *= ret_settings.smooth;
+			newTangent.y *= ret_settings.smooth;
 
 			// Temporary store tangent for next loop
 			var tempTangent = new Vector2d(
@@ -946,20 +950,33 @@ function spiral(data) {
 		document = document.sketchObject;
 		document.currentPage().addLayers([shape]);
 	}
+}
+
+//////////////////////////////////////////////
+// 
+// Clear selected objects on blur
+// 
+//////////////////////////////////////////////
+
+function clearSelection(data) {
+
+	// Get selected document and layers from Sketch API
+	let document = sketch.getSelectedDocument();
+
+	// Passed data from webview
+	var ret_settings = data.settings;
 
 	// Clear objects if clear is set
-	if(ret_settings.clear) {
-		if(ret_settings.pathID != '') {
-			let pathId = document.getLayerWithID(ret_settings.pathID);
-			pathId.remove();
-		}
-		if(ret_settings.startID != '') {
-			let startID = document.getLayerWithID(ret_settings.startID);
-			startID.remove();
-		}
-		if(ret_settings.endID != '') {
-			let endID = document.getLayerWithID(ret_settings.endID);
-			endID.remove();
-		}
+	if(ret_settings.pathID != '') {
+		let pathId = document.getLayerWithID(ret_settings.pathID);
+		pathId.remove();
+	}
+	if(ret_settings.startID != '') {
+		let startID = document.getLayerWithID(ret_settings.startID);
+		startID.remove();
+	}
+	if(ret_settings.endID != '') {
+		let endID = document.getLayerWithID(ret_settings.endID);
+		endID.remove();
 	}
 }

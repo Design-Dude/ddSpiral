@@ -51,6 +51,7 @@ The spiral is stretched from the first object to the second, using their coordin
 - Dark mode support.
 
 ## Whislist for future versions
+- Fix calculations against the direction of the spiral when > 180deg or < -180deg
 - Rename revolutions to loops.
 - Rename curve to tension and possibly change scale to -1 / 0 / 1+ instead of %.
 - Rename velocity to rate or speed (of change) and change scale to 0 / 1 / 1+ instead of %.

@@ -32,17 +32,18 @@ var end_val = {
 var loops = 10;
 var points = 4;
 var timing = 'linear';
-var smooth = 100;
-var power = 30;
+var smooth = 1;
+var power = 1;
 var clockwise = true;
 var squeeze = false;
 var mirror = false;
 var auto = false;
+var clear = false;
 
 var hasFocus = false;
 var update = false;
 
-const elements = ['start_width','start_height','start_rotation','end_width','end_height','end_rotation','loops','points','timing','smooth','power','squeeze','clockwise', 'mirror', 'auto'];
+const elements = ['start_width','start_height','start_rotation','end_width','end_height','end_rotation','loops','points','timing','smooth','power','squeeze','clockwise', 'mirror', 'auto', 'clear'];
 
 // Math extension
 Math.decimal = function (num, precision = 0) {
@@ -163,6 +164,22 @@ const requestUpdateInfo = (url) => {
 window.addEventListener("blur", e => {
 	hasFocus = false;
 	allOff();
+	if(clear) { // Collect clear settings
+		let settings = {
+			pathID: selection.pathID,
+			startID: selection.startID,
+			endID: selection.endID
+		}
+		// Create message
+		var message = { settings, action: "clear" };
+		if(!local) {
+			// Send message to plugin
+			window.postMessage('internalRequest', JSON.stringify(message));
+		} else {
+			console.log('blur', message)
+			allOn();
+		}
+	}
 });
 
 // On plugin focus
@@ -207,6 +224,7 @@ function spiralise() {
 		mirror: document.getElementById('mirror').disabled == false && mirror ? true : false,
 		clockwise: clockwise,
 		auto: auto,
+		clear: clear,
 		type: selection.type,
 		pathID: selection.pathID,
 		startID: selection.startID,
@@ -220,6 +238,7 @@ function spiralise() {
 		// Send message to plugin
 		window.postMessage('internalRequest', JSON.stringify(message));
 	} else {
+		console.log('spiralise', message)
 		allOn();
 	}
 	// Reset world rotation for next update
@@ -299,6 +318,8 @@ function handleSelection(response) {
 	document.getElementById('clockwise').checked = clockwise;
 	auto = selection.auto != 'undefined' ? selection.auto : auto;
 	document.getElementById('auto').checked = auto;
+	clear = false;
+	document.getElementById('auto').checked = clear;
 	if(selection.type == 4 && mirror) {
 		switchStart();
 	}
@@ -412,6 +433,7 @@ function allOff() {
 	document.getElementById('clockwise_text').style.opacity = 0.2;
 	document.getElementById('mirror_text').style.opacity = 0.2;
 	document.getElementById('auto_text').style.opacity = 0.2;
+	document.getElementById('clear_text').style.opacity = 0.2;
 }
 
 // Enable all active form elements
@@ -481,6 +503,7 @@ function allOn() {
 		document.getElementById('end_text').innerHTML = 'End';
 	}
 	document.getElementById('auto_text').style.opacity = 1;
+	document.getElementById('clear_text').style.opacity = 1;
 }
 	
 // Handle form elements
@@ -527,7 +550,7 @@ document.getElementById("start_height").addEventListener("change", e => {
 	
 });
 document.getElementById("start_rotation").addEventListener("change", e => {
-	let newVal = Math.abs((parseFloat(e.target.value)+360)%360);
+	let newVal = Math.decimal((parseFloat(e.target.value)+3600)%360, 2);
 	if(isNaN(newVal)) newVal = start_val.deg;
 	e.target.value = newVal;
 	start_val.deg = newVal;
@@ -591,7 +614,7 @@ document.getElementById("end_height").addEventListener("change", e => {
 	
 });
 document.getElementById("end_rotation").addEventListener("change", e => {
-	let newVal = Math.decimal(Math.abs((parseFloat(e.target.value)+360)%360) ,2);
+	let newVal = Math.decimal((parseFloat(e.target.value)+3600)%360, 2);
 	if(isNaN(newVal)) newVal = end_val.deg;
 	e.target.value = newVal;
 	end_val.deg = newVal;
@@ -661,9 +684,9 @@ document.getElementById("mirror").addEventListener("change", e => {
 	
 });
 document.getElementById("smooth").addEventListener("change", e => {
-	let newVal = Math.abs(Math.round(parseFloat(e.target.value)));
+	let newVal = Math.decimal(parseFloat(e.target.value), 2);
 	if(isNaN(newVal)) newVal = smooth;
-	if(newVal > 500) newVal = 500;
+	if(newVal > 10) newVal = 10;
 	if(newVal < 0) newVal = 0;
 	smooth = newVal;
 	e.target.value = smooth;
@@ -673,9 +696,9 @@ document.getElementById("smooth").addEventListener("change", e => {
 	
 });
 document.getElementById("power").addEventListener("change", e => {
-	let newVal = Math.abs(Math.round(parseFloat(e.target.value)));
+	let newVal = Math.decimal(parseFloat(e.target.value), 2);
 	if(isNaN(newVal)) newVal = smooth;
-	if(newVal > 100) newVal = 100;
+	if(newVal > 10) newVal = 10;
 	if(newVal < 0) newVal = 0;
 	power = newVal;
 	e.target.value = power;
@@ -709,4 +732,8 @@ document.getElementById("auto").addEventListener("change", e => {
 	if(auto && update) {
 		spiralise();
 	}
+});
+
+document.getElementById("clear").addEventListener("change", e => {
+	clear = e.target.checked;
 });

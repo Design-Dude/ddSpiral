@@ -2541,7 +2541,7 @@ module.exports.sendToWebview = function sendToWebview(identifier, evalString) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "file://" + String(context.scriptPath).split(".sketchplugin/Contents/Sketch")[0] + ".sketchplugin/Contents/Resources/_webpack_resources/7140a01aec3506dd818f192a1f620b10.html";
+module.exports = "file://" + String(context.scriptPath).split(".sketchplugin/Contents/Sketch")[0] + ".sketchplugin/Contents/Resources/_webpack_resources/d185e74ad4e53236afd37ba858a0bf3b.html";
 
 /***/ }),
 

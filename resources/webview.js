@@ -79,7 +79,7 @@ window.addEventListener("load", () => {
 
 	// Link to readme
 	document.getElementById("github").addEventListener("click", e => {
-		followLink("https://github.com/Design-Dude/ddSpiral");
+		followLink("https://github.com/Design-Dude/ddSpiral/blob/main/README.md");
 	});
 
 	// Link to info from footer

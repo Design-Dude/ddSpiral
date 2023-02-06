@@ -14,6 +14,7 @@ const openShapes = ['Custom','Rectangle','Oval','Triangle','Polygon','Star'];
 const shapeNames = ['custom shape', 'rectangle', 'oval', 'triangle', 'polygon', 'star'];
 		
 const settingIdentifiers = ['loops', 'points', 'smooth', 'timing', 'power', 'squeeze', 'mirror', 'clockwise', 'auto'];
+const appcast = "https://raw.githubusercontent.com/Design-Dude/ddSpiral/master/.appcast.xml";
 
 // Not working with skpm BrowserWindow
 // var fiber;

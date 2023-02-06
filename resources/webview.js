@@ -1,6 +1,6 @@
 // Settings
 const local = false;
-const currentVersion = "v1.0.1";
+const currentVersion = "v1.1.0";
 const server = 'https://www.design-dude.nl/apps/ddSpiral/';
 
 var selection = {
@@ -28,6 +28,11 @@ var end_val = {
 	h:0,
 	deg:0,
 	worldDeg: 0
+}
+var clearObjects = {
+	startID:false,
+	endID:false,
+	pathID:false,
 }
 var loops = 10;
 var points = 4;
@@ -166,9 +171,9 @@ window.addEventListener("blur", e => {
 	allOff();
 	if(clear) { // Collect clear settings
 		let settings = {
-			pathID: selection.pathID,
-			startID: selection.startID,
-			endID: selection.endID
+			pathID: clearObjects.pathID,
+			startID: clearObjects.startID,
+			endID: clearObjects.endID
 		}
 		// Create message
 		var message = { settings, action: "clear" };
@@ -176,9 +181,10 @@ window.addEventListener("blur", e => {
 			// Send message to plugin
 			window.postMessage('internalRequest', JSON.stringify(message));
 		} else {
-			console.log('blur', message)
 			allOn();
 		}
+		clear = false;
+		document.getElementById('clear').checked = clear;
 	}
 });
 
@@ -224,7 +230,6 @@ function spiralise() {
 		mirror: document.getElementById('mirror').disabled == false && mirror ? true : false,
 		clockwise: clockwise,
 		auto: auto,
-		clear: clear,
 		type: selection.type,
 		pathID: selection.pathID,
 		startID: selection.startID,
@@ -233,14 +238,13 @@ function spiralise() {
 	}
 	// Create message
 	var message = { start_val, end_val, settings, action: "spiralise" };
-	//console.log(JSON.stringify(message));
 	if(!local) {
 		// Send message to plugin
 		window.postMessage('internalRequest', JSON.stringify(message));
 	} else {
 		console.log('spiralise', message)
-		allOn();
 	}
+	allOn();
 	// Reset world rotation for next update
 	start_val.deg = Math.degrees( start_val.deg + start_val.worldDeg );
 	end_val.deg = Math.degrees( end_val.deg + end_val.worldDeg );
@@ -291,7 +295,6 @@ window.setSelection = (requestedData) => {
 
 // Handle selection response
 function handleSelection(response) {
-
 	document.getElementById("button").innerHTML = "Spiralise!";
 	update = false;
 
@@ -318,8 +321,6 @@ function handleSelection(response) {
 	document.getElementById('clockwise').checked = clockwise;
 	auto = selection.auto != 'undefined' ? selection.auto : auto;
 	document.getElementById('auto').checked = auto;
-	clear = false;
-	document.getElementById('auto').checked = clear;
 	if(selection.type == 4 && mirror) {
 		switchStart();
 	}
@@ -413,9 +414,9 @@ function allOff() {
 	for(let i=0; i<elements.length; i++) {
 		document.getElementById(elements[i]).setAttribute('disabled', '');
 		if(!selection.type || ((squeeze && (elements[i].indexOf('start') > -1 || elements[i].indexOf('end') > -1)) || ((selection.type < 2 || selection.type > 3) && elements[i] == 'squeeze'))) {
-			document.getElementById(elements[i]).style.opacity = elements[i] == 'squeeze' || elements[i] == 'clockwise' || elements[i] == 'mirror' || elements[i] == 'auto' ? 0.5 : 0;
+			document.getElementById(elements[i]).style.opacity = elements[i] == 'squeeze' || elements[i] == 'clockwise' || elements[i] == 'mirror' || elements[i] == 'auto' || elements[i] == 'clear' ? 0.5 : 0;
 		} else {
-			document.getElementById(elements[i]).style.opacity = elements[i] == 'squeeze' || elements[i] == 'clockwise' || elements[i] == 'mirror' || elements[i] == 'auto' ? 0.5 : 0.3;
+			document.getElementById(elements[i]).style.opacity = elements[i] == 'squeeze' || elements[i] == 'clockwise' || elements[i] == 'mirror' || elements[i] == 'auto' || elements[i] == 'clear' ? 0.5 : 0.3;
 		}
 		let parent = document.getElementById(elements[i]).parentElement;
 		if(parent.classList.contains('textfield')) {
@@ -503,7 +504,14 @@ function allOn() {
 		document.getElementById('end_text').innerHTML = 'End';
 	}
 	document.getElementById('auto_text').style.opacity = 1;
-	document.getElementById('clear_text').style.opacity = 1;
+	if(update) {
+		document.getElementById('clear_text').style.opacity = 1;
+		document.getElementById('clear').disabled = false;
+		document.getElementById('clear').style.opacity = 1;
+	} else {
+		document.getElementById('clear_text').style.opacity = 0.2;
+		document.getElementById('clear').setAttribute('disabled', '');
+	}
 }
 	
 // Handle form elements
@@ -736,4 +744,9 @@ document.getElementById("auto").addEventListener("change", e => {
 
 document.getElementById("clear").addEventListener("change", e => {
 	clear = e.target.checked;
+	if(clear) {
+		clearObjects.startID = selection.startID;
+		clearObjects.endID = selection.endID;
+		clearObjects.pathID = selection.pathID;
+	}
 });

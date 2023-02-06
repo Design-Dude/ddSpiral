@@ -36,6 +36,7 @@ h2 span, #info {
 	vertical-align: middle;
 	display: table-cell;
 	padding-right: 10px;
+	line-height: 13px;
 }
 #info span {
 	font-weight: bold;
@@ -147,6 +148,11 @@ input[type="checkbox"] {
 	border: none;
 	float: left;
 	margin-right: 5px;
+}
+#clear_text {
+	display: flex;
+	line-height: 13px;
+	padding-top: 4px;
 }
 .textfield-full {
 		padding-bottom: 6px;
@@ -308,6 +314,7 @@ img.bmac {
 	align-self: center;
 	text-align: left;
 	padding-left:8px;
+	line-height: 13px;
 }
 li {
 	font-size: 12px;

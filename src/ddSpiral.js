@@ -32,7 +32,7 @@ export default function (context) {
 	const options = {
 		identifier: uniqueCommIdentifier,
 		width: 240,
-		height: 534,
+		height: 554,
 		show: false,
 		backgroundColor: '#ffffffff',
 		alwaysOnTop: true,

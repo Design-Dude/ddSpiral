@@ -2541,7 +2541,7 @@ module.exports.sendToWebview = function sendToWebview(identifier, evalString) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "file://" + String(context.scriptPath).split(".sketchplugin/Contents/Sketch")[0] + ".sketchplugin/Contents/Resources/_webpack_resources/a943e8ad5c51b7de4ff33f6c817b4501.html";
+module.exports = "file://" + String(context.scriptPath).split(".sketchplugin/Contents/Sketch")[0] + ".sketchplugin/Contents/Resources/_webpack_resources/057bfc41d12dfdea616100d3b52056b0.html";
 
 /***/ }),
 
@@ -2730,7 +2730,7 @@ var settingIdentifiers = ['loops', 'points', 'smooth', 'timing', 'power', 'squee
   var options = {
     identifier: uniqueCommIdentifier,
     width: 240,
-    height: 517,
+    height: 554,
     show: false,
     backgroundColor: '#ffffffff',
     alwaysOnTop: true,
@@ -2779,6 +2779,10 @@ var settingIdentifiers = ['loops', 'points', 'smooth', 'timing', 'power', 'squee
         case "spiralise":
           // The webview may ask for the current selection
           spiral(requestData);
+          break;
+        case "clear":
+          // The webview may ask for the current selection
+          clearSelection(requestData);
           break;
       }
     }
@@ -3092,7 +3096,7 @@ function spiral(data) {
   var steps = ret_settings.loops * ret_settings.points;
 
   // Ease timing
-  var transition = Math.easePower(ret_settings.timing, ret_settings.power / 35, steps);
+  var transition = Math.easePower(ret_settings.timing, ret_settings.power * 0.85, steps);
 
   // GAP, fix for half paths from rectangles
   var gap = {
@@ -3393,8 +3397,8 @@ function spiral(data) {
       newTangent.add(radiusTangent);
 
       // Scale according to smoothness
-      newTangent.x *= ret_settings.smooth / 100;
-      newTangent.y *= ret_settings.smooth / 100;
+      newTangent.x *= ret_settings.smooth;
+      newTangent.y *= ret_settings.smooth;
 
       // Temporary store tangent for next loop
       var tempTangent = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](newTangent.x, newTangent.y);
@@ -3510,21 +3514,33 @@ function spiral(data) {
     document = document.sketchObject;
     document.currentPage().addLayers([shape]);
   }
+}
+
+//////////////////////////////////////////////
+// 
+// Clear selected objects on blur
+// 
+//////////////////////////////////////////////
+
+function clearSelection(data) {
+  // Get selected document and layers from Sketch API
+  var document = sketch.getSelectedDocument();
+
+  // Passed data from webview
+  var ret_settings = data.settings;
 
   // Clear objects if clear is set
-  if (ret_settings.clear) {
-    if (ret_settings.pathID != '') {
-      var pathId = document.getLayerWithID(ret_settings.pathID);
-      pathId.remove();
-    }
-    if (ret_settings.startID != '') {
-      var startID = document.getLayerWithID(ret_settings.startID);
-      startID.remove();
-    }
-    if (ret_settings.endID != '') {
-      var endID = document.getLayerWithID(ret_settings.endID);
-      endID.remove();
-    }
+  if (ret_settings.pathID != '') {
+    var pathId = document.getLayerWithID(ret_settings.pathID);
+    pathId.remove();
+  }
+  if (ret_settings.startID != '') {
+    var startID = document.getLayerWithID(ret_settings.startID);
+    startID.remove();
+  }
+  if (ret_settings.endID != '') {
+    var endID = document.getLayerWithID(ret_settings.endID);
+    endID.remove();
   }
 }
 

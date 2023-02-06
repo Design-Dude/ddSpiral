@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="7ce7564bab3814f89ae8b09981f94450.css" />
+    </head>
+
+    <body>
+        <img src="181bcb205d2ee61d8eb89cb2267da92e.svg" class="logo" id="github">
+        <img src="fb87ee6962deca2df6d700063c062208.svg" class="darklogo" id="githubdark"> 
+        
+        <div id="info"></div>
+        
+        <hr />
+        
+        <h2 id="start_text">Start</h2>
+        <form class="textfield-row" id="start">
+            <label>
+                <div class="textfield" data-unit="w">
+                    <input type="number" value="50" name="start_width" id="start_width" class="w" />
+                </div>
+            </label>
+            <label id="link_start_container">
+                <div id="link_start" class="linked"></div>
+            </label>
+            <label>
+                <div class="textfield" data-unit="h">
+                    <input type="number" value="50" name="start_height" id="start_height" />
+                </div>
+            </label>
+            <label>
+                <div class="textfield" data-unit="°">
+                    <input type="number" value="0" name="start_rotation" id="start_rotation" />
+                </div>
+            </label>
+        </form>
+        
+        <hr />
+        
+        <h2 id="end_text">End</h2>
+        
+        <form class="textfield-row" id="end">
+            <label>
+                <div class="textfield" data-unit="w">
+                    <input type="number" value="50" name="end_width" id="end_width" class="w" />
+                </div>
+            </label>
+            <label id="link_end_container">
+                <div id="link_end" class="linked"></div>
+            </label>
+            <label>
+                <div class="textfield" data-unit="h">
+                    <input type="number" value="50" name="end_height" id="end_height" />
+                </div>
+            </label>
+            <label>
+                <div class="textfield" data-unit="°">
+                    <input type="number" value="0" name="end_rotation" id="end_rotation" />
+                </div>
+            </label>
+        </form>
+        
+        <hr />
+        
+        <div class="textfield-row two-row">
+            <h2>Loops</h2>
+            <h2>Points per loop</h2>
+        </div>
+        
+        <form class="textfield-row two-row" id="settings">
+            <label>
+                <div class="textfield" data-unit="">
+                    <input type="number" value="10" name="loops" id="loops" class="full" />
+                </div>
+            </label>
+            <label>
+                <div class="textfield" data-unit="">
+                    <input type="number" value="4" name="points" id="points" class="full" />
+                </div>
+            </label>
+        </form>
+        
+        <hr/ >
+        
+        <div class="textfield-row">
+            <h2>Tension</h2>
+            <h2></h2>
+            <h2>Transition</h2>
+            <h2>Rate</h2>
+        </div>
+            
+        <form class="textfield-row" id="easing">
+            <label>
+                <div class="textfield" data-unit="">
+                    <input type="number" value="1" name="smooth" id="smooth" class="full" />
+                </div>
+            </label>
+            <label id="link_container">
+            </label>
+            <label>
+                <div class="textfield" data-unit="">
+                    <select type="select" name="timing" id="timing">
+                        <option value="linear">Linear</option>
+                        <option value="ease">Ease</option>
+                        <option value="ease-in">Ease in</option>
+                        <option value="ease-out">Ease out</option>
+                    </select>
+                </div>
+            </label>
+            <label>
+                <div class="textfield" data-unit="">
+                    <input type="number" value="1" name="power" id="power" class="full" />
+                    <input type="number" value="" style="opacity:0;height:0;width:0;display:block;" />
+                </div>
+            </label>
+        </form>
+        
+        <hr/ >
+
+        
+        <form class="textfield-full" style="margin-top: 3px;">
+            <label>
+                <input type="checkbox" value="squeeze" name="squeeze" id="squeeze" />
+                <span id="squeeze_text">Force (kinda) into shape</span>
+            </label>
+        </form>
+        <form class="textfield-full">
+            <label>
+                <input type="checkbox" value="mirror" name="mirror" id="mirror" />
+                <span id="mirror_text">Mirror around midpoint</span>
+            </label>
+        </form>
+        <form class="textfield-full" style="margin-bottom: 1px;">
+            <label>
+                <input type="checkbox" value="clockwise" name="clockwise" id="clockwise" />
+                <span id="clockwise_text">Clockwise</span>
+            </label>
+        </form>
+
+        <form class="textfield-row two-row" style="margin-bottom: 9px;">
+            <label>
+                <input type="checkbox" value="auto" name="auto" id="auto" />
+                <span id="auto_text">Auto update</span>
+            </label>
+            <label>
+                <div style="text-align: right" data-unit="">
+                    <button id="button">Spiralise!</button>
+                </div>
+            </label>
+        </form>
+
+        <form class="textfield-full" style="margin-bottom: -3px;">
+            <label>
+                <input type="checkbox" value="clear" name="clear" id="clear" />
+                <span id="clear_text">Remove pre-selected object(s)<br/>when done (on blur)</span>
+            </label>
+        </form>
+        
+        <hr version="" id="ddVersion" />
+        
+        <div id="coffeelink">
+            <img src="0e1e019ee2c080b645701cbb4d3754d1.svg" class="bmac" id="bmacimg">
+            <img src="02fc2683dadcac55dc05b17d62b0bc90.svg" class="darkbmac" id="bmacimgdark">
+        
+            <div id="bmac">
+                Happy?
+                <br/>Consider buying me a coffee!
+            </div>
+        </div>
+        
+        <script src="../resources_webview.js"></script>
+        <!-- <script src="webview.js"></script> -->
+    </body>
+</html>

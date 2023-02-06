@@ -95,7 +95,7 @@
 
 // Settings
 var local = false;
-var currentVersion = "v1.0.1";
+var currentVersion = "v1.1.0";
 var server = 'https://www.design-dude.nl/apps/ddSpiral/';
 var selection = {
   type: 4,
@@ -123,18 +123,24 @@ var end_val = {
   deg: 0,
   worldDeg: 0
 };
+var clearObjects = {
+  startID: false,
+  endID: false,
+  pathID: false
+};
 var loops = 10;
 var points = 4;
 var timing = 'linear';
-var smooth = 100;
-var power = 30;
+var smooth = 1;
+var power = 1;
 var clockwise = true;
 var squeeze = false;
 var mirror = false;
 var auto = false;
+var clear = false;
 var hasFocus = false;
 var update = false;
-var elements = ['start_width', 'start_height', 'start_rotation', 'end_width', 'end_height', 'end_rotation', 'loops', 'points', 'timing', 'smooth', 'power', 'squeeze', 'clockwise', 'mirror', 'auto'];
+var elements = ['start_width', 'start_height', 'start_rotation', 'end_width', 'end_height', 'end_rotation', 'loops', 'points', 'timing', 'smooth', 'power', 'squeeze', 'clockwise', 'mirror', 'auto', 'clear'];
 
 // Math extension
 Math.decimal = function (num) {
@@ -248,6 +254,27 @@ var requestUpdateInfo = function requestUpdateInfo(url) {
 window.addEventListener("blur", function (e) {
   hasFocus = false;
   allOff();
+  if (clear) {
+    // Collect clear settings
+    var _settings = {
+      pathID: clearObjects.pathID,
+      startID: clearObjects.startID,
+      endID: clearObjects.endID
+    };
+    // Create message
+    var message = {
+      settings: _settings,
+      action: "clear"
+    };
+    if (!local) {
+      // Send message to plugin
+      window.postMessage('internalRequest', JSON.stringify(message));
+    } else {
+      allOn();
+    }
+    clear = false;
+    document.getElementById('clear').checked = clear;
+  }
 });
 
 // On plugin focus
@@ -305,13 +332,13 @@ function spiralise() {
     settings: settings,
     action: "spiralise"
   };
-  //console.log(JSON.stringify(message));
   if (!local) {
     // Send message to plugin
     window.postMessage('internalRequest', JSON.stringify(message));
   } else {
-    allOn();
+    console.log('spiralise', message);
   }
+  allOn();
   // Reset world rotation for next update
   start_val.deg = Math.degrees(start_val.deg + start_val.worldDeg);
   end_val.deg = Math.degrees(end_val.deg + end_val.worldDeg);
@@ -481,9 +508,9 @@ function allOff() {
   for (var i = 0; i < elements.length; i++) {
     document.getElementById(elements[i]).setAttribute('disabled', '');
     if (!selection.type || squeeze && (elements[i].indexOf('start') > -1 || elements[i].indexOf('end') > -1) || (selection.type < 2 || selection.type > 3) && elements[i] == 'squeeze') {
-      document.getElementById(elements[i]).style.opacity = elements[i] == 'squeeze' || elements[i] == 'clockwise' || elements[i] == 'mirror' || elements[i] == 'auto' ? 0.5 : 0;
+      document.getElementById(elements[i]).style.opacity = elements[i] == 'squeeze' || elements[i] == 'clockwise' || elements[i] == 'mirror' || elements[i] == 'auto' || elements[i] == 'clear' ? 0.5 : 0;
     } else {
-      document.getElementById(elements[i]).style.opacity = elements[i] == 'squeeze' || elements[i] == 'clockwise' || elements[i] == 'mirror' || elements[i] == 'auto' ? 0.5 : 0.3;
+      document.getElementById(elements[i]).style.opacity = elements[i] == 'squeeze' || elements[i] == 'clockwise' || elements[i] == 'mirror' || elements[i] == 'auto' || elements[i] == 'clear' ? 0.5 : 0.3;
     }
     var parent = document.getElementById(elements[i]).parentElement;
     if (parent.classList.contains('textfield')) {
@@ -501,6 +528,7 @@ function allOff() {
   document.getElementById('clockwise_text').style.opacity = 0.2;
   document.getElementById('mirror_text').style.opacity = 0.2;
   document.getElementById('auto_text').style.opacity = 0.2;
+  document.getElementById('clear_text').style.opacity = 0.2;
 }
 
 // Enable all active form elements
@@ -569,6 +597,14 @@ function allOn() {
     document.getElementById('end_text').innerHTML = 'End';
   }
   document.getElementById('auto_text').style.opacity = 1;
+  if (update) {
+    document.getElementById('clear_text').style.opacity = 1;
+    document.getElementById('clear').disabled = false;
+    document.getElementById('clear').style.opacity = 1;
+  } else {
+    document.getElementById('clear_text').style.opacity = 0.2;
+    document.getElementById('clear').setAttribute('disabled', '');
+  }
 }
 
 // Handle form elements
@@ -613,7 +649,7 @@ document.getElementById("start_height").addEventListener("change", function (e) 
   }
 });
 document.getElementById("start_rotation").addEventListener("change", function (e) {
-  var newVal = Math.abs((parseFloat(e.target.value) + 360) % 360);
+  var newVal = Math.decimal((parseFloat(e.target.value) + 3600) % 360, 2);
   if (isNaN(newVal)) newVal = start_val.deg;
   e.target.value = newVal;
   start_val.deg = newVal;
@@ -673,7 +709,7 @@ document.getElementById("end_height").addEventListener("change", function (e) {
   }
 });
 document.getElementById("end_rotation").addEventListener("change", function (e) {
-  var newVal = Math.decimal(Math.abs((parseFloat(e.target.value) + 360) % 360), 2);
+  var newVal = Math.decimal((parseFloat(e.target.value) + 3600) % 360, 2);
   if (isNaN(newVal)) newVal = end_val.deg;
   e.target.value = newVal;
   end_val.deg = newVal;
@@ -737,9 +773,9 @@ document.getElementById("mirror").addEventListener("change", function (e) {
   }
 });
 document.getElementById("smooth").addEventListener("change", function (e) {
-  var newVal = Math.abs(Math.round(parseFloat(e.target.value)));
+  var newVal = Math.decimal(parseFloat(e.target.value), 2);
   if (isNaN(newVal)) newVal = smooth;
-  if (newVal > 500) newVal = 500;
+  if (newVal > 10) newVal = 10;
   if (newVal < 0) newVal = 0;
   smooth = newVal;
   e.target.value = smooth;
@@ -748,9 +784,9 @@ document.getElementById("smooth").addEventListener("change", function (e) {
   }
 });
 document.getElementById("power").addEventListener("change", function (e) {
-  var newVal = Math.abs(Math.round(parseFloat(e.target.value)));
+  var newVal = Math.decimal(parseFloat(e.target.value), 2);
   if (isNaN(newVal)) newVal = smooth;
-  if (newVal > 100) newVal = 100;
+  if (newVal > 10) newVal = 10;
   if (newVal < 0) newVal = 0;
   power = newVal;
   e.target.value = power;
@@ -779,6 +815,14 @@ document.getElementById("auto").addEventListener("change", function (e) {
   allOn();
   if (auto && update) {
     spiralise();
+  }
+});
+document.getElementById("clear").addEventListener("change", function (e) {
+  clear = e.target.checked;
+  if (clear) {
+    clearObjects.startID = selection.startID;
+    clearObjects.endID = selection.endID;
+    clearObjects.pathID = selection.pathID;
   }
 });
 

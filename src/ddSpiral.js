@@ -425,7 +425,7 @@ function spiral(data) {
 		// Adjust loop setting
 		ret_settings.loops = Math.round(ret_settings.loops) + 0.5;
 		steps = ret_settings.loops * ret_settings.points;
-		transition = Math.easePower(ret_settings.timing, ret_settings.power / 35, steps);
+		transition = Math.easePower(ret_settings.timing, ret_settings.power * 0.85, steps);
 
 		
 		// Get the shape as js object

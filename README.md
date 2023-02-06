@@ -15,11 +15,12 @@ Download and double-click the [latest version.](https://github.com/Design-Dude/d
 Just select up to 2 objects and/or an open path and run 🌀 ddSpiral from 🧰 ddTools in the plugin menu. You can also hit CTRL-ALT-SHIFT-S (All future ddTools wil use CTRL-ALT-SHIFT). The plugin presents you with an overlay for adjustments. The spiral will behave slightly differently depending on the selected objects. As long as you stay in the overlay you can update the spiral by altering:
 - size and rotation (preset by the selected objects)
 - direction (clockwise or counterclockwise),
-- number of revolutions (loops),
+- number of loops,
 - number of points per loop (tangents),
-- curve (0%=sharp corners, 100%=optimal curves, >100%=experimental).
+- tension (0=sharp corners, 1=optimal curves, >1-10=experimental loose curves).
 - transition (linear, ease in and out, ease-in or ease-out),
-- and (easing) velocity (0%=same as linear, 30%=smooth, 100%=exponetial).
+- and easing rate (0=linear, 1=standard css easing, >1-10=exponetial).
+You must always click the 'Spiralize' button first to start the drawing process. Subsequent updates can be automated by checking the 'Auto update' option. The operations are terminated as soon as the overlay loses its focus. The last option 'Remove preselected objects' automatically starts a clean process during this final termination.
 
 ### 1. Select a single object, such as an image, group, or symbol, and then run ddSpiral
 If you select 1 object, not a path, the spiral rotates from the bounding box to the center of the object. Position, size and rotation are inherited from the selected object. The spiral is drawn on top of the object in the same group.
@@ -49,15 +50,17 @@ The spiral is stretched from the first object to the second, using their coordin
 - User input is saved for the next spiral.
 - Thoughtful user experience in a pleasant user interface.
 - Dark mode support.
+- Automatic cleaning service to remove pre-selected objects.
 
 ## Whislist for future versions
-- Fix calculations against the direction of the spiral when > 180deg or < -180deg
-- Rename revolutions to loops.
-- Rename curve to tension and possibly change scale to -1 / 0 / 1+ instead of %.
-- Rename velocity to rate or speed (of change) and change scale to 0 / 1 / 1+ instead of %.
-- Option to clear the preselected objects at blur.
+- Fix calculations against the direction of the spiral when > 180deg or < -180deg - check
+- Rename revolutions to loops - check.
+- Rename curve to tension and possibly change scale to 0-10 instead of % - check.
+- Rename velocity to rate or speed (of change) and change scale to 0-10 instead of % - check.
+- Option to clear the preselected objects at blur - check.
 - Spinning option for real arti results.
 - Rotating version of the forced spiral.
+- Additional path adjustments 
 
 ## Privacy
 ddPlugin will ping the ddServer for updates upon activation. No data is sent to the server. By using the plugin, you automatically agree to this fait accompli (or you can strip the functionality and build your own version of the plugin).

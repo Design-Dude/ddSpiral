@@ -171,7 +171,7 @@ window.addEventListener("load", function () {
 
   // Link to readme
   document.getElementById("github").addEventListener("click", function (e) {
-    followLink("https://github.com/Design-Dude/ddSpiral");
+    followLink("https://github.com/Design-Dude/ddSpiral/blob/main/README.md");
   });
 
   // Link to info from footer

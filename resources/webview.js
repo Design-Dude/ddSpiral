@@ -398,7 +398,7 @@ function setTypeText() {
 		say('Curve <span>along the route</span> of that ' + objType, settings.theme === 'dark' ? '#DFDFDF' : 'black');
 		break;
 	default:
-		say('<span>Select a maximum of 2 objects and/or 1 open path!</span>', '#FF5B02');
+		say('<span>Select at least 1 and at most 2 objects and/or an open path!</span>', '#FF5B02');
 		allOff();
 	} 
 }

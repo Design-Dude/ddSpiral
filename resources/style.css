@@ -35,7 +35,7 @@ h2 span, #info {
 	font-weight: normal;
 	vertical-align: middle;
 	display: table-cell;
-	padding-right: 10px;
+	padding-right: 5px;
 	line-height: 13px;
 }
 #info span {

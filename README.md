@@ -54,6 +54,7 @@ The spiral is stretched from the first object to the second, using their coordin
 - Automatic cleaning service to remove pre-selected objects.
 
 ## Whislist for future versions
+- Fix for undetermined tangent of first and last points
 - Spinning option for arti spirals.
 - Rotating version of the forced spiral.
 - Additional path adjustments.

@@ -54,14 +54,9 @@ The spiral is stretched from the first object to the second, using their coordin
 - Automatic cleaning service to remove pre-selected objects.
 
 ## Whislist for future versions
-- Fix calculations against the direction of the spiral when > 180deg or < -180deg - check
-- Rename revolutions to loops - check.
-- Rename curve to tension and possibly change scale to 0-10 instead of % - check.
-- Rename velocity to rate or speed (of change) and change scale to 0-10 instead of % - check.
-- Option to clear the preselected objects at blur - check.
-- Spinning option for real arti results.
+- Spinning option for arti spirals.
 - Rotating version of the forced spiral.
-- Additional path adjustments 
+- Additional path adjustments.
 
 ## Privacy
 ddPlugin will ping the ddServer for updates upon activation. No data is sent to the server. By using the plugin, you automatically agree to this fait accompli (or you can strip the functionality and build your own version of the plugin).

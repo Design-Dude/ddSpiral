@@ -2541,7 +2541,7 @@ module.exports.sendToWebview = function sendToWebview(identifier, evalString) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "file://" + String(context.scriptPath).split(".sketchplugin/Contents/Sketch")[0] + ".sketchplugin/Contents/Resources/_webpack_resources/057bfc41d12dfdea616100d3b52056b0.html";
+module.exports = "file://" + String(context.scriptPath).split(".sketchplugin/Contents/Sketch")[0] + ".sketchplugin/Contents/Resources/_webpack_resources/7140a01aec3506dd818f192a1f620b10.html";
 
 /***/ }),
 
@@ -3110,7 +3110,7 @@ function spiral(data) {
     // Adjust loop setting
     ret_settings.loops = Math.round(ret_settings.loops) + 0.5;
     steps = ret_settings.loops * ret_settings.points;
-    transition = Math.easePower(ret_settings.timing, ret_settings.power / 35, steps);
+    transition = Math.easePower(ret_settings.timing, ret_settings.power * 0.85, steps);
 
     // Get the shape as js object
     var jsShape = document.getLayerWithID(ret_settings.startID);

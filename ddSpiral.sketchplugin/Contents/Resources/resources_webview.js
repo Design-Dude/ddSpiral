@@ -186,7 +186,9 @@ window.addEventListener("load", function () {
   getSelection();
 
   // Set version
-  document.getElementById("ddVersion").setAttribute('version', currentVersion);
+  setTimeout(function () {
+    document.getElementById("ddVersion").setAttribute('version', currentVersion);
+  }, 10);
 
   // Get info from server for footer info
   requestUpdateInfo(server + 'info.php').then(function (data) {
@@ -198,12 +200,19 @@ window.addEventListener("load", function () {
       document.getElementById("coffeelink").setAttribute('goto', data[0].link);
     }
     var card = false;
+    var isCurrentVersion = false;
     for (var c in data) {
       if (data[c] && data[c].version && (data[c].version === currentVersion || data[c].version === 'any')) {
+        if (data[c].version === currentVersion) {
+          isCurrentVersion = true;
+        }
         if (card === false || card.version === 'any') {
           card = data[c];
         }
       }
+    }
+    if (isCurrentVersion && Math.random() < 0.5) {
+      card = false;
     }
     if (card) {
       document.getElementById("bmac").innerHTML = card.info;

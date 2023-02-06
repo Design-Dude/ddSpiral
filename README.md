@@ -20,7 +20,8 @@ Just select up to 2 objects and/or an open path and run 🌀 ddSpiral from 🧰 
 - tension (0=sharp corners, 1=optimal curves, >1-10=experimental loose curves).
 - transition (linear, ease in and out, ease-in or ease-out),
 - and easing rate (0=linear, 1=standard css easing, >1-10=exponetial).
-You must always click the 'Spiralize' button first to start the drawing process. Subsequent updates can be automated by checking the 'Auto update' option. The operations are terminated as soon as the overlay loses its focus. The last option 'Remove preselected objects' automatically starts a clean process during this final termination.
+
+You must always click the _Spiralize_ button first to start the drawing process. Subsequent updates can be automated by checking the _Auto update_ option. The operations are terminated as soon as the overlay loses its focus. The last option _Remove preselected objects_ automatically starts a clean process during this final termination.
 
 ### 1. Select a single object, such as an image, group, or symbol, and then run ddSpiral
 If you select 1 object, not a path, the spiral rotates from the bounding box to the center of the object. Position, size and rotation are inherited from the selected object. The spiral is drawn on top of the object in the same group.
@@ -28,7 +29,7 @@ If you select 1 object, not a path, the spiral rotates from the bounding box to 
 ![Screenshot](repository_images/object.svg)
 
 ### 2. Select a closed shape, like a rectangle, oval or any other custom closed path, and then run ddSpiral
-Selecting a closed path is basically the same as #1 but the experimental option 'Force into shape' becomes available. When checked, the spiral runs from top to bottom, roughly staying within the object's outer perimeter rather than inside the bounding box.
+Selecting a closed path is basically the same as #1 but the experimental option _Force into shape_ becomes available. When checked, the spiral runs from top to bottom, roughly staying within the object's outer perimeter rather than inside the bounding box.
 
 ![Screenshot](repository_images/shape.svg)
 
@@ -66,11 +67,9 @@ The spiral is stretched from the first object to the second, using their coordin
 ddPlugin will ping the ddServer for updates upon activation. No data is sent to the server. By using the plugin, you automatically agree to this fait accompli (or you can strip the functionality and build your own version of the plugin).
 
 ## Known issues
-1. There seems to be a slight calculation error with rotating spirals (more than 180°) against there natural direction. We're on it.
+1. There is a known side effect that you can sometimes resolve yourself. Paths are made with bézier curves. The smoothness depends on the length of the path, in combination with the number of loops as well as the number of points per loop. If the combination doesn't match you can get unexpected turns and bends. Especially if the route along an open path contains long or sharp turns. Try changing the path, number of loops or points for a better result. If you set the number of points very high you can see how the curve should actually run. However, many points is completely unnecessary. 4 tangents is more than enough in most cases. Manually removing and adjusting the tangents afterwards is also always an option.
 
-2. There is a known side effect that you can sometimes resolve yourself. Paths are made with bézier curves. The smoothness depends on the length of the path, in combination with the number of loops as well as the number of points per loop. If the combination doesn't match you can get unexpected turns and bends. Especially if the route along an open path contains long or sharp turns. Try changing the path, number of loops or points for a better result. If you set the number of points very high you can see how the curve should actually run. However, many points is completely unnecessary. 4 tangents is more than enough in most cases. Manually removing and adjusting the tangents afterwards is also always an option.
-
-3. The 'Force into shape' option is a work in progress.
+2. The _Force into shape_ option is a work in progress.
 - Logically, this option also suffers from the sharp corners and varying radii described above. ddSpiral is not very good in tight spaces, especially at the beginning and end where the direction is indeterminate. Subsequent adjustments are often necessary. Keep it simple is the motto.
 - The spiral is never interrupted, so no gaps or notches are taken into account.
 - For now, the spiral will only run from top to bottom, not in any other direction. You can of course rotate your object before running ddSpiral.

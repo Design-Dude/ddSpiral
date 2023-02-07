@@ -54,7 +54,6 @@ The spiral is stretched from the first object to the second, using their coordin
 - Automatic cleaning service to remove pre-selected objects.
 
 ## Whislist for future versions
-- Fix for undetermined tangent of first and last points
 - Spinning option for arti spirals.
 - Rotating version of the forced spiral.
 - Additional path adjustments.
@@ -63,9 +62,11 @@ The spiral is stretched from the first object to the second, using their coordin
 ddPlugin will ping the ddServer for updates upon activation. No data is sent to the server. By using the plugin, you automatically agree to this fait accompli (or you can strip the functionality and build your own version of the plugin).
 
 ## Known issues
-1. There is a known side effect that you can sometimes resolve yourself. Paths are made with bézier curves. The smoothness depends on the length of the path, in combination with the number of loops as well as the number of points per loop. If the combination doesn't match you can get unexpected turns and bends. Especially if the route along an open path contains long or sharp turns. Try changing the path, number of loops or points for a better result. If you set the number of points very high you can see how the curve should actually run. However, many points is completely unnecessary. 4 tangents is more than enough in most cases. Manually removing and adjusting the tangents afterwards is also always an option.
+1. See [issues.](https://github.com/Design-Dude/ddSpiral/issues)
 
-2. The _Force into shape_ option is a work in progress.
+2. There is a known side effect that you can sometimes resolve yourself. Paths are made with bézier curves. The smoothness depends on the length of the path, in combination with the number of loops as well as the number of points per loop. If the combination doesn't match you can get unexpected turns and bends. Especially if the route along an open path contains long or sharp turns. Try changing the path, number of loops or points for a better result. If you set the number of points very high you can see how the curve should actually run. However, many points is completely unnecessary. 4 tangents is more than enough in most cases. Manually removing and adjusting the tangents afterwards is also always an option.
+
+3. The _Force into shape_ option is a work in progress.
 - Logically, this option also suffers from the sharp corners and varying radii described above. ddSpiral is not very good in tight spaces, especially at the beginning and end where the direction is indeterminate. Subsequent adjustments are often necessary. Keep it simple is the motto.
 - The spiral is never interrupted, so no gaps or notches are taken into account.
 - For now, the spiral will only run from top to bottom, not in any other direction. You can of course rotate your object before running ddSpiral.

@@ -351,9 +351,11 @@ function worldOrientation(obj) {
 }
 
 //////////////////////////////////////////////
+//////////////////////////////////////////////
 // 
 // Create actual spiral
 // 
+//////////////////////////////////////////////
 //////////////////////////////////////////////
 
 function spiral(data) {
@@ -384,6 +386,15 @@ function spiral(data) {
 		),
 		total: 0,
 		array: []
+	}
+	// Prevent 0 length for divisions
+	if(rad.length.x == 0 || rad.length.y == 0) {
+		rad.length.x = 0.0001;
+		rad.length.y = 0.0001;
+	}
+	if(rad.target.x == 0 || rad.target.y == 0) {
+		rad.target.x = 0.0001;
+		rad.target.y = 0.0001;
 	}
 	// Preset rotation
 	var rot = {
@@ -422,7 +433,6 @@ function spiral(data) {
 	// Squeeze spiral into shape
 	if(ret_settings.squeeze) {
 
-
 		// Adjust loop setting
 		ret_settings.loops = Math.round(ret_settings.loops) + 0.5;
 		steps = ret_settings.loops * ret_settings.points;
@@ -437,7 +447,7 @@ function spiral(data) {
 		// Collection of point on path
 		let outl = {
 			top: false,
-			bottom: 0,
+			bottom: false,
 			array: []
 		}
 		// Collect all horizontal max and min points on the path
@@ -482,7 +492,7 @@ function spiral(data) {
 				const radius = (high - low) / 2;
 				const center = low + radius;
 				outl.top = y < outl.top || outl.top === false ? y : outl.top;
-				outl.bottom = y > outl.bottom ? y : outl.bottom;
+				outl.bottom = y > outl.bottom || outl.bottom === false ? y : outl.bottom;
 				outl.array[y] = {
 					high: high,
 					low: low,
@@ -503,6 +513,7 @@ function spiral(data) {
 
 		// Prepare vertical translation
 		const easeRadius = ret_settings.timing == 'linear' ? false : true;
+
 		trans = {
 			center: new Vector2d(
 				outl.array[outl.top].center,
@@ -528,7 +539,7 @@ function spiral(data) {
 		// Prepare vertical radius
 		rad = {
 			length: new Vector2d(
-				outl.array[outl.top + 1].radius,
+				outl.array[outl.top].radius,
 				easeRadius ? (ret_settings.timing == 'ease' || ret_settings.timing == 'ease-out' ? 0 : radiusY) : radiusY
 			),
 			step: new Vector2d(),
@@ -544,6 +555,7 @@ function spiral(data) {
 		var transTotal = 0;
 		var radTotal = 0;
 		var largestStep = 0;
+
 		for(var j=0; j<=steps; j++) {
 			if(transition) {
 				transTotal += transition[j] * trans.total.y;
@@ -560,21 +572,24 @@ function spiral(data) {
 					largestStep = transition[j] > largestStep ? transition[j] : largestStep;
 					radPoint.y = transition[j];
 				}
-			} else {
+			} else if(j < steps) {
 				var transPoint = new Vector2d(
 					ret_start_val.x,
-					trans.center.y + j * trans.step.y
+					trans.center.y + (j+1) * trans.step.y
 				);
 				var radPoint = new Vector2d(
 					rad.length.x,
 					radiusY
 				);
 			}
-			// Seek horizontal position and radius
-			var seeker = Math.round(transPoint.y);
-			if(outl.array[seeker]) {
-				transPoint.x = outl.array[seeker].center;
-				radPoint.x = outl.array[seeker].radius;
+			// Lookup horizontal position and radius
+			//let a = Math.cos( Math.rad * Math.degrees((ret_settings.loops * 360 / steps) * j * (ret_settings.clockwise ? 1 : -1)) );
+			//var lookup = Math.round(transPoint.y + Math.floor( radPoint.y * -a ));
+			var lookupCenter = Math.round(transPoint.y);
+			
+			if(outl.array[lookupCenter]) {
+				transPoint.x = outl.array[lookupCenter].center;
+				radPoint.x = outl.array[lookupCenter].radius;
 			}
 			// Put points in arrays
 			trans.array.push( transPoint );
@@ -714,13 +729,15 @@ function spiral(data) {
 			const a = rad.length.x;
 			const b = rad.length.y;
 			const h = ( ((a - b) * (a - b)) / ((a + b) * (a + b)) ) * 3;
-			const circumference = Math.PI * (a + b) * ( 1 + ( h / ( 10 + Math.sqrt( 4 - h ) )) );
+			let circumference = Math.PI * (a + b) * ( 1 + ( h / ( 10 + Math.sqrt( 4 - h ) )) );
+			if(isNaN(circumference)) circumference = 0;
 			const tLength = Math.sqrt( (newTangent.x * newTangent.x) + (newTangent.y * newTangent.y) );
 			const degInLoops = ret_settings.loops * ret_settings.clockwise ? 360 : -360;
 			const rotationInDeg = steps * rot.step;
 			const absoluteRotation = degInLoops + rotationInDeg;
 			const rotationFactor = degInLoops / absoluteRotation;
-			const stepFactor = tLength / (circumference / ret_settings.points) * rotationFactor;
+			const stepFactor = circumference ? tLength / (circumference / ret_settings.points) * rotationFactor : 0;
+
 			// Calculate translation vector
 			let vTranslate = new Vector2d(0,0);
 			if(trans.array.length) {
@@ -729,7 +746,7 @@ function spiral(data) {
 						(trans.array[s+1].x - trans.array[s].x) * stepFactor,
 						(trans.array[s+1].y - trans.array[s].y) * stepFactor
 					)
-				} else { // Repat previous direction for last point
+				} else { // Repeat previous direction for last point
 					vTranslate = new Vector2d(
 						(trans.array[s].x - trans.array[s-1].x) * stepFactor,
 						(trans.array[s].y - trans.array[s-1].y) * stepFactor
@@ -767,33 +784,38 @@ function spiral(data) {
 						(rad.array[s+1].x - rad.array[s].x) * stepFactor,
 						(rad.array[s+1].y - rad.array[s].y) * stepFactor
 					)
-				} else { // Repat previous direction for last point
+				} else { // Repeat previous direction for last point
 					radiusTangent = new Vector2d(
 						(rad.array[s].x - rad.array[s-1].x) * stepFactor,
 						(rad.array[s].y - rad.array[s-1].y) * stepFactor
 					)
 				}
+
 			} else if(transition) {
 				if(ret_settings.type == 4 && ret_settings.mirror) {
 					if(s < (transition.length) / 2) {
+						let t = transition[s * 2];
 						var radiusTangent = new Vector2d(
-							Math.sin( Math.rad * radiusAngle ) * transition[s * 2] * rad.total.x * 2 * stepFactor, 
-							Math.cos( Math.rad * radiusAngle ) * transition[s * 2] * -rad.total.y * 2 * stepFactor
+							Math.sin( Math.rad * radiusAngle ) * t * rad.total.x * 2 * stepFactor, 
+							Math.cos( Math.rad * radiusAngle ) * t * -rad.total.y * 2 * stepFactor
 						);
 					} else {
+						let t = transition[(transition.length - 1 - s) * 2];
 						var radiusTangent = new Vector2d(
-							Math.sin( Math.rad * radiusAngle ) * -(transition[(transition.length - 1 - s) * 2] * rad.total.x * 2) * stepFactor, 
-							Math.cos( Math.rad * radiusAngle ) * -(transition[(transition.length - 1 - s) * 2] * -rad.total.y * 2) * stepFactor
+							Math.sin( Math.rad * radiusAngle ) * -(t * rad.total.x * 2) * stepFactor, 
+							Math.cos( Math.rad * radiusAngle ) * -(t * -rad.total.y * 2) * stepFactor
 						);
 					}
 				} else {
+					let t = transition[s];
+					if(!t) t = transition[s-1];
 					var radiusTangent = new Vector2d(
-						Math.sin( Math.rad * radiusAngle ) * transition[s] * rad.total.x * stepFactor, 
-						Math.cos( Math.rad * radiusAngle ) * transition[s] * -rad.total.y * stepFactor
+						Math.sin( Math.rad * radiusAngle ) * t * rad.total.x * stepFactor, 
+						Math.cos( Math.rad * radiusAngle ) * t * -rad.total.y * stepFactor
 					);
 				}
-			} else {
 
+			} else {
 				if(ret_settings.mirror) {
 					if(s < steps / 2) {
 						var radiusTangent = new Vector2d(
@@ -812,6 +834,7 @@ function spiral(data) {
 						Math.cos( Math.rad * radiusAngle ) * -rad.step.y * stepFactor
 					);
 				}
+
 			}
 			// Add radius vector to tangent
 			newTangent.add(radiusTangent);
@@ -893,15 +916,18 @@ function spiral(data) {
 			if(transition) {
 				if(ret_settings.type == 4 && ret_settings.mirror) {// && ret_settings.timing == 'ease') {
 					if(s < (transition.length) / 2) {
-						rad.length.x += transition[s * 2] * rad.total.x * 2;
-						rad.length.y += transition[s * 2] * rad.total.y * 2;
+						let t = transition[s * 2];
+						rad.length.x += t * rad.total.x * 2;
+						rad.length.y += t * rad.total.y * 2;
 					} else {
-						rad.length.x -= transition[(transition.length - 1 - s) * 2] * rad.total.x * 2;
-						rad.length.y -= transition[(transition.length - 1 - s) * 2] * rad.total.y * 2;
+						let t = transition[(transition.length - 1 - s) * 2];
+						rad.length.x -= t * rad.total.x * 2;
+						rad.length.y -= t * rad.total.y * 2;
 					}
 				} else {
-					rad.length.x += transition[s] * rad.total.x;
-					rad.length.y += transition[s] * rad.total.y;
+					let t = transition[s];
+					rad.length.x += t * rad.total.x;
+					rad.length.y += t * rad.total.y;
 				}
 			} else {
 				if(ret_settings.mirror) {
@@ -917,6 +943,10 @@ function spiral(data) {
 					rad.length.y += rad.step.y;
 				}
 			}
+		}
+		if(rad.length.x == 0 || rad.length.y == 0) {
+			rad.length.x = 0.0001;
+			rad.length.y = 0.0001;
 		}
 
 	}

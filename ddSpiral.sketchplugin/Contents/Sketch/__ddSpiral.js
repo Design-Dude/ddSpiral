@@ -3233,12 +3233,13 @@ function spiral(data) {
         var radPoint = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](rad.length.x, radiusY);
       }
       // Lookup horizontal position and radius
-      //let a = Math.cos( Math.rad * Math.degrees((ret_settings.loops * 360 / steps) * j * (ret_settings.clockwise ? 1 : -1)) );
-      //var lookup = Math.round(transPoint.y + Math.floor( radPoint.y * -a ));
+      var a = Math.cos(Math.rad * Math.degrees(ret_settings.loops * 360 / steps * j * (ret_settings.clockwise ? 1 : -1)));
+      var lookup = Math.round(transPoint.y + radPoint.y * -a);
       var lookupCenter = Math.round(transPoint.y);
+      log(j + ': ' + lookupCenter + ' | ' + radiusY + ' | ' + lookup + ' | ' + outl.array[lookup].center + ' en ' + outl.array[lookup].radius);
       if (outl.array[lookupCenter]) {
-        transPoint.x = outl.array[lookupCenter].center;
-        radPoint.x = outl.array[lookupCenter].radius;
+        transPoint.x = outl.array[lookup].center;
+        radPoint.x = outl.array[lookup].radius;
       }
       // Put points in arrays
       trans.array.push(transPoint);
@@ -3339,10 +3340,10 @@ function spiral(data) {
       vTangent = Math.degrees(vTangent);
       var newTangent = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](Math.sin(Math.rad * vTangent) * rad.length.x * tangent, Math.cos(Math.rad * vTangent) * -rad.length.y * tangent);
       // Get step factor from tangent
-      var a = rad.length.x;
+      var _a = rad.length.x;
       var b = rad.length.y;
-      var h = (a - b) * (a - b) / ((a + b) * (a + b)) * 3;
-      var circumference = Math.PI * (a + b) * (1 + h / (10 + Math.sqrt(4 - h)));
+      var h = (_a - b) * (_a - b) / ((_a + b) * (_a + b)) * 3;
+      var circumference = Math.PI * (_a + b) * (1 + h / (10 + Math.sqrt(4 - h)));
       if (isNaN(circumference)) circumference = 0;
       var tLength = Math.sqrt(newTangent.x * newTangent.x + newTangent.y * newTangent.y);
       var degInLoops = ret_settings.loops * ret_settings.clockwise ? 360 : -360;
@@ -3383,7 +3384,7 @@ function spiral(data) {
       //const radiusAngle = deg;
       if (rad.array.length) {
         if (s != Math.floor(steps)) {
-          radiusTangent = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"]((rad.array[s + 1].x - rad.array[s].x) * stepFactor, (rad.array[s + 1].y - rad.array[s].y) * stepFactor);
+          radiusTangent = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"]((rad.array[s].x - rad.array[s].x) * stepFactor, (rad.array[s].y - rad.array[s].y) * stepFactor);
         } else {
           // Repeat previous direction for last point
           radiusTangent = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"]((rad.array[s].x - rad.array[s - 1].x) * stepFactor, (rad.array[s].y - rad.array[s - 1].y) * stepFactor);

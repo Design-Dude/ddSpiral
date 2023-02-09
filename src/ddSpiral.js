@@ -583,13 +583,13 @@ function spiral(data) {
 				);
 			}
 			// Lookup horizontal position and radius
-			//let a = Math.cos( Math.rad * Math.degrees((ret_settings.loops * 360 / steps) * j * (ret_settings.clockwise ? 1 : -1)) );
-			//var lookup = Math.round(transPoint.y + Math.floor( radPoint.y * -a ));
+			let a = Math.cos( Math.rad * Math.degrees((ret_settings.loops * 360 / steps) * j * (ret_settings.clockwise ? 1 : -1)) );
+			var lookup = Math.round(transPoint.y + radPoint.y * -a);
 			var lookupCenter = Math.round(transPoint.y);
-			
+
 			if(outl.array[lookupCenter]) {
-				transPoint.x = outl.array[lookupCenter].center;
-				radPoint.x = outl.array[lookupCenter].radius;
+				transPoint.x = outl.array[lookup].center;
+				radPoint.x = outl.array[lookup].radius;
 			}
 			// Put points in arrays
 			trans.array.push( transPoint );
@@ -781,8 +781,8 @@ function spiral(data) {
 			if(rad.array.length) {
 				if( s != Math.floor(steps) ) {
 					radiusTangent = new Vector2d(
-						(rad.array[s+1].x - rad.array[s].x) * stepFactor,
-						(rad.array[s+1].y - rad.array[s].y) * stepFactor
+						(rad.array[s].x - rad.array[s].x) * stepFactor,
+						(rad.array[s].y - rad.array[s].y) * stepFactor
 					)
 				} else { // Repeat previous direction for last point
 					radiusTangent = new Vector2d(

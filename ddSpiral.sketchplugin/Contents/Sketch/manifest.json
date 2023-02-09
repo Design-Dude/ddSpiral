@@ -6,7 +6,7 @@
   "bundleVersion": 1,
   "icon": "icon.png",
   "description": "Make almost any kind of spiral magically appear.",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "author": "Mek van’t Hoff",
   "authorEmail": "master.mek@design-dude.nl",
   "commands": [

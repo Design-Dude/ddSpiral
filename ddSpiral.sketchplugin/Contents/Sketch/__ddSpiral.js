@@ -1,1 +1,3640 @@
-var globalThis=this,global=this;function __skpm_run(key,context){globalThis.context=context;try{var exports=function(e){var t={};function n(i){if(t[i])return t[i].exports;var r=t[i]={i:i,l:!1,exports:{}};return e[i].call(r.exports,r,r.exports,n),r.l=!0,r.exports}return n.m=e,n.c=t,n.d=function(e,t,i){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:i})},n.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var i=Object.create(null);if(n.r(i),Object.defineProperty(i,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var r in e)n.d(i,r,function(t){return e[t]}.bind(null,r));return i},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="",n(n.s=19)}([function(e,t){e.exports={JS_BRIDGE:"__skpm_sketchBridge",JS_BRIDGE_RESULT_SUCCESS:"__skpm_sketchBridge_success",JS_BRIDGE_RESULT_ERROR:"__skpm_sketchBridge_error",START_MOVING_WINDOW:"__skpm_startMovingWindow",EXECUTE_JAVASCRIPT:"__skpm_executeJS",EXECUTE_JAVASCRIPT_SUCCESS:"__skpm_executeJS_success_",EXECUTE_JAVASCRIPT_ERROR:"__skpm_executeJS_error_"}},function(e,t,n){var i=NSThread.mainThread().threadDictionary();e.exports.getWebview=function(e){return n(2).fromId(e)},e.exports.isWebviewPresent=function(e){return!!i[e]},e.exports.sendToWebview=function(t,n){if(e.exports.isWebviewPresent(t)){for(var r=null,a=i[t].contentView().subviews(),o=0;o<a.length;o+=1)r||a[o].isKindOfClass(WKInspectorWKWebView)||!a[o].isKindOfClass(WKWebView)||(r=a[o]);if(!r||!r.evaluateJavaScript_completionHandler)throw new Error("Webview "+t+" not found");r.evaluateJavaScript_completionHandler(n,null)}}},function(e,t,n){var i=n(3),r=n(9),a=n(10),o=n(11),s=n(12),l=n(13),c=n(14),u=n(4),d=n(15);function h(e){var t=(e=e||{}).identifier||String(NSUUID.UUID().UUIDString()),n=NSThread.mainThread().threadDictionary(),f=h.fromId(t);if(f)return f;var p=new i;if(p.id=t,e.modal&&!e.parent)throw new Error("A modal needs to have a parent.");var g=coscript.createFiber(),m=e.width||800,w=e.height||600,y=NSScreen.screens().firstObject().frame(),S=NSMakeRect(void 0!==e.x?e.x:Math.round((NSWidth(y)-m)/2),void 0!==e.y?NSHeight(y)-e.y:Math.round((NSHeight(y)-w)/2),m,w);e.titleBarStyle&&"default"!==e.titleBarStyle&&(e.frame=!1);var v="textured"!==e.windowType,b=NSTitledWindowMask;!1!==e.minimizable&&(b|=NSMiniaturizableWindowMask),!1!==e.closable&&(b|=NSClosableWindowMask),!1!==e.resizable&&(b|=NSResizableWindowMask),v&&!e.transparent&&!1!==e.frame||(b|=NSTexturedBackgroundWindowMask);var M=NSPanel.alloc().initWithContentRect_styleMask_backing_defer(S,b,NSBackingStoreBuffered,!0),x=WKWebViewConfiguration.alloc().init(),_=WKWebView.alloc().initWithFrame_configuration(CGRectMake(0,0,e.width||800,e.height||600),x);if(l(_),_.setAutoresizingMask(NSViewWidthSizable|NSViewHeightSizable),r(p,M,_),a(p,M,_),d(p,M,_,e),"desktop"===e.windowType&&(M.setLevel(kCGDesktopWindowLevel-1),M.setCollectionBehavior(NSWindowCollectionBehaviorCanJoinAllSpaces|NSWindowCollectionBehaviorStationary|NSWindowCollectionBehaviorIgnoresCycle)),void 0===e.minWidth&&void 0===e.minHeight||p.setMinimumSize(e.minWidth||0,e.minHeight||0),void 0===e.maxWidth&&void 0===e.maxHeight||p.setMaximumSize(e.maxWidth||1e4,e.maxHeight||1e4),e.transparent||!1===e.frame){M.titlebarAppearsTransparent=!0,M.titleVisibility=NSWindowTitleHidden,M.setOpaque(0),M.isMovableByWindowBackground=!0;var N=NSToolbar.alloc().initWithIdentifier("titlebarStylingToolbar");N.setShowsBaselineSeparator(!1),M.setToolbar(N)}if("hiddenInset"===e.titleBarStyle){var C=NSToolbar.alloc().initWithIdentifier("titlebarStylingToolbar");C.setShowsBaselineSeparator(!1),M.setToolbar(C)}!1!==e.frame&&e.useContentSize||p.setSize(m,w),e.center&&p.center(),e.alwaysOnTop&&p.setAlwaysOnTop(!0),e.fullscreen&&p.setFullScreen(!0),p.setFullScreenable(!!e.fullscreenable);let W=e.title;!1===e.frame?W=void 0:void 0===W&&"undefined"!=typeof __command&&__command.pluginBundle()&&(W=__command.pluginBundle().name()),W&&p.setTitle(W);var k=e.backgroundColor;e.transparent&&(k=NSColor.clearColor()),!k&&!1===e.frame&&e.vibrancy&&(k=NSColor.clearColor()),p._setBackgroundColor(k||NSColor.windowBackgroundColor()),!1===e.hasShadow&&p.setHasShadow(!1),void 0!==e.opacity&&p.setOpacity(e.opacity),e.webPreferences=e.webPreferences||{},_.configuration().preferences().setValue_forKey(!1!==e.webPreferences.devTools,"developerExtrasEnabled"),_.configuration().preferences().setValue_forKey(!1!==e.webPreferences.javascript,"javaScriptEnabled"),_.configuration().preferences().setValue_forKey(!!e.webPreferences.plugins,"plugInsEnabled"),_.configuration().preferences().setValue_forKey(e.webPreferences.minimumFontSize||0,"minimumFontSize"),e.webPreferences.zoomFactor&&_.setMagnification(e.webPreferences.zoomFactor);var R=M.contentView();return!1!==e.frame?(_.setFrame(R.bounds()),R.addSubview(_)):(R.setAutoresizingMask(NSViewWidthSizable|NSViewHeightSizable),o(R,R.superview()),_.setFrame(R.bounds()),R.addSubview(_),M.standardWindowButton(NSWindowFullScreenButton)&&M.standardWindowButton(NSWindowFullScreenButton).setHidden(!0),e.titleBarStyle&&"default"!==e.titleBarStyle||(M.standardWindowButton(NSWindowZoomButton).setHidden(!0),M.standardWindowButton(NSWindowMiniaturizeButton).setHidden(!0),M.standardWindowButton(NSWindowCloseButton).setHidden(!0),M.standardWindowButton(NSWindowZoomButton).setEnabled(!1))),e.vibrancy&&p.setVibrancy(e.vibrancy),p.setMaximizable(!1!==e.maximizable),M.setHidesOnDeactivate(!1!==e.hidesOnDeactivate),e.remembersWindowFrame&&(M.setFrameAutosaveName(t),M.setFrameUsingName_force(M.frameAutosaveName(),!1)),e.acceptsFirstMouse&&p.on("focus",(function(e){e.type()===NSEventTypeLeftMouseDown&&p.webContents.executeJavaScript(s(_,e)).catch(()=>{})})),u.injectScript(_),c.injectScript(_),c.setupHandler(p),!1!==e.show&&p.show(),p.on("closed",(function(){p._destroyed=!0,n.removeObjectForKey(t);var e=n[t+".themeObserver"];e&&(NSApplication.sharedApplication().removeObserver_forKeyPath(e,"effectiveAppearance"),n.removeObjectForKey(t+".themeObserver")),g.cleanup()})),n[t]=M,g.onCleanup((function(){p._destroyed||p.destroy()})),p}h.fromId=function(e){var t=NSThread.mainThread().threadDictionary();if(t[e])return h.fromPanel(t[e],e)},h.fromPanel=function(e,t){var n=new i;if(n.id=t,!e||!e.contentView)throw new Error("needs to pass an NSPanel");for(var o=null,s=e.contentView().subviews(),l=0;l<s.length;l+=1)o||s[l].isKindOfClass(WKInspectorWKWebView)||!s[l].isKindOfClass(WKWebView)||(o=s[l]);if(!o)throw new Error("The panel needs to have a webview");return r(n,e,o),a(n,e,o),n},e.exports=h},function(e,t){e.exports=require("events")},function(e,t,n){(function(t){var i=n(0);e.exports=function(n,r){return function a(o,s,l){"function"==typeof s&&(l=s,s=!1);var c=coscript.createFiber();return n.navigationDelegate().state&&0==n.navigationDelegate().state.wasReady?new t((function(e,t){r.once("ready-to-show",(function(){a(o,s,l).then(e).catch(t),c.cleanup()}))})):new t((function(t,a){var s=Math.random();r.webContents.on(i.EXECUTE_JAVASCRIPT_SUCCESS+s,(function(e){try{l&&l(null,e),t(e)}catch(n){a(n)}c.cleanup()})),r.webContents.on(i.EXECUTE_JAVASCRIPT_ERROR+s,(function(e){try{l?(l(e),t()):a(e)}catch(n){a(n)}c.cleanup()})),n.evaluateJavaScript_completionHandler(e.exports.wrapScript(o,s),null)}))}},e.exports.wrapScript=function(e,t){return"window."+i.EXECUTE_JAVASCRIPT+"("+t+", "+JSON.stringify(e)+")"},e.exports.injectScript=function(e){var t="window."+i.EXECUTE_JAVASCRIPT+' = function(id, script) {  try {    var res = eval(script);    if (res && typeof res.then === "function" && typeof res.catch === "function") {      res.then(function (res2) {        window.postMessage("'+i.EXECUTE_JAVASCRIPT_SUCCESS+'" + id, res2);      })      .catch(function (err) {        window.postMessage("'+i.EXECUTE_JAVASCRIPT_ERROR+'" + id, err);      })    } else {      window.postMessage("'+i.EXECUTE_JAVASCRIPT_SUCCESS+'" + id, res);    }  } catch (err) {    window.postMessage("'+i.EXECUTE_JAVASCRIPT_ERROR+'" + id, err);  }}',n=WKUserScript.alloc().initWithSource_injectionTime_forMainFrameOnly(t,0,!0);e.configuration().userContentController().addUserScript(n)}}).call(this,n(5))},function(e,t){function n(){}function i(e){if(!(this instanceof i))throw new TypeError("Promises must be constructed via new");if("function"!=typeof e)throw new TypeError("not a function");this._state=0,this._handled=!1,this._value=void 0,this._deferreds=[],c(e,this)}function r(e,t){for(;3===e._state;)e=e._value;0!==e._state?(e._handled=!0,i._immediateFn((function(){var n=1===e._state?t.onFulfilled:t.onRejected;if(null!==n){var i;try{i=n(e._value)}catch(r){return void o(t.promise,r)}a(t.promise,i)}else(1===e._state?a:o)(t.promise,e._value)}))):e._deferreds.push(t)}function a(e,t){try{if(t===e)throw new TypeError("A promise cannot be resolved with itself.");if(t&&("object"==typeof t||"function"==typeof t)){var n=t.then;if(t instanceof i)return e._state=3,e._value=t,void s(e);if("function"==typeof n)return void c(n.bind(t),e)}e._state=1,e._value=t,s(e)}catch(r){o(e,r)}}function o(e,t){e._state=2,e._value=t,s(e)}function s(e){2===e._state&&0===e._deferreds.length&&i._immediateFn((function(){e._handled||i._unhandledRejectionFn(e._value,e)}));for(var t=0,n=e._deferreds.length;t<n;t++)r(e,e._deferreds[t]);e._deferreds=null}function l(e,t,n){this.onFulfilled="function"==typeof e?e:null,this.onRejected="function"==typeof t?t:null,this.promise=n}function c(e,t){var n=!1;try{e((function(e){n?i._multipleResolvesFn("resolve",t,e):(n=!0,a(t,e))}),(function(e){n?i._multipleResolvesFn("reject",t,e):(n=!0,o(t,e))}))}catch(r){if(n)return void i._multipleResolvesFn("reject",t,r);n=!0,o(t,r)}}i.prototype.catch=function(e){return this.then(null,e)},i.prototype.then=function(e,t){var i=new this.constructor(n);return r(this,new l(e,t,i)),i},i.prototype.finally=function(e){var t=this.constructor;return this.then((function(n){return t.resolve(e()).then((function(){return n}))}),(function(n){return t.resolve(e()).then((function(){return t.reject(n)}))}))},i.all=function(e){return new i((function(t,n){if(!Array.isArray(e))return n(new TypeError("Promise.all accepts an array"));var i=Array.prototype.slice.call(e);if(0===i.length)return t([]);var r=i.length;function a(e,o){try{if(o&&("object"==typeof o||"function"==typeof o)){var s=o.then;if("function"==typeof s)return void s.call(o,(function(t){a(e,t)}),n)}i[e]=o,0==--r&&t(i)}catch(l){n(l)}}for(var o=0;o<i.length;o++)a(o,i[o])}))},i.resolve=function(e){return e&&"object"==typeof e&&e.constructor===i?e:new i((function(t){t(e)}))},i.reject=function(e){return new i((function(t,n){n(e)}))},i.race=function(e){return new i((function(t,n){if(!Array.isArray(e))return n(new TypeError("Promise.race accepts an array"));for(var r=0,a=e.length;r<a;r++)i.resolve(e[r]).then(t,n)}))},i._immediateFn=setImmediate,i._unhandledRejectionFn=function(e,t){"undefined"!=typeof process&&process.listenerCount&&(process.listenerCount("unhandledRejection")||process.listenerCount("uncaughtException"))?(process.emit("unhandledRejection",e,t),process.emit("uncaughtException",e,"unhandledRejection")):"undefined"!=typeof console&&console&&console.warn("Possible Unhandled Promise Rejection:",e)},i._multipleResolvesFn=function(e,t,n){"undefined"!=typeof process&&process.emit&&process.emit("multipleResolves",e,t,n)},e.exports=i},function(e,t){e.exports=require("sketch")},function(e,t){e.exports=require("sketch/settings")},function(e,t){e.exports=require("sketch/ui")},function(e,t){e.exports=function(e,t,n){function i(n){e.isVisible()&&(n?(NSApplication.sharedApplication().activateIgnoringOtherApps(!0),t.makeKeyAndOrderFront(null)):(t.orderBack(null),NSApp.mainWindow().makeKeyAndOrderFront(null)))}e._panel=t,e._webview=n,e._destroyed=!1,e.destroy=function(){return t.close()},e.close=function(){if(t.delegate().utils&&t.delegate().utils.parentWindow){var n=!0;return e.emit("close",{get defaultPrevented(){return!n},preventDefault:function(){n=!1}}),void(n&&t.delegate().utils.parentWindow.endSheet(t))}e.isClosable()&&t.performClose(null)},e.focus=i.bind(this,!0),e.blur=i.bind(this,!1),e.isFocused=function(){return t.isKeyWindow()},e.isDestroyed=function(){return e._destroyed},e.show=function(){return NSApp.activateIgnoringOtherApps(!0),t.delegate().utils&&t.delegate().utils.parentWindow?t.delegate().utils.parentWindow.beginSheet_completionHandler(t,__mocha__.createBlock_function("v16@?0q8",(function(){e.emit("closed")}))):t.makeKeyAndOrderFront(null)},e.showInactive=function(){return t.orderFrontRegardless()},e.hide=function(){return t.orderOut(null)},e.isVisible=function(){return t.isVisible()},e.isModal=function(){return!1},e.maximize=function(){e.isMaximized()||t.zoom(null)},e.unmaximize=function(){e.isMaximized()&&t.zoom(null)},e.isMaximized=function(){if(0!=(t.styleMask()&NSResizableWindowMask))return t.isZoomed();var e=NSScreen.mainScreen().visibleFrame(),n=t.frame();return e.origin.x==n.origin.x&&e.origin.y==n.origin.y&&e.size.width==n.size.width&&e.size.height==n.size.height},e.minimize=function(){return t.miniaturize(null)},e.restore=function(){return t.deminiaturize(null)},e.isMinimized=function(){return t.isMiniaturized()},e.setFullScreen=function(n){n!==e.isFullscreen()&&t.toggleFullScreen(null)},e.isFullscreen=function(){return t.styleMask()&NSFullScreenWindowMask},e.setAspectRatio=function(e){e>0?t.setAspectRatio(NSMakeSize(e,1)):t.setResizeIncrements(NSMakeSize(1,1))},e.setBounds=function(n,i){if(!n)return;if(e.isFullscreen())return;const r=Object.assign(e.getBounds(),n);var a=NSMakeRect(r.x,0,r.width,r.height),o=NSScreen.screens().firstObject();a.origin.y=NSHeight(o.frame())-r.y,t.setFrame_display_animate(a,!0,i)},e.getBounds=function(){const e=t.frame();var n=NSScreen.screens().firstObject().frame();return{x:e.origin.x,y:Math.round(NSHeight(n)-e.origin.y),width:e.size.width,height:e.size.height}},e.setContentBounds=function(t,n){e.setBounds(t,n)},e.getContentBounds=function(){return e.getBounds()},e.setSize=function(t,n,i){return e.setBounds({width:t,height:n},i)},e.getSize=function(){var t=e.getBounds();return[t.width,t.height]},e.setContentSize=function(t,n,i){return e.setContentBounds({width:t,height:n},i)},e.getContentSize=function(){var t=e.getContentBounds();return[t.width,t.height]},e.setMinimumSize=function(e,n){const i=CGSizeMake(e,n);t.setContentMinSize(i)},e.getMinimumSize=function(){const e=t.contentMinSize();return[e.width,e.height]},e.setMaximumSize=function(e,n){const i=CGSizeMake(e,n);t.setContentMaxSize(i)},e.getMaximumSize=function(){const e=t.contentMaxSize();return[e.width,e.height]},e.setResizable=function(t){return e._setStyleMask(t,NSResizableWindowMask)},e.isResizable=function(){return t.styleMask()&NSResizableWindowMask},e.setMovable=function(e){return t.setMovable(e)},e.isMovable=function(){return t.isMovable()},e.setMinimizable=function(t){return e._setStyleMask(t,NSMiniaturizableWindowMask)},e.isMinimizable=function(){return t.styleMask()&NSMiniaturizableWindowMask},e.setMaximizable=function(e){t.standardWindowButton(NSWindowZoomButton)&&t.standardWindowButton(NSWindowZoomButton).setEnabled(e)},e.isMaximizable=function(){return t.standardWindowButton(NSWindowZoomButton)&&t.standardWindowButton(NSWindowZoomButton).isEnabled()},e.setFullScreenable=function(t){e._setCollectionBehavior(t,NSWindowCollectionBehaviorFullScreenPrimary),e._setCollectionBehavior(!t,NSWindowCollectionBehaviorFullScreenAuxiliary)},e.isFullScreenable=function(){return t.collectionBehavior()&NSWindowCollectionBehaviorFullScreenPrimary},e.setClosable=function(t){e._setStyleMask(t,NSClosableWindowMask)},e.isClosable=function(){return t.styleMask()&NSClosableWindowMask},e.setAlwaysOnTop=function(e,n,i){var r=NSNormalWindowLevel,a=CGWindowLevelForKey(kCGMaximumWindowLevelKey),o=CGWindowLevelForKey(kCGMinimumWindowLevelKey);e&&(r="normal"===n?NSNormalWindowLevel:"torn-off-menu"===n?NSTornOffMenuWindowLevel:"modal-panel"===n?NSModalPanelWindowLevel:"main-menu"===n?NSMainMenuWindowLevel:"status"===n?NSStatusWindowLevel:"pop-up-menu"===n?NSPopUpMenuWindowLevel:"screen-saver"===n?NSScreenSaverWindowLevel:"dock"===n?NSDockWindowLevel:NSFloatingWindowLevel);var s=r+(i||0);if(!(s>=o&&s<=a))throw new Error("relativeLevel must be between "+o+" and "+a);t.setLevel(s)},e.isAlwaysOnTop=function(){return t.level()!==NSNormalWindowLevel},e.moveTop=function(){return t.orderFrontRegardless()},e.center=function(){t.center()},e.setPosition=function(t,n,i){return e.setBounds({x:t,y:n},i)},e.getPosition=function(){var t=e.getBounds();return[t.x,t.y]},e.setTitle=function(e){t.setTitle(e)},e.getTitle=function(){return String(t.title())};var r=0;e.flashFrame=function(e){e?r=NSApp.requestUserAttention(NSInformationalRequest):(NSApp.cancelUserAttentionRequest(r),r=0)},e.getNativeWindowHandle=function(){return t},e.getNativeWebViewHandle=function(){return n},e.loadURL=function(e){if(/^(?!https?|file).*\.html?$/.test(e)&&"undefined"!=typeof __command&&__command.pluginBundle()&&(e="file://"+__command.pluginBundle().urlForResourceNamed(e).path()),/^file:\/\/.*\.html?$/.test(e))return e=(e=NSString.alloc().initWithString(e)).stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet()),void n.loadFileURL_allowingReadAccessToURL(NSURL.URLWithString(e),NSURL.URLWithString("file:///"));const t=NSURL.URLWithString(e),i=NSURLRequest.requestWithURL(t);n.loadRequest(i)},e.reload=function(){n.reload()},e.setHasShadow=function(e){return t.setHasShadow(e)},e.hasShadow=function(){return t.hasShadow()},e.setOpacity=function(e){return t.setAlphaValue(e)},e.getOpacity=function(){return t.alphaValue()},e.setVisibleOnAllWorkspaces=function(t){return e._setCollectionBehavior(t,NSWindowCollectionBehaviorCanJoinAllSpaces)},e.isVisibleOnAllWorkspaces=function(){return t.collectionBehavior()&NSWindowCollectionBehaviorCanJoinAllSpaces},e.setIgnoreMouseEvents=function(e){return t.setIgnoresMouseEvents(e)},e.setContentProtection=function(e){t.setSharingType(e?NSWindowSharingNone:NSWindowSharingReadOnly)},e.setAutoHideCursor=function(e){t.setDisableAutoHideCursor(e)},e.setVibrancy=function(n){var i=e._vibrantView;if(!n){if(null==i)return;return i.removeFromSuperview(),void t.setVibrantView(null)}if(null==i){var r=t.contentView();i=NSVisualEffectView.alloc().initWithFrame(r.bounds()),e._vibrantView=i,i.setAutoresizingMask(NSViewWidthSizable|NSViewHeightSizable),i.setBlendingMode(NSVisualEffectBlendingModeBehindWindow),i.setState(NSVisualEffectStateActive),i.setFrame(r.bounds()),r.addSubview_positioned_relativeTo(i,NSWindowBelow,null)}var a=NSVisualEffectMaterialLight;"appearance-based"===n?a=NSVisualEffectMaterialAppearanceBased:"light"===n?a=NSVisualEffectMaterialLight:"dark"===n?a=NSVisualEffectMaterialDark:"titlebar"===n?a=NSVisualEffectMaterialTitlebar:"selection"===n?a=NSVisualEffectMaterialSelection:"menu"===n?a=NSVisualEffectMaterialMenu:"popover"===n?a=NSVisualEffectMaterialPopover:"sidebar"===n?a=NSVisualEffectMaterialSidebar:"medium-light"===n?a=NSVisualEffectMaterialMediumLight:"ultra-dark"===n&&(a=NSVisualEffectMaterialUltraDark),i.setMaterial(a)},e._setBackgroundColor=function(e){var i=function(e){if(!e||"#"!==e[0]){if(e&&"function"==typeof e.isKindOfClass&&e.isKindOfClass(NSColor))return e;throw new Error("Incorrect color formating. It should be an hex color: #RRGGBBAA")}var t,n=e.substr(1);if(3===n.length?n+="F":6===n.length&&(n+="FF"),4===n.length)for(var i=0;i<4;i+=1)t+=n[i],t+=n[i];else{if(8!==n.length)return NSColor.whiteColor();t=n}var r=parseInt(t.slice(0,2),16)/255,a=parseInt(t.slice(2,4),16)/255,o=parseInt(t.slice(4,6),16)/255,s=parseInt(t.slice(6,8),16)/255;return NSColor.colorWithSRGBRed_green_blue_alpha(r,a,o,s)}(e);n.setValue_forKey(!1,"drawsBackground"),t.backgroundColor=i},e._invalidate=function(){t.flushWindow(),t.contentView().setNeedsDisplay(!0)},e._setStyleMask=function(n,i){var r=e.isMaximizable();n?t.setStyleMask(t.styleMask()|i):t.setStyleMask(t.styleMask()&~i),e.setMaximizable(r)},e._setCollectionBehavior=function(n,i){var r=e.isMaximizable();n?t.setCollectionBehavior(t.collectionBehavior()|i):t.setCollectionBehavior(t.collectionBehavior()&~i),e.setMaximizable(r)},e._showWindowButton=function(e){var n=t.standardWindowButton(e);n.superview().addSubview_positioned_relative(n,NSWindowAbove,null)}}},function(e,t,n){var i=n(3),r=n(4);e.exports=function(e,t,n){var a=new i;a.loadURL=e.loadURL,a.loadFile=function(){console.warn("Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)")},a.downloadURL=function(){console.warn("Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)")},a.getURL=function(){return String(n.URL())},a.getTitle=function(){return String(n.title())},a.isDestroyed=function(){console.warn("Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)")},a.focus=e.focus,a.isFocused=e.isFocused,a.isLoading=function(){return!!n.loading()},a.isLoadingMainFrame=function(){return!!n.loading()},a.isWaitingForResponse=function(){return!n.loading()},a.stop=function(){n.stopLoading()},a.reload=function(){n.reload()},a.reloadIgnoringCache=function(){n.reloadFromOrigin()},a.canGoBack=function(){return!!n.canGoBack()},a.canGoForward=function(){return!!n.canGoForward()},a.canGoToOffset=function(e){return!!n.backForwardList().itemAtIndex(e)},a.clearHistory=function(){console.warn("Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)")},a.goBack=function(){n.goBack()},a.goForward=function(){n.goForward()},a.goToIndex=function(e){var t=n.backForwardList(),i=t.backList(),r=i.count();if(r>e)n.loadRequest(NSURLRequest.requestWithURL(i[e]));else{var a=t.forwardList();if(!(a.count()>e-r))throw new Error("Cannot go to index "+e);n.loadRequest(NSURLRequest.requestWithURL(a[e-r]))}},a.goToOffset=function(e){if(!a.canGoToOffset(e))throw new Error("Cannot go to offset "+e);n.loadRequest(NSURLRequest.requestWithURL(n.backForwardList().itemAtIndex(e)))},a.isCrashed=function(){console.warn("Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)")},a.setUserAgent=function(){console.warn("Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)")},a.getUserAgent=function(){const e=n.customUserAgent();return e?String(e):void 0},a.insertCSS=function(e){var t="var style = document.createElement('style'); style.innerHTML = "+e.replace(/"/,'\\"')+"; document.head.appendChild(style);",i=WKUserScript.alloc().initWithSource_injectionTime_forMainFrameOnly(t,0,!0);n.configuration().userContentController().addUserScript(i)},a.insertJS=function(e){var t=WKUserScript.alloc().initWithSource_injectionTime_forMainFrameOnly(e,0,!0);n.configuration().userContentController().addUserScript(t)},a.executeJavaScript=r(n,e),a.setIgnoreMenuShortcuts=function(){console.warn("Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)")},a.setAudioMuted=function(){console.warn("Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)")},a.isAudioMuted=function(){console.warn("Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)")},a.setZoomFactor=function(e){n.setMagnification_centeredAtPoint(e,CGPointMake(0,0))},a.getZoomFactor=function(e){e(Number(n.magnification()))},a.setZoomLevel=function(e){a.setZoomFactor(Math.pow(1.2,e))},a.getZoomLevel=function(e){e(Math.log(Number(n.magnification()))/Math.log(1.2))},a.setVisualZoomLevelLimits=function(){console.warn("Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)")},a.setLayoutZoomLevelLimits=function(){console.warn("Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)")},a.send=function(){const e="window.postMessage({isSketchMessage: true,origin: '"+String(__command.identifier())+"',args: "+JSON.stringify([].slice.call(arguments))+'}, "*")';n.evaluateJavaScript_completionHandler(e,null)},a.getNativeWebview=function(){return n},e.webContents=a}},function(e,t){function n(e,t,n,i){n.addConstraint(NSLayoutConstraint.constraintWithItem_attribute_relatedBy_toItem_attribute_multiplier_constant(t,e,NSLayoutRelationEqual,n,e,1,i))}e.exports=function(e,t,i){i=i||[],e.setTranslatesAutoresizingMaskIntoConstraints(!1),n(NSLayoutAttributeLeft,e,t,i[0]||0),n(NSLayoutAttributeTop,e,t,i[1]||0),n(NSLayoutAttributeRight,e,t,i[2]||0),n(NSLayoutAttributeBottom,e,t,i[3]||0)}},function(e,t){e.exports=function(e,t){var n=e.convertPoint_fromView(t.locationInWindow(),null);return"var el = document.elementFromPoint("+n.x+", "+n.y+'); if (el && el.tagName === "SELECT") {  var event = document.createEvent("MouseEvents");  event.initMouseEvent("mousedown", true, true, window);  el.dispatchEvent(event);} else if (el && ["text", "textarea", "date", "datetime-local", "email", "number", "month", "password", "search", "tel", "time", "url", "week" ].indexOf(el.type) >= 0 && el.focus) {el.focus();} else if (el) {el.dispatchEvent(new Event("click", {bubbles: true}))}'}},function(e,t,n){var i=n(0);e.exports=function(e){var t='window.originalPostMessage = window.postMessage;window.postMessage = function(actionName) {  if (!actionName) {    throw new Error(\'missing action name\')  }  var id = String(Math.random()).replace(".", "");    var args = [].slice.call(arguments);    args.unshift(id);  return new Promise(function (resolve, reject) {    window["'+i.JS_BRIDGE_RESULT_SUCCESS+'" + id] = resolve;    window["'+i.JS_BRIDGE_RESULT_ERROR+'" + id] = reject;    window.webkit.messageHandlers.'+i.JS_BRIDGE+".postMessage(JSON.stringify(args));  });}",n=WKUserScript.alloc().initWithSource_injectionTime_forMainFrameOnly(t,0,!0);e.configuration().userContentController().addUserScript(n)}},function(e,t,n){var i=n(0);e.exports.injectScript=function(e){var t='(function () {document.addEventListener(\'mousedown\', onMouseDown);function shouldDrag(target) {  if (!target || (target.dataset || {}).appRegion === "no-drag") { return false }  if ((target.dataset || {}).appRegion === "drag") { return true }  return shouldDrag(target.parentElement)};function onMouseDown(e) {  if (e.button !== 0 || !shouldDrag(e.target)) { return }  window.postMessage("'+i.START_MOVING_WINDOW+'");};})()',n=WKUserScript.alloc().initWithSource_injectionTime_forMainFrameOnly(t,0,!0);e.configuration().userContentController().addUserScript(n)},e.exports.setupHandler=function(e){var t=null,n=null,r=null;function a(){if(!n||1!==NSEvent.pressedMouseButtons())return clearInterval(r),t=null,void(n=null);var i=NSEvent.mouseLocation();e.setPosition(n.x+(i.x-t.x),n.y+(t.y-i.y),!1)}e.webContents.on(i.START_MOVING_WINDOW,(function(){t=NSEvent.mouseLocation();var i=e.getPosition();n={x:i[0],y:i[1]},r=setInterval(a,1e3/60)}))}},function(e,t,n){(function(t){var i,r,a,o,s=n(16),l=n(17),c=n(0);e.exports=function(e,n,u,d){o||(o=new s({utils:null,"observeValueForKeyPath:ofObject:change:context:":function(e,t,n){const i=n[NSKeyValueChangeNewKey],r="NSAppearanceNameDarkAqua"===String(i.bestMatchFromAppearancesWithNames(["NSAppearanceNameAqua","NSAppearanceNameDarkAqua"]));this.utils.executeJavaScript("document.body.classList.remove('__skpm-"+(r?"light":"dark")+"'); document.body.classList.add('__skpm-"+(r?"dark":"light")+"')")}})),i||(i=new s({utils:null,panel:null,"windowDidResize:":function(){this.utils.emit("resize")},"windowDidMiniaturize:":function(){this.utils.emit("minimize")},"windowDidDeminiaturize:":function(){this.utils.emit("restore")},"windowDidEnterFullScreen:":function(){this.utils.emit("enter-full-screen")},"windowDidExitFullScreen:":function(){this.utils.emit("leave-full-screen")},"windowDidMove:":function(){this.utils.emit("move"),this.utils.emit("moved")},"windowShouldClose:":function(){var e=1;return this.utils.emit("close",{get defaultPrevented(){return!e},preventDefault:function(){e=0}}),e},"windowWillClose:":function(){this.utils.emit("closed")},"windowDidBecomeKey:":function(){this.utils.emit("focus",this.panel.currentEvent())},"windowDidResignKey:":function(){this.utils.emit("blur")}})),r||(r=new s({state:{wasReady:0},utils:null,"webView:didCommitNavigation:":function(e){this.utils.emit("will-navigate",{},String(String(e.URL())))},"webView:didStartProvisionalNavigation:":function(){this.utils.emit("did-start-navigation"),this.utils.emit("did-start-loading")},"webView:didReceiveServerRedirectForProvisionalNavigation:":function(){this.utils.emit("did-get-redirect-request")},"webView:didFailProvisionalNavigation:withError:":function(e,t,n){this.utils.emit("did-fail-load",n)},"webView:didFinishNavigation:":function(){0==this.state.wasReady&&(this.state.wasReady=1,this.utils.emitBrowserEvent("ready-to-show")),this.utils.emit("did-navigate"),this.utils.emit("did-frame-navigate"),this.utils.emit("did-stop-loading"),this.utils.emit("did-finish-load"),this.utils.emit("did-frame-finish-load")},"webViewWebContentProcessDidTerminate:":function(){this.utils.emit("dom-ready")}})),a||(a=new s({utils:null,"userContentController:didReceiveScriptMessage:":function(e,t){var n=this.utils.parseWebArguments(String(t.body()));n&&n[0]&&"string"==typeof n[0]&&(n[0]=String(n[0]),this.utils.emit.apply(this,n))}}));var h=o.new({utils:{executeJavaScript(e){u.evaluateJavaScript_completionHandler(e,null)}}}),f=WKUserScript.alloc().initWithSource_injectionTime_forMainFrameOnly("document.addEventListener('DOMContentLoaded', function() { document.body.classList.add('__skpm-"+("undefined"!=typeof MSTheme&&MSTheme.sharedTheme().isDark()?"dark":"light")+"') }, false)",0,!0);u.configuration().userContentController().addUserScript(f),NSApplication.sharedApplication().addObserver_forKeyPath_options_context(h,"effectiveAppearance",NSKeyValueObservingOptionNew,null),NSThread.mainThread().threadDictionary()[e.id+".themeObserver"]=h;var p=r.new({utils:{setTitle:e.setTitle.bind(e),emitBrowserEvent(){try{e.emit.apply(e,arguments)}catch(t){if("undefined"==typeof process||!process.listenerCount||!process.listenerCount("uncaughtException"))throw console.error(t),t;process.emit("uncaughtException",t,"uncaughtException")}},emit(){try{e.webContents.emit.apply(e.webContents,arguments)}catch(t){if("undefined"==typeof process||!process.listenerCount||!process.listenerCount("uncaughtException"))throw console.error(t),t;process.emit("uncaughtException",t,"uncaughtException")}}},state:{wasReady:0}});u.setNavigationDelegate(p);var g=a.new({utils:{emit(n,i){if(i){for(var r=[],a=2;a<arguments.length;a+=1)r.push(arguments[a]);var o=e.webContents.listeners(i);t.all(o.map((function(e){return t.resolve().then((function(){return e.apply(e,r)}))}))).then((function(e){u.evaluateJavaScript_completionHandler(c.JS_BRIDGE_RESULT_SUCCESS+n+"("+JSON.stringify(e)+")",null)})).catch((function(e){u.evaluateJavaScript_completionHandler(c.JS_BRIDGE_RESULT_ERROR+n+"("+JSON.stringify(e)+")",null)}))}else u.evaluateJavaScript_completionHandler(c.JS_BRIDGE_RESULT_SUCCESS+n+"()",null)},parseWebArguments:l}});u.configuration().userContentController().addScriptMessageHandler_name(g,c.JS_BRIDGE);var m,w={emit(){try{e.emit.apply(e,arguments)}catch(t){if("undefined"==typeof process||!process.listenerCount||!process.listenerCount("uncaughtException"))throw console.error(t),t;process.emit("uncaughtException",t,"uncaughtException")}}};d.modal&&((m="Document"===d.parent.type?d.parent.sketchObject:d.parent)&&"MSDocumentData"===String(m.class())&&(m=m.delegate()),w.parentWindow=m.windowForSheet());var y=i.new({utils:w,panel:n});n.setDelegate(y)}}).call(this,n(5))},function(module,exports){module.exports=function MochaDelegate(definition,superclass){var uniqueClassName="MochaJSDelegate_DynamicClass_"+NSUUID.UUID().UUIDString(),delegateClassDesc=MOClassDescription.allocateDescriptionForClassWithName_superclass_(uniqueClassName,superclass||NSObject),handlers={},ivars={};function setHandlerForSelector(selectorString,func){var handlerHasBeenSet=selectorString in handlers,selector=NSSelectorFromString(selectorString);if(handlers[selectorString]=func,!handlerHasBeenSet){for(var args=[],regex=/:/g;regex.exec(selectorString);)args.push("arg"+args.length);var dynamicFunction=eval("(function ("+args.join(", ")+") { return handlers[selectorString].apply(this, arguments); })");delegateClassDesc.addInstanceMethodWithSelector_function(selector,dynamicFunction)}}function setIvar(e,t){var n=e in handlers;if(ivars[e]=t,!n){delegateClassDesc.addInstanceVariableWithName_typeEncoding(e,"@");var i=MOPropertyDescription.new();i.name=e,i.typeEncoding="@",i.weak=!0,i.ivarName=e,delegateClassDesc.addProperty(i)}}this.getClass=function(){return NSClassFromString(uniqueClassName)},this.getClassInstance=function(e){var t=NSClassFromString(uniqueClassName).new();return Object.keys(ivars).forEach((function(e){t[e]=ivars[e]})),Object.keys(e||{}).forEach((function(n){t[n]=e[n]})),t},this.new=this.getClassInstance,"object"==typeof definition&&Object.keys(definition).forEach((function(e){"function"==typeof definition[e]?setHandlerForSelector(e,definition[e]):setIvar(e,definition[e])})),delegateClassDesc.registerClass()}},function(e,t){e.exports=function(e){var t=null;try{t=JSON.parse(e)}catch(n){}return t&&t.constructor&&t.constructor===Array&&0!=t.length?t:null}},function(e,t){e.exports="file://"+String(context.scriptPath).split(".sketchplugin/Contents/Sketch")[0]+".sketchplugin/Contents/Resources/_webpack_resources/d185e74ad4e53236afd37ba858a0bf3b.html"},function(e,t,n){"use strict";n.r(t),n.d(t,"onShutdown",(function(){return f})),n.d(t,"onSelectionChanged",(function(){return p}));var i=n(2),r=n.n(i),a=n(1);function o(e,t){this.x=e||0,this.y=t||0}Math.rad=Math.PI/180,Math.degrees=function(e){return(e+360)%360},Math.factorial=function(e){for(var t=1,n=2;n<=e;n++)t*=n;return t},Math.triangle=function(e){return e*(e+1)/2},Math.decimal=function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:0;return Math.round(e*Math.pow(10,t))/Math.pow(10,t)},Math.ease=function(e,t){var n={start:0,step:0,latter:0,factor:1,points:new Array};switch(e){case"ease":n.step=Math.PI/t,n.factor=2;break;case"ease-in":n.start=Math.PI/2,n.step=Math.PI/2/t;break;case"ease-out":n.step=Math.PI/2/t}if(n.step){n.latter=(Math.cos(n.start)+1)/n.factor;for(var i=0;i<=t;i++){var r=(Math.cos(n.start)+1)/n.factor,a=0==i?0:Math.abs(r-n.latter);n.start+=n.step,n.latter=r,i&&n.points.push(a)}return n.points.push(0),n.points}return!1},Math.easePower=function(e,t,n){if("linear"==e)return!1;for(var i=new Array,r=0,a=0;a<=n;a++){var o="ease"==e&&a>n/2?Math.pow(n+1-a,t):Math.pow(a,t);a&&(r+=o,"ease-in"==e?i.unshift(o):i.push(o))}for(var s=0;s<n;s++)i[s]=Math.decimal(i[s]/=r,6);return i.push(0),i},o.prototype={add:function(e){this.x+=e.x,this.y+=e.y},angle:function(){return Math.degrees(270-180*Math.atan2(this.y,-this.x)/Math.PI)},multiplier:function(e){var t=Math.degrees(this.angle()-e),n=Math.rad*t,i=Math.decimal(Math.cos(n),9);return i},radius:function(){return Math.sqrt(this.x*this.x+this.y*this.y)},root:function(){Math.abs(this.x)>Math.abs(this.y)?(this.y=this.y/Math.abs(this.x),this.x=this.x/Math.abs(this.x)):(this.x=this.x/Math.abs(this.y),this.y=this.y/Math.abs(this.y))},rotate:function(e,t){var n=Math.rad*t,i=Math.cos(n),r=Math.sin(n),a=this.x,o=this.y;this.x=i*(a-e.x)+r*(o-e.y)+e.x,this.y=i*(o-e.y)-r*(a-e.x)+e.y},substract:function(e){this.x-=e.x,this.y-=e.y}};var s=n(6),l=n(7),c=n(8),u=["Custom","Rectangle","Oval","Triangle","Polygon","Star"],d=["custom shape","rectangle","oval","triangle","polygon","star"],h=["loops","points","smooth","timing","power","squeeze","mirror","clockwise","auto"];t.default=function(e){var t={identifier:"comm.ddSpiral.webview",width:240,height:554,show:!1,backgroundColor:"#ffffffff",alwaysOnTop:!0,resizable:!1,titleBarStyle:"default",maximizable:!1,minimizable:!1},i=new r.a(t);i.once("ready-to-show",(function(){l.setSettingForKey("ddSpiralIDwindow",!0),i.show()})),i.once("close",(function(){l.setSettingForKey("ddSpiralIDwindow",!1)}));var a=i.webContents;a.on("did-finish-load",(function(){g()})),a.on("followLink",(function(e){NSWorkspace.sharedWorkspace().openURL(NSURL.URLWithString(e))})),a.on("internalRequest",(function(e){if((e=JSON.parse(e)).action)switch(e.action){case"getSelection":g();break;case"spiralise":!function(e){var t=s.getSelectedDocument(),n=e.start_val,i=e.end_val,r=e.settings;for(var a in h)l.setSettingForKey("ddSpiralID"+h[a],r[h[a]]);var c={length:new o(n.w,n.h),step:new o,target:new o(i.w,i.h),total:0,array:[]};0!=c.length.x&&0!=c.length.y||(c.length.x=1e-4,c.length.y=1e-4);0!=c.target.x&&0!=c.target.y||(c.target.x=1e-4,c.target.y=1e-4);var u={angle:Math.degrees(n.deg),step:0,target:Math.degrees(i.deg)},d={center:new o(n.x,n.y),step:0,target:new o(i.x,i.y),total:0,array:[]},f=r.loops*r.points,p=Math.easePower(r.timing,.85*r.power,f),g={first:!1,start:new o,length:0};if(r.squeeze){r.loops=Math.round(r.loops)+.5,f=r.loops*r.points,p=Math.easePower(r.timing,.85*r.power,f);for(var m=t.getLayerWithID(r.startID).sketchObject.pathInFrameWithTransforms(),w={top:!1,bottom:!1,array:[]},y=0;y<=Math.round(m.length());y++){var S=m.pointOnPathAtLength(y),v=Math.round(S.x),b=Math.round(S.y);if(g.first||(g.first=new o(v,b)),v==g.start.x&&b==g.start.y&&y!=Math.round(m.length()))g.length++;else if(g.length>2||y==Math.round(m.length())){for(var M=Math.sqrt((g.first.x-g.start.x)*(g.first.x-g.start.x)+(g.first.y-g.start.y)*(g.first.y-g.start.y)),x=new o((g.first.x-g.start.x)/M,(g.first.y-g.start.y)/M),_=0;_<M;_++){var N=Math.round(g.start.x+_*x.x),C=Math.round(g.start.y+_*x.y),W=Math.ceil(w.array[C]?N>w.array[C].high?N:w.array[C].high:N),k=Math.floor(w.array[C]?N<w.array[C].low?N:w.array[C].low:N),R=(W-k)/2,O=k+R;w.array[C]={high:W,low:k,center:O,radius:R}}g.start=new o(v,b),g.length=0}else{g.start=new o(v,b),g.length=0;var E=Math.ceil(w.array[b]?v>w.array[b].high?v:w.array[b].high:v),I=Math.floor(w.array[b]?v<w.array[b].low?v:w.array[b].low:v),D=(E-I)/2,T=I+D;w.top=b<w.top||!1===w.top?b:w.top,w.bottom=b>w.bottom||!1===w.bottom?b:w.bottom,w.array[b]={high:E,low:I,center:T,radius:D}}}u.angle=0,u.target=0;var B=c.length.y/(r.loops+0),F="linear"!=r.timing;(d={center:new o(w.array[w.top].center,w.top+(F&&("ease"==r.timing||"ease-out"==r.timing)?0:B)),step:0,target:new o(w.array[w.bottom].center,w.bottom-(F&&("ease"==r.timing||"ease-in"==r.timing)?0:B)),total:0,array:[]}).total=new o(d.target.x-d.center.x,d.target.y-d.center.y),d.step=new o(d.total.x/f,d.total.y/f),c={length:new o(w.array[w.top].radius,F&&("ease"==r.timing||"ease-out"==r.timing)?0:B),step:new o,target:new o(w.array[w.bottom].radius,F&&("ease"==r.timing||"ease-in"==r.timing)?0:B),total:0,array:[]};var P=0,A=0;for(y=0;y<=f;y++){if(p){P+=p[y]*d.total.y;var L=new o(n.x,d.center.y+P);p[y];var j=new o(c.length.x,B);F&&(A=p[y]>A?p[y]:A,j.y=p[y])}else if(y<f)L=new o(n.x,d.center.y+(y+1)*d.step.y),j=new o(c.length.x,B);var z=Math.cos(Math.rad*Math.degrees(360*r.loops/f*y*(r.clockwise?1:-1))),U=Math.round(L.y+j.y*-z),V=Math.round(L.y);w.array[V]&&(L.x=w.array[U].center,j.x=w.array[U].radius),d.array.push(L),c.array.push(j)}if(F)for(var K=0;K<c.array.length;K++)c.array[K].y*=B/A}var J=(r.clockwise?1:-1)*r.loops*360/f;u.step=Math.degrees(360+u.target)-Math.degrees(360+u.angle),u.step>180?u.step=-(360-u.step):u.step<-180&&(u.step=360+u.step);u.step>0&&!r.clockwise&&(u.step-=360);u.step<0&&r.clockwise&&(u.step+=360);if(u.step/=f,d.total=new o(d.target.x-d.center.x,d.target.y-d.center.y),d.step=new o(d.total.x/f,d.total.y/f),""!=r.pathID){var H=t.getLayerWithID(r.pathID).sketchObject.pathInFrameWithTransforms(),q=H.length()/f;S=H.pointOnPathAtLength(0),d.center=new o(S.x,S.y),p&&d.array.push(new o(S.x,S.y));var G=0;for(y=0;y<=f;y++){if(p){G+=p[y]*H.length();S=H.pointOnPathAtLength(G)}else S=H.pointOnPathAtLength(q*y);d.array.push(new o(S.x,S.y))}}c.total=new o(c.target.x-c.length.x,c.target.y-c.length.y),c.step=new o(c.total.x/f,c.total.y/f),c.max=new o(c.length.x,c.length.y);for(var Z=NSBezierPath.bezierPath(),X=0;X<=f;X++){var $=c.length.x>c.length.y?c.length.x:c.length.y,Q=(new o(c.length.x/$,c.length.y/$),X*J),Y=new o(Math.sin(Math.rad*Q)*c.length.x,Math.cos(Math.rad*Q)*-c.length.y);if(Y.add(d.center),Y.rotate(d.center,-u.angle),r.smooth){var ee=u.step+J,te=Math.tan(Math.PI/(360/ee*2))/3*4,ne=Q+90;ne=Math.degrees(ne);var ie=new o(Math.sin(Math.rad*ne)*c.length.x*te,Math.cos(Math.rad*ne)*-c.length.y*te),re=c.length.x,ae=c.length.y,oe=(re-ae)*(re-ae)/((re+ae)*(re+ae))*3,se=Math.PI*(re+ae)*(1+oe/(10+Math.sqrt(4-oe)));isNaN(se)&&(se=0);var le=Math.sqrt(ie.x*ie.x+ie.y*ie.y),ce=r.loops*r.clockwise?360:-360,ue=f*u.step,de=ce/(ce+ue),he=se?le/(se/r.points)*de:0,fe=new o(0,0);(fe=d.array.length?X!=Math.floor(f)?new o((d.array[X+1].x-d.array[X].x)*he,(d.array[X+1].y-d.array[X].y)*he):new o((d.array[X].x-d.array[X-1].x)*he,(d.array[X].y-d.array[X-1].y)*he):p?new o(p[X]*d.total.x*he,p[X]*d.total.y*he):new o(d.step.x*he,d.step.y*he)).rotate(new o,u.angle),ie.add(fe);var pe=new o(Y.x,Y.y);pe.substract(d.center),pe.rotate(new o,u.angle);var ge=pe.angle();if(c.array.length)we=X!=Math.floor(f)?new o((c.array[X].x-c.array[X].x)*he,(c.array[X].y-c.array[X].y)*he):new o((c.array[X].x-c.array[X-1].x)*he,(c.array[X].y-c.array[X-1].y)*he);else if(p)if(4==r.type&&r.mirror)if(X<p.length/2)var me=p[2*X],we=new o(Math.sin(Math.rad*ge)*me*c.total.x*2*he,Math.cos(Math.rad*ge)*me*-c.total.y*2*he);else{var ye=p[2*(p.length-1-X)];we=new o(Math.sin(Math.rad*ge)*(-ye*c.total.x*2)*he,Math.cos(Math.rad*ge)*(-ye*-c.total.y*2)*he)}else{var Se=p[X];Se||(Se=p[X-1]);we=new o(Math.sin(Math.rad*ge)*Se*c.total.x*he,Math.cos(Math.rad*ge)*Se*-c.total.y*he)}else if(r.mirror)if(X<f/2)we=new o(Math.sin(Math.rad*ge)*c.step.x*2*he,Math.cos(Math.rad*ge)*-c.step.y*2*he);else we=new o(Math.sin(Math.rad*ge)*c.step.x*-2*he,Math.cos(Math.rad*ge)*-c.step.y*-2*he);else we=new o(Math.sin(Math.rad*ge)*c.step.x*he,Math.cos(Math.rad*ge)*-c.step.y*he);ie.add(we),ie.x*=r.smooth,ie.y*=r.smooth;var ve=new o(ie.x,ie.y);ie.add(Y),ie.rotate(Y,180-u.angle)}else be=Y,ie=Y,ve=Y;X?Z.curveToPoint_controlPoint1_controlPoint2(NSMakePoint(Y.x,Y.y),NSMakePoint(be.x,be.y),NSMakePoint(ie.x,ie.y)):Z.moveToPoint(NSMakePoint(Y.x,Y.y));var be=new o(ve.x,ve.y);if(d.array.length,be.add(Y),be.rotate(Y,-u.angle),u.angle+=u.step,d.array.length?X!=Math.floor(f)&&(d.center=new o(d.array[X+1].x,d.array[X+1].y)):p?(4==r.type&&r.mirror,d.center.x+=p[X]*d.total.x,d.center.y+=p[X]*d.total.y):d.center.add(d.step),c.array.length)X!=Math.floor(f)&&(c.length=new o(c.array[X+1].x,c.array[X+1].y));else if(p)if(4==r.type&&r.mirror)if(X<p.length/2){var Me=p[2*X];c.length.x+=Me*c.total.x*2,c.length.y+=Me*c.total.y*2}else{var xe=p[2*(p.length-1-X)];c.length.x-=xe*c.total.x*2,c.length.y-=xe*c.total.y*2}else{var _e=p[X];c.length.x+=_e*c.total.x,c.length.y+=_e*c.total.y}else r.mirror?X<f/2?(c.length.x+=2*c.step.x,c.length.y+=2*c.step.y):(c.length.x-=2*c.step.x,c.length.y-=2*c.step.y):(c.length.x+=c.step.x,c.length.y+=c.step.y);0!=c.length.x&&0!=c.length.y||(c.length.x=1e-4,c.length.y=1e-4)}var Ne=MSShapePathLayer.layerWithPath(MSPath.pathWithBezierPath(Z));Ne.style().addStylePartOfType(1).thickness=1,Ne.style().borderOptions().setLineCapStyle(1),l.setLayerSettingForKey(Ne,"ddSpiralID","spiral");var Ce=l.settingForKey("ddSpiralID");if(Ce){t.getLayerWithID(Ce).remove()}if(l.setSettingForKey("ddSpiralID",Ne.objectID()),""!=r.parentID){var We=t.getLayerWithID(r.parentID);(We=We.sketchObject).addLayers([Ne])}else(t=t.sketchObject).currentPage().addLayers([Ne])}(e);break;case"clear":!function(e){var t=s.getSelectedDocument(),n=e.settings;if(""!=n.pathID){t.getLayerWithID(n.pathID).remove()}if(""!=n.startID){t.getLayerWithID(n.startID).remove()}if(""!=n.endID){t.getLayerWithID(n.endID).remove()}}(e)}})),i.loadURL(n(18))};function f(){var e=Object(a.getWebview)("comm.ddSpiral.webview");e&&e.close()}function p(e){l.settingForKey("ddSpiralIDwindow")&&g()}function g(){var e=s.getSelectedDocument().selectedLayers.layers;l.setSettingForKey("ddSpiralID",!1);var t={objects:0,shapes:0,rects:0,paths:0,parentObj:!1,startObj:!1,endObj:!1},n={theme:"light",type:0,shape:"",clear:!1,isSpiral:!1,startID:"",endID:"",pathID:"",parentID:""};for(var i in h){var r=l.settingForKey("ddSpiralID"+h[i]);n[h[i]]=r||!1===r?r:"undefined"}for(var o={x:0,y:0,w:0,h:0,deg:0,worldDeg:0},f={x:0,y:0,w:0,h:0,deg:0,worldDeg:0},p=!0,g=0;g<e.length;g++){var w=e[g],y=w.shapeType;if(u.indexOf(y)>-1&&!w.closed){if(t.paths++,1==t.paths){n.isSpiral=l.layerSettingForKey(w,"ddSpiralID"),t.parentObj=w.parent,n.parentID=w.parent.id;var S=w.sketchObject,v=NSBezierPath.bezierPathWithCGPath(S.pathInFrameWithTransforms().CGPath()).length()/10;v=v>50?50:v,n.pathID=w.id,p&&(o.w=v,o.h=v,o.deg=Math.degrees(w.transform.rotation-0),f.w=v,f.h=v,f.deg=Math.degrees(w.transform.rotation-0))}}else u.indexOf(y)>-1?(t.shapes++,n.shape=d[u.indexOf(y)],"Rectangle"==y&&t.rects++):t.objects++,t.paths||(t.parentObj=w.parent,n.parentID=w.parent.id),p?(p=!1,t.startObj=w.parent,n.startID=w.id,o.x=w.frame.x+w.frame.width/2,o.y=w.frame.y+w.frame.height/2,o.w=.5*w.frame.width,o.h=.5*w.frame.height,o.deg=Math.degrees(w.transform.rotation-0),f.x=w.frame.x+w.frame.width/2,f.y=w.frame.y+w.frame.height/2,f.w=0,f.h=0,f.deg=Math.degrees(w.transform.rotation-0)):(t.endObj=w.parent,n.endID=w.id,f.x=w.frame.x+w.frame.width/2,f.y=w.frame.y+w.frame.height/2,f.w=.5*w.frame.width,f.h=.5*w.frame.height,f.deg=Math.degrees(w.transform.rotation-0))}var b=t.objects,M=t.shapes,x=t.paths,_=t.rects;n.type=0,1!=b||M||x?(b||1!=M||_||x)&&(b||1!=M||!_||x)?b+M<2&&1==x?n.type=4:b+M!=2||x?b+M+x==3&&1==x&&(n.type=4):n.type=5:n.type=2:n.type=1,t.parentObj=m(t.parentObj),t.startObj=m(t.startObj),t.endObj=m(t.endObj),o.worldDeg=t.startObj.r,f.worldDeg=t.startObj.r,5==n.type&&t.startObj&&t.endObj&&t.startObj.id!=t.endObj.id&&(o.x+=t.startObj.x,o.y+=t.startObj.y,o.deg=Math.degrees(o.deg+t.startObj.r),o.worldDeg=0,f.x+=t.endObj.x,f.y+=t.endObj.y,f.deg=Math.degrees(f.deg+t.endObj.r),f.worldDeg=0,n.parentID=""),4==n.type&&t.startObj.id&&t.startObj.id!=t.parentObj.id&&(o.x+=t.startObj.x-t.parentObj.x,o.y+=t.startObj.y-t.parentObj.y,o.deg=Math.degrees(o.deg+t.startObj.r-t.parentObj.r),o.worldDeg=t.parentObj.r,4==n.type&&t.endObj.id&&t.endObj.id!=t.parentObj.id?(f.x+=t.endObj.x-t.parentObj.x,f.y+=t.endObj.y-t.parentObj.y,f.deg=Math.degrees(f.deg+t.endObj.r-t.parentObj.r)):f.deg=o.deg,f.worldDeg=t.parentObj.r),n.theme=c.getTheme(),function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:"internalResponse";e=JSON.stringify(e),Object(a.isWebviewPresent)("comm.ddSpiral.webview")&&Object(a.sendToWebview)("comm.ddSpiral.webview","".concat(t,"(").concat(e,")"))}({selection:n,start_val:o,end_val:f},"setSelection")}function m(e){for(var t={id:!!e.id&&e.id,x:0,y:0,r:0};e&&e.name;)t.x+=e.frame.x,t.y+=e.frame.y,t.r+=e.transform.rotation,e=e.parent;return t}}]);if("default"===key&&"function"==typeof exports)exports(context);else{if("function"!=typeof exports[key])throw new Error('Missing export named "'+key+'". Your command should contain something like `export function " + key +"() {}`.');exports[key](context)}}catch(err){if("undefined"==typeof process||!process.listenerCount||!process.listenerCount("uncaughtException"))throw err;process.emit("uncaughtException",err,"uncaughtException")}}globalThis.onRun=__skpm_run.bind(this,"default"),globalThis.onShutdown=__skpm_run.bind(this,"onShutdown"),globalThis.onSelectionChanged=__skpm_run.bind(this,"onSelectionChanged");
+var globalThis = this;
+var global = this;
+function __skpm_run (key, context) {
+  globalThis.context = context;
+  try {
+
+var exports =
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/ddSpiral.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./node_modules/@skpm/promise/index.js":
+/*!*********************************************!*\
+  !*** ./node_modules/@skpm/promise/index.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* from https://github.com/taylorhakes/promise-polyfill */
+
+function promiseFinally(callback) {
+  var constructor = this.constructor;
+  return this.then(
+    function(value) {
+      return constructor.resolve(callback()).then(function() {
+        return value;
+      });
+    },
+    function(reason) {
+      return constructor.resolve(callback()).then(function() {
+        return constructor.reject(reason);
+      });
+    }
+  );
+}
+
+function noop() {}
+
+/**
+ * @constructor
+ * @param {Function} fn
+ */
+function Promise(fn) {
+  if (!(this instanceof Promise))
+    throw new TypeError("Promises must be constructed via new");
+  if (typeof fn !== "function") throw new TypeError("not a function");
+  /** @type {!number} */
+  this._state = 0;
+  /** @type {!boolean} */
+  this._handled = false;
+  /** @type {Promise|undefined} */
+  this._value = undefined;
+  /** @type {!Array<!Function>} */
+  this._deferreds = [];
+
+  doResolve(fn, this);
+}
+
+function handle(self, deferred) {
+  while (self._state === 3) {
+    self = self._value;
+  }
+  if (self._state === 0) {
+    self._deferreds.push(deferred);
+    return;
+  }
+  self._handled = true;
+  Promise._immediateFn(function() {
+    var cb = self._state === 1 ? deferred.onFulfilled : deferred.onRejected;
+    if (cb === null) {
+      (self._state === 1 ? resolve : reject)(deferred.promise, self._value);
+      return;
+    }
+    var ret;
+    try {
+      ret = cb(self._value);
+    } catch (e) {
+      reject(deferred.promise, e);
+      return;
+    }
+    resolve(deferred.promise, ret);
+  });
+}
+
+function resolve(self, newValue) {
+  try {
+    // Promise Resolution Procedure: https://github.com/promises-aplus/promises-spec#the-promise-resolution-procedure
+    if (newValue === self)
+      throw new TypeError("A promise cannot be resolved with itself.");
+    if (
+      newValue &&
+      (typeof newValue === "object" || typeof newValue === "function")
+    ) {
+      var then = newValue.then;
+      if (newValue instanceof Promise) {
+        self._state = 3;
+        self._value = newValue;
+        finale(self);
+        return;
+      } else if (typeof then === "function") {
+        doResolve(then.bind(newValue), self);
+        return;
+      }
+    }
+    self._state = 1;
+    self._value = newValue;
+    finale(self);
+  } catch (e) {
+    reject(self, e);
+  }
+}
+
+function reject(self, newValue) {
+  self._state = 2;
+  self._value = newValue;
+  finale(self);
+}
+
+function finale(self) {
+  if (self._state === 2 && self._deferreds.length === 0) {
+    Promise._immediateFn(function() {
+      if (!self._handled) {
+        Promise._unhandledRejectionFn(self._value, self);
+      }
+    });
+  }
+
+  for (var i = 0, len = self._deferreds.length; i < len; i++) {
+    handle(self, self._deferreds[i]);
+  }
+  self._deferreds = null;
+}
+
+/**
+ * @constructor
+ */
+function Handler(onFulfilled, onRejected, promise) {
+  this.onFulfilled = typeof onFulfilled === "function" ? onFulfilled : null;
+  this.onRejected = typeof onRejected === "function" ? onRejected : null;
+  this.promise = promise;
+}
+
+/**
+ * Take a potentially misbehaving resolver function and make sure
+ * onFulfilled and onRejected are only called once.
+ *
+ * Makes no guarantees about asynchrony.
+ */
+function doResolve(fn, self) {
+  var done = false;
+  try {
+    fn(
+      function(value) {
+        if (done) {
+          Promise._multipleResolvesFn("resolve", self, value);
+          return;
+        }
+        done = true;
+        resolve(self, value);
+      },
+      function(reason) {
+        if (done) {
+          Promise._multipleResolvesFn("reject", self, reason);
+          return;
+        }
+        done = true;
+        reject(self, reason);
+      }
+    );
+  } catch (ex) {
+    if (done) {
+      Promise._multipleResolvesFn("reject", self, ex);
+      return;
+    }
+    done = true;
+    reject(self, ex);
+  }
+}
+
+Promise.prototype["catch"] = function(onRejected) {
+  return this.then(null, onRejected);
+};
+
+Promise.prototype.then = function(onFulfilled, onRejected) {
+  // @ts-ignore
+  var prom = new this.constructor(noop);
+
+  handle(this, new Handler(onFulfilled, onRejected, prom));
+  return prom;
+};
+
+Promise.prototype["finally"] = promiseFinally;
+
+Promise.all = function(arr) {
+  return new Promise(function(resolve, reject) {
+    if (!Array.isArray(arr)) {
+      return reject(new TypeError("Promise.all accepts an array"));
+    }
+
+    var args = Array.prototype.slice.call(arr);
+    if (args.length === 0) return resolve([]);
+    var remaining = args.length;
+
+    function res(i, val) {
+      try {
+        if (val && (typeof val === "object" || typeof val === "function")) {
+          var then = val.then;
+          if (typeof then === "function") {
+            then.call(
+              val,
+              function(val) {
+                res(i, val);
+              },
+              reject
+            );
+            return;
+          }
+        }
+        args[i] = val;
+        if (--remaining === 0) {
+          resolve(args);
+        }
+      } catch (ex) {
+        reject(ex);
+      }
+    }
+
+    for (var i = 0; i < args.length; i++) {
+      res(i, args[i]);
+    }
+  });
+};
+
+Promise.resolve = function(value) {
+  if (value && typeof value === "object" && value.constructor === Promise) {
+    return value;
+  }
+
+  return new Promise(function(resolve) {
+    resolve(value);
+  });
+};
+
+Promise.reject = function(value) {
+  return new Promise(function(resolve, reject) {
+    reject(value);
+  });
+};
+
+Promise.race = function(arr) {
+  return new Promise(function(resolve, reject) {
+    if (!Array.isArray(arr)) {
+      return reject(new TypeError("Promise.race accepts an array"));
+    }
+
+    for (var i = 0, len = arr.length; i < len; i++) {
+      Promise.resolve(arr[i]).then(resolve, reject);
+    }
+  });
+};
+
+// Use polyfill for setImmediate for performance gains
+Promise._immediateFn = setImmediate;
+
+Promise._unhandledRejectionFn = function _unhandledRejectionFn(err, promise) {
+  if (
+    typeof process !== "undefined" &&
+    process.listenerCount &&
+    (process.listenerCount("unhandledRejection") ||
+      process.listenerCount("uncaughtException"))
+  ) {
+    process.emit("unhandledRejection", err, promise);
+    process.emit("uncaughtException", err, "unhandledRejection");
+  } else if (typeof console !== "undefined" && console) {
+    console.warn("Possible Unhandled Promise Rejection:", err);
+  }
+};
+
+Promise._multipleResolvesFn = function _multipleResolvesFn(
+  type,
+  promise,
+  value
+) {
+  if (typeof process !== "undefined" && process.emit) {
+    process.emit("multipleResolves", type, promise, value);
+  }
+};
+
+module.exports = Promise;
+
+
+/***/ }),
+
+/***/ "./node_modules/mocha-js-delegate/index.js":
+/*!*************************************************!*\
+  !*** ./node_modules/mocha-js-delegate/index.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* globals MOClassDescription, NSObject, NSSelectorFromString, NSClassFromString, MOPropertyDescription */
+
+module.exports = function MochaDelegate(definition, superclass) {
+  var uniqueClassName =
+    'MochaJSDelegate_DynamicClass_' + NSUUID.UUID().UUIDString()
+
+  var delegateClassDesc = MOClassDescription.allocateDescriptionForClassWithName_superclass_(
+    uniqueClassName,
+    superclass || NSObject
+  )
+
+  // Storage
+  var handlers = {}
+  var ivars = {}
+
+  // Define an instance method
+  function setHandlerForSelector(selectorString, func) {
+    var handlerHasBeenSet = selectorString in handlers
+    var selector = NSSelectorFromString(selectorString)
+
+    handlers[selectorString] = func
+
+    /*
+      For some reason, Mocha acts weird about arguments: https://github.com/logancollins/Mocha/issues/28
+      We have to basically create a dynamic handler with a likewise dynamic number of predefined arguments.
+    */
+    if (!handlerHasBeenSet) {
+      var args = []
+      var regex = /:/g
+      while (regex.exec(selectorString)) {
+        args.push('arg' + args.length)
+      }
+
+      // eslint-disable-next-line no-eval
+      var dynamicFunction = eval(
+        '(function (' +
+          args.join(', ') +
+          ') { return handlers[selectorString].apply(this, arguments); })'
+      )
+
+      delegateClassDesc.addInstanceMethodWithSelector_function(
+        selector,
+        dynamicFunction
+      )
+    }
+  }
+
+  // define a property
+  function setIvar(key, value) {
+    var ivarHasBeenSet = key in handlers
+
+    ivars[key] = value
+
+    if (!ivarHasBeenSet) {
+      delegateClassDesc.addInstanceVariableWithName_typeEncoding(key, '@')
+      var description = MOPropertyDescription.new()
+      description.name = key
+      description.typeEncoding = '@'
+      description.weak = true
+      description.ivarName = key
+      delegateClassDesc.addProperty(description)
+    }
+  }
+
+  this.getClass = function() {
+    return NSClassFromString(uniqueClassName)
+  }
+
+  this.getClassInstance = function(instanceVariables) {
+    var instance = NSClassFromString(uniqueClassName).new()
+    Object.keys(ivars).forEach(function(key) {
+      instance[key] = ivars[key]
+    })
+    Object.keys(instanceVariables || {}).forEach(function(key) {
+      instance[key] = instanceVariables[key]
+    })
+    return instance
+  }
+  // alias
+  this.new = this.getClassInstance
+
+  // Convenience
+  if (typeof definition === 'object') {
+    Object.keys(definition).forEach(
+      function(key) {
+        if (typeof definition[key] === 'function') {
+          setHandlerForSelector(key, definition[key])
+        } else {
+          setIvar(key, definition[key])
+        }
+      }
+    )
+  }
+
+  delegateClassDesc.registerClass()
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/sketch-module-web-view/lib/browser-api.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/sketch-module-web-view/lib/browser-api.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function parseHexColor(color) {
+  // Check the string for incorrect formatting.
+  if (!color || color[0] !== '#') {
+    if (
+      color &&
+      typeof color.isKindOfClass === 'function' &&
+      color.isKindOfClass(NSColor)
+    ) {
+      return color
+    }
+    throw new Error(
+      'Incorrect color formating. It should be an hex color: #RRGGBBAA'
+    )
+  }
+
+  // append FF if alpha channel is not specified.
+  var source = color.substr(1)
+  if (source.length === 3) {
+    source += 'F'
+  } else if (source.length === 6) {
+    source += 'FF'
+  }
+  // Convert the string from #FFF format to #FFFFFF format.
+  var hex
+  if (source.length === 4) {
+    for (var i = 0; i < 4; i += 1) {
+      hex += source[i]
+      hex += source[i]
+    }
+  } else if (source.length === 8) {
+    hex = source
+  } else {
+    return NSColor.whiteColor()
+  }
+
+  var r = parseInt(hex.slice(0, 2), 16) / 255
+  var g = parseInt(hex.slice(2, 4), 16) / 255
+  var b = parseInt(hex.slice(4, 6), 16) / 255
+  var a = parseInt(hex.slice(6, 8), 16) / 255
+
+  return NSColor.colorWithSRGBRed_green_blue_alpha(r, g, b, a)
+}
+
+module.exports = function (browserWindow, panel, webview) {
+  // keep reference to the subviews
+  browserWindow._panel = panel
+  browserWindow._webview = webview
+  browserWindow._destroyed = false
+
+  browserWindow.destroy = function () {
+    return panel.close()
+  }
+
+  browserWindow.close = function () {
+    if (panel.delegate().utils && panel.delegate().utils.parentWindow) {
+      var shouldClose = true
+      browserWindow.emit('close', {
+        get defaultPrevented() {
+          return !shouldClose
+        },
+        preventDefault: function () {
+          shouldClose = false
+        },
+      })
+      if (shouldClose) {
+        panel.delegate().utils.parentWindow.endSheet(panel)
+      }
+      return
+    }
+
+    if (!browserWindow.isClosable()) {
+      return
+    }
+
+    panel.performClose(null)
+  }
+
+  function focus(focused) {
+    if (!browserWindow.isVisible()) {
+      return
+    }
+    if (focused) {
+      NSApplication.sharedApplication().activateIgnoringOtherApps(true)
+      panel.makeKeyAndOrderFront(null)
+    } else {
+      panel.orderBack(null)
+      NSApp.mainWindow().makeKeyAndOrderFront(null)
+    }
+  }
+
+  browserWindow.focus = focus.bind(this, true)
+  browserWindow.blur = focus.bind(this, false)
+
+  browserWindow.isFocused = function () {
+    return panel.isKeyWindow()
+  }
+
+  browserWindow.isDestroyed = function () {
+    return browserWindow._destroyed
+  }
+
+  browserWindow.show = function () {
+    // This method is supposed to put focus on window, however if the app does not
+    // have focus then "makeKeyAndOrderFront" will only show the window.
+    NSApp.activateIgnoringOtherApps(true)
+
+    if (panel.delegate().utils && panel.delegate().utils.parentWindow) {
+      return panel.delegate().utils.parentWindow.beginSheet_completionHandler(
+        panel,
+        __mocha__.createBlock_function('v16@?0q8', function () {
+          browserWindow.emit('closed')
+        })
+      )
+    }
+
+    return panel.makeKeyAndOrderFront(null)
+  }
+
+  browserWindow.showInactive = function () {
+    return panel.orderFrontRegardless()
+  }
+
+  browserWindow.hide = function () {
+    return panel.orderOut(null)
+  }
+
+  browserWindow.isVisible = function () {
+    return panel.isVisible()
+  }
+
+  browserWindow.isModal = function () {
+    return false
+  }
+
+  browserWindow.maximize = function () {
+    if (!browserWindow.isMaximized()) {
+      panel.zoom(null)
+    }
+  }
+  browserWindow.unmaximize = function () {
+    if (browserWindow.isMaximized()) {
+      panel.zoom(null)
+    }
+  }
+
+  browserWindow.isMaximized = function () {
+    if ((panel.styleMask() & NSResizableWindowMask) !== 0) {
+      return panel.isZoomed()
+    }
+    var rectScreen = NSScreen.mainScreen().visibleFrame()
+    var rectWindow = panel.frame()
+    return (
+      rectScreen.origin.x == rectWindow.origin.x &&
+      rectScreen.origin.y == rectWindow.origin.y &&
+      rectScreen.size.width == rectWindow.size.width &&
+      rectScreen.size.height == rectWindow.size.height
+    )
+  }
+
+  browserWindow.minimize = function () {
+    return panel.miniaturize(null)
+  }
+
+  browserWindow.restore = function () {
+    return panel.deminiaturize(null)
+  }
+
+  browserWindow.isMinimized = function () {
+    return panel.isMiniaturized()
+  }
+
+  browserWindow.setFullScreen = function (fullscreen) {
+    if (fullscreen !== browserWindow.isFullscreen()) {
+      panel.toggleFullScreen(null)
+    }
+  }
+
+  browserWindow.isFullscreen = function () {
+    return panel.styleMask() & NSFullScreenWindowMask
+  }
+
+  browserWindow.setAspectRatio = function (aspectRatio /* , extraSize */) {
+    // Reset the behaviour to default if aspect_ratio is set to 0 or less.
+    if (aspectRatio > 0.0) {
+      panel.setAspectRatio(NSMakeSize(aspectRatio, 1.0))
+    } else {
+      panel.setResizeIncrements(NSMakeSize(1.0, 1.0))
+    }
+  }
+
+  browserWindow.setBounds = function (bounds, animate) {
+    if (!bounds) {
+      return
+    }
+
+    // Do nothing if in fullscreen mode.
+    if (browserWindow.isFullscreen()) {
+      return
+    }
+
+    const newBounds = Object.assign(browserWindow.getBounds(), bounds)
+
+    // TODO: Check size constraints since setFrame does not check it.
+    // var size = bounds.size
+    // size.SetToMax(GetMinimumSize());
+    // gfx::Size max_size = GetMaximumSize();
+    // if (!max_size.IsEmpty())
+    //   size.SetToMin(max_size);
+
+    var cocoaBounds = NSMakeRect(
+      newBounds.x,
+      0,
+      newBounds.width,
+      newBounds.height
+    )
+    // Flip Y coordinates based on the primary screen
+    var screen = NSScreen.screens().firstObject()
+    cocoaBounds.origin.y = NSHeight(screen.frame()) - newBounds.y
+
+    panel.setFrame_display_animate(cocoaBounds, true, animate)
+  }
+
+  browserWindow.getBounds = function () {
+    const cocoaBounds = panel.frame()
+    var mainScreenRect = NSScreen.screens().firstObject().frame()
+    return {
+      x: cocoaBounds.origin.x,
+      y: Math.round(NSHeight(mainScreenRect) - cocoaBounds.origin.y),
+      width: cocoaBounds.size.width,
+      height: cocoaBounds.size.height,
+    }
+  }
+
+  browserWindow.setContentBounds = function (bounds, animate) {
+    // TODO:
+    browserWindow.setBounds(bounds, animate)
+  }
+
+  browserWindow.getContentBounds = function () {
+    // TODO:
+    return browserWindow.getBounds()
+  }
+
+  browserWindow.setSize = function (width, height, animate) {
+    // TODO: handle resizing around center
+    return browserWindow.setBounds({ width: width, height: height }, animate)
+  }
+
+  browserWindow.getSize = function () {
+    var bounds = browserWindow.getBounds()
+    return [bounds.width, bounds.height]
+  }
+
+  browserWindow.setContentSize = function (width, height, animate) {
+    // TODO: handle resizing around center
+    return browserWindow.setContentBounds(
+      { width: width, height: height },
+      animate
+    )
+  }
+
+  browserWindow.getContentSize = function () {
+    var bounds = browserWindow.getContentBounds()
+    return [bounds.width, bounds.height]
+  }
+
+  browserWindow.setMinimumSize = function (width, height) {
+    const minSize = CGSizeMake(width, height)
+    panel.setContentMinSize(minSize)
+  }
+
+  browserWindow.getMinimumSize = function () {
+    const size = panel.contentMinSize()
+    return [size.width, size.height]
+  }
+
+  browserWindow.setMaximumSize = function (width, height) {
+    const maxSize = CGSizeMake(width, height)
+    panel.setContentMaxSize(maxSize)
+  }
+
+  browserWindow.getMaximumSize = function () {
+    const size = panel.contentMaxSize()
+    return [size.width, size.height]
+  }
+
+  browserWindow.setResizable = function (resizable) {
+    return browserWindow._setStyleMask(resizable, NSResizableWindowMask)
+  }
+
+  browserWindow.isResizable = function () {
+    return panel.styleMask() & NSResizableWindowMask
+  }
+
+  browserWindow.setMovable = function (movable) {
+    return panel.setMovable(movable)
+  }
+  browserWindow.isMovable = function () {
+    return panel.isMovable()
+  }
+
+  browserWindow.setMinimizable = function (minimizable) {
+    return browserWindow._setStyleMask(minimizable, NSMiniaturizableWindowMask)
+  }
+
+  browserWindow.isMinimizable = function () {
+    return panel.styleMask() & NSMiniaturizableWindowMask
+  }
+
+  browserWindow.setMaximizable = function (maximizable) {
+    if (panel.standardWindowButton(NSWindowZoomButton)) {
+      panel.standardWindowButton(NSWindowZoomButton).setEnabled(maximizable)
+    }
+  }
+
+  browserWindow.isMaximizable = function () {
+    return (
+      panel.standardWindowButton(NSWindowZoomButton) &&
+      panel.standardWindowButton(NSWindowZoomButton).isEnabled()
+    )
+  }
+
+  browserWindow.setFullScreenable = function (fullscreenable) {
+    browserWindow._setCollectionBehavior(
+      fullscreenable,
+      NSWindowCollectionBehaviorFullScreenPrimary
+    )
+    // On EL Capitan this flag is required to hide fullscreen button.
+    browserWindow._setCollectionBehavior(
+      !fullscreenable,
+      NSWindowCollectionBehaviorFullScreenAuxiliary
+    )
+  }
+
+  browserWindow.isFullScreenable = function () {
+    var collectionBehavior = panel.collectionBehavior()
+    return collectionBehavior & NSWindowCollectionBehaviorFullScreenPrimary
+  }
+
+  browserWindow.setClosable = function (closable) {
+    browserWindow._setStyleMask(closable, NSClosableWindowMask)
+  }
+
+  browserWindow.isClosable = function () {
+    return panel.styleMask() & NSClosableWindowMask
+  }
+
+  browserWindow.setAlwaysOnTop = function (top, level, relativeLevel) {
+    var windowLevel = NSNormalWindowLevel
+    var maxWindowLevel = CGWindowLevelForKey(kCGMaximumWindowLevelKey)
+    var minWindowLevel = CGWindowLevelForKey(kCGMinimumWindowLevelKey)
+
+    if (top) {
+      if (level === 'normal') {
+        windowLevel = NSNormalWindowLevel
+      } else if (level === 'torn-off-menu') {
+        windowLevel = NSTornOffMenuWindowLevel
+      } else if (level === 'modal-panel') {
+        windowLevel = NSModalPanelWindowLevel
+      } else if (level === 'main-menu') {
+        windowLevel = NSMainMenuWindowLevel
+      } else if (level === 'status') {
+        windowLevel = NSStatusWindowLevel
+      } else if (level === 'pop-up-menu') {
+        windowLevel = NSPopUpMenuWindowLevel
+      } else if (level === 'screen-saver') {
+        windowLevel = NSScreenSaverWindowLevel
+      } else if (level === 'dock') {
+        // Deprecated by macOS, but kept for backwards compatibility
+        windowLevel = NSDockWindowLevel
+      } else {
+        windowLevel = NSFloatingWindowLevel
+      }
+    }
+
+    var newLevel = windowLevel + (relativeLevel || 0)
+    if (newLevel >= minWindowLevel && newLevel <= maxWindowLevel) {
+      panel.setLevel(newLevel)
+    } else {
+      throw new Error(
+        'relativeLevel must be between ' +
+          minWindowLevel +
+          ' and ' +
+          maxWindowLevel
+      )
+    }
+  }
+
+  browserWindow.isAlwaysOnTop = function () {
+    return panel.level() !== NSNormalWindowLevel
+  }
+
+  browserWindow.moveTop = function () {
+    return panel.orderFrontRegardless()
+  }
+
+  browserWindow.center = function () {
+    panel.center()
+  }
+
+  browserWindow.setPosition = function (x, y, animate) {
+    return browserWindow.setBounds({ x: x, y: y }, animate)
+  }
+
+  browserWindow.getPosition = function () {
+    var bounds = browserWindow.getBounds()
+    return [bounds.x, bounds.y]
+  }
+
+  browserWindow.setTitle = function (title) {
+    panel.setTitle(title)
+  }
+
+  browserWindow.getTitle = function () {
+    return String(panel.title())
+  }
+
+  var attentionRequestId = 0
+  browserWindow.flashFrame = function (flash) {
+    if (flash) {
+      attentionRequestId = NSApp.requestUserAttention(NSInformationalRequest)
+    } else {
+      NSApp.cancelUserAttentionRequest(attentionRequestId)
+      attentionRequestId = 0
+    }
+  }
+
+  browserWindow.getNativeWindowHandle = function () {
+    return panel
+  }
+
+  browserWindow.getNativeWebViewHandle = function () {
+    return webview
+  }
+
+  browserWindow.loadURL = function (url) {
+    // When frameLocation is a file, prefix it with the Sketch Resources path
+    if (/^(?!https?|file).*\.html?$/.test(url)) {
+      if (typeof __command !== 'undefined' && __command.pluginBundle()) {
+        url =
+          'file://' + __command.pluginBundle().urlForResourceNamed(url).path()
+      }
+    }
+
+    if (/^file:\/\/.*\.html?$/.test(url)) {
+      // ensure URLs containing spaces are properly handled
+      url = NSString.alloc().initWithString(url)
+      url = url.stringByAddingPercentEncodingWithAllowedCharacters(
+        NSCharacterSet.URLQueryAllowedCharacterSet()
+      )
+      webview.loadFileURL_allowingReadAccessToURL(
+        NSURL.URLWithString(url),
+        NSURL.URLWithString('file:///')
+      )
+      return
+    }
+
+    const properURL = NSURL.URLWithString(url)
+    const urlRequest = NSURLRequest.requestWithURL(properURL)
+
+    webview.loadRequest(urlRequest)
+  }
+
+  browserWindow.reload = function () {
+    webview.reload()
+  }
+
+  browserWindow.setHasShadow = function (hasShadow) {
+    return panel.setHasShadow(hasShadow)
+  }
+
+  browserWindow.hasShadow = function () {
+    return panel.hasShadow()
+  }
+
+  browserWindow.setOpacity = function (opacity) {
+    return panel.setAlphaValue(opacity)
+  }
+
+  browserWindow.getOpacity = function () {
+    return panel.alphaValue()
+  }
+
+  browserWindow.setVisibleOnAllWorkspaces = function (visible) {
+    return browserWindow._setCollectionBehavior(
+      visible,
+      NSWindowCollectionBehaviorCanJoinAllSpaces
+    )
+  }
+
+  browserWindow.isVisibleOnAllWorkspaces = function () {
+    var collectionBehavior = panel.collectionBehavior()
+    return collectionBehavior & NSWindowCollectionBehaviorCanJoinAllSpaces
+  }
+
+  browserWindow.setIgnoreMouseEvents = function (ignore) {
+    return panel.setIgnoresMouseEvents(ignore)
+  }
+
+  browserWindow.setContentProtection = function (enable) {
+    panel.setSharingType(enable ? NSWindowSharingNone : NSWindowSharingReadOnly)
+  }
+
+  browserWindow.setAutoHideCursor = function (autoHide) {
+    panel.setDisableAutoHideCursor(autoHide)
+  }
+
+  browserWindow.setVibrancy = function (type) {
+    var effectView = browserWindow._vibrantView
+
+    if (!type) {
+      if (effectView == null) {
+        return
+      }
+
+      effectView.removeFromSuperview()
+      panel.setVibrantView(null)
+      return
+    }
+
+    if (effectView == null) {
+      var contentView = panel.contentView()
+      effectView = NSVisualEffectView.alloc().initWithFrame(
+        contentView.bounds()
+      )
+      browserWindow._vibrantView = effectView
+
+      effectView.setAutoresizingMask(NSViewWidthSizable | NSViewHeightSizable)
+      effectView.setBlendingMode(NSVisualEffectBlendingModeBehindWindow)
+      effectView.setState(NSVisualEffectStateActive)
+      effectView.setFrame(contentView.bounds())
+      contentView.addSubview_positioned_relativeTo(
+        effectView,
+        NSWindowBelow,
+        null
+      )
+    }
+
+    var vibrancyType = NSVisualEffectMaterialLight
+
+    if (type === 'appearance-based') {
+      vibrancyType = NSVisualEffectMaterialAppearanceBased
+    } else if (type === 'light') {
+      vibrancyType = NSVisualEffectMaterialLight
+    } else if (type === 'dark') {
+      vibrancyType = NSVisualEffectMaterialDark
+    } else if (type === 'titlebar') {
+      vibrancyType = NSVisualEffectMaterialTitlebar
+    } else if (type === 'selection') {
+      vibrancyType = NSVisualEffectMaterialSelection
+    } else if (type === 'menu') {
+      vibrancyType = NSVisualEffectMaterialMenu
+    } else if (type === 'popover') {
+      vibrancyType = NSVisualEffectMaterialPopover
+    } else if (type === 'sidebar') {
+      vibrancyType = NSVisualEffectMaterialSidebar
+    } else if (type === 'medium-light') {
+      vibrancyType = NSVisualEffectMaterialMediumLight
+    } else if (type === 'ultra-dark') {
+      vibrancyType = NSVisualEffectMaterialUltraDark
+    }
+
+    effectView.setMaterial(vibrancyType)
+  }
+
+  browserWindow._setBackgroundColor = function (colorName) {
+    var color = parseHexColor(colorName)
+    webview.setValue_forKey(false, 'drawsBackground')
+    panel.backgroundColor = color
+  }
+
+  browserWindow._invalidate = function () {
+    panel.flushWindow()
+    panel.contentView().setNeedsDisplay(true)
+  }
+
+  browserWindow._setStyleMask = function (on, flag) {
+    var wasMaximizable = browserWindow.isMaximizable()
+    if (on) {
+      panel.setStyleMask(panel.styleMask() | flag)
+    } else {
+      panel.setStyleMask(panel.styleMask() & ~flag)
+    }
+    // Change style mask will make the zoom button revert to default, probably
+    // a bug of Cocoa or macOS.
+    browserWindow.setMaximizable(wasMaximizable)
+  }
+
+  browserWindow._setCollectionBehavior = function (on, flag) {
+    var wasMaximizable = browserWindow.isMaximizable()
+    if (on) {
+      panel.setCollectionBehavior(panel.collectionBehavior() | flag)
+    } else {
+      panel.setCollectionBehavior(panel.collectionBehavior() & ~flag)
+    }
+    // Change collectionBehavior will make the zoom button revert to default,
+    // probably a bug of Cocoa or macOS.
+    browserWindow.setMaximizable(wasMaximizable)
+  }
+
+  browserWindow._showWindowButton = function (button) {
+    var view = panel.standardWindowButton(button)
+    view.superview().addSubview_positioned_relative(view, NSWindowAbove, null)
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/sketch-module-web-view/lib/constants.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/sketch-module-web-view/lib/constants.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = {
+  JS_BRIDGE: '__skpm_sketchBridge',
+  JS_BRIDGE_RESULT_SUCCESS: '__skpm_sketchBridge_success',
+  JS_BRIDGE_RESULT_ERROR: '__skpm_sketchBridge_error',
+  START_MOVING_WINDOW: '__skpm_startMovingWindow',
+  EXECUTE_JAVASCRIPT: '__skpm_executeJS',
+  EXECUTE_JAVASCRIPT_SUCCESS: '__skpm_executeJS_success_',
+  EXECUTE_JAVASCRIPT_ERROR: '__skpm_executeJS_error_',
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/sketch-module-web-view/lib/dispatch-first-click.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/sketch-module-web-view/lib/dispatch-first-click.js ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var tagsToFocus =
+  '["text", "textarea", "date", "datetime-local", "email", "number", "month", "password", "search", "tel", "time", "url", "week" ]'
+
+module.exports = function (webView, event) {
+  var point = webView.convertPoint_fromView(event.locationInWindow(), null)
+  return (
+    'var el = document.elementFromPoint(' + // get the DOM element that match the event
+    point.x +
+    ', ' +
+    point.y +
+    '); ' +
+    'if (el && el.tagName === "SELECT") {' + // select needs special handling
+    '  var event = document.createEvent("MouseEvents");' +
+    '  event.initMouseEvent("mousedown", true, true, window);' +
+    '  el.dispatchEvent(event);' +
+    '} else if (el && ' + // some tags need to be focused instead of clicked
+    tagsToFocus +
+    '.indexOf(el.type) >= 0 && ' +
+    'el.focus' +
+    ') {' +
+    'el.focus();' + // so focus them
+    '} else if (el) {' +
+    'el.dispatchEvent(new Event("click", {bubbles: true}))' + // click the others
+    '}'
+  )
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/sketch-module-web-view/lib/execute-javascript.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/sketch-module-web-view/lib/execute-javascript.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(Promise) {var CONSTANTS = __webpack_require__(/*! ./constants */ "./node_modules/sketch-module-web-view/lib/constants.js")
+
+module.exports = function (webview, browserWindow) {
+  function executeJavaScript(script, userGesture, callback) {
+    if (typeof userGesture === 'function') {
+      callback = userGesture
+      userGesture = false
+    }
+    var fiber = coscript.createFiber()
+
+    // if the webview is not ready yet, defer the execution until it is
+    if (
+      webview.navigationDelegate().state &&
+      webview.navigationDelegate().state.wasReady == 0
+    ) {
+      return new Promise(function (resolve, reject) {
+        browserWindow.once('ready-to-show', function () {
+          executeJavaScript(script, userGesture, callback)
+            .then(resolve)
+            .catch(reject)
+          fiber.cleanup()
+        })
+      })
+    }
+
+    return new Promise(function (resolve, reject) {
+      var requestId = Math.random()
+
+      browserWindow.webContents.on(
+        CONSTANTS.EXECUTE_JAVASCRIPT_SUCCESS + requestId,
+        function (res) {
+          try {
+            if (callback) {
+              callback(null, res)
+            }
+            resolve(res)
+          } catch (err) {
+            reject(err)
+          }
+          fiber.cleanup()
+        }
+      )
+      browserWindow.webContents.on(
+        CONSTANTS.EXECUTE_JAVASCRIPT_ERROR + requestId,
+        function (err) {
+          try {
+            if (callback) {
+              callback(err)
+              resolve()
+            } else {
+              reject(err)
+            }
+          } catch (err2) {
+            reject(err2)
+          }
+          fiber.cleanup()
+        }
+      )
+
+      webview.evaluateJavaScript_completionHandler(
+        module.exports.wrapScript(script, requestId),
+        null
+      )
+    })
+  }
+
+  return executeJavaScript
+}
+
+module.exports.wrapScript = function (script, requestId) {
+  return (
+    'window.' +
+    CONSTANTS.EXECUTE_JAVASCRIPT +
+    '(' +
+    requestId +
+    ', ' +
+    JSON.stringify(script) +
+    ')'
+  )
+}
+
+module.exports.injectScript = function (webView) {
+  var source =
+    'window.' +
+    CONSTANTS.EXECUTE_JAVASCRIPT +
+    ' = function(id, script) {' +
+    '  try {' +
+    '    var res = eval(script);' +
+    '    if (res && typeof res.then === "function" && typeof res.catch === "function") {' +
+    '      res.then(function (res2) {' +
+    '        window.postMessage("' +
+    CONSTANTS.EXECUTE_JAVASCRIPT_SUCCESS +
+    '" + id, res2);' +
+    '      })' +
+    '      .catch(function (err) {' +
+    '        window.postMessage("' +
+    CONSTANTS.EXECUTE_JAVASCRIPT_ERROR +
+    '" + id, err);' +
+    '      })' +
+    '    } else {' +
+    '      window.postMessage("' +
+    CONSTANTS.EXECUTE_JAVASCRIPT_SUCCESS +
+    '" + id, res);' +
+    '    }' +
+    '  } catch (err) {' +
+    '    window.postMessage("' +
+    CONSTANTS.EXECUTE_JAVASCRIPT_ERROR +
+    '" + id, err);' +
+    '  }' +
+    '}'
+  var script = WKUserScript.alloc().initWithSource_injectionTime_forMainFrameOnly(
+    source,
+    0,
+    true
+  )
+  webView.configuration().userContentController().addUserScript(script)
+}
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@skpm/promise/index.js */ "./node_modules/@skpm/promise/index.js")))
+
+/***/ }),
+
+/***/ "./node_modules/sketch-module-web-view/lib/fitSubview.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/sketch-module-web-view/lib/fitSubview.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function addEdgeConstraint(edge, subview, view, constant) {
+  view.addConstraint(
+    NSLayoutConstraint.constraintWithItem_attribute_relatedBy_toItem_attribute_multiplier_constant(
+      subview,
+      edge,
+      NSLayoutRelationEqual,
+      view,
+      edge,
+      1,
+      constant
+    )
+  )
+}
+module.exports = function fitSubviewToView(subview, view, constants) {
+  constants = constants || []
+  subview.setTranslatesAutoresizingMaskIntoConstraints(false)
+
+  addEdgeConstraint(NSLayoutAttributeLeft, subview, view, constants[0] || 0)
+  addEdgeConstraint(NSLayoutAttributeTop, subview, view, constants[1] || 0)
+  addEdgeConstraint(NSLayoutAttributeRight, subview, view, constants[2] || 0)
+  addEdgeConstraint(NSLayoutAttributeBottom, subview, view, constants[3] || 0)
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/sketch-module-web-view/lib/index.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/sketch-module-web-view/lib/index.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* let's try to match the API from Electron's Browser window
+(https://github.com/electron/electron/blob/master/docs/api/browser-window.md) */
+var EventEmitter = __webpack_require__(/*! events */ "events")
+var buildBrowserAPI = __webpack_require__(/*! ./browser-api */ "./node_modules/sketch-module-web-view/lib/browser-api.js")
+var buildWebAPI = __webpack_require__(/*! ./webview-api */ "./node_modules/sketch-module-web-view/lib/webview-api.js")
+var fitSubviewToView = __webpack_require__(/*! ./fitSubview */ "./node_modules/sketch-module-web-view/lib/fitSubview.js")
+var dispatchFirstClick = __webpack_require__(/*! ./dispatch-first-click */ "./node_modules/sketch-module-web-view/lib/dispatch-first-click.js")
+var injectClientMessaging = __webpack_require__(/*! ./inject-client-messaging */ "./node_modules/sketch-module-web-view/lib/inject-client-messaging.js")
+var movableArea = __webpack_require__(/*! ./movable-area */ "./node_modules/sketch-module-web-view/lib/movable-area.js")
+var executeJavaScript = __webpack_require__(/*! ./execute-javascript */ "./node_modules/sketch-module-web-view/lib/execute-javascript.js")
+var setDelegates = __webpack_require__(/*! ./set-delegates */ "./node_modules/sketch-module-web-view/lib/set-delegates.js")
+
+function BrowserWindow(options) {
+  options = options || {}
+
+  var identifier = options.identifier || String(NSUUID.UUID().UUIDString())
+  var threadDictionary = NSThread.mainThread().threadDictionary()
+
+  var existingBrowserWindow = BrowserWindow.fromId(identifier)
+
+  // if we already have a window opened, reuse it
+  if (existingBrowserWindow) {
+    return existingBrowserWindow
+  }
+
+  var browserWindow = new EventEmitter()
+  browserWindow.id = identifier
+
+  if (options.modal && !options.parent) {
+    throw new Error('A modal needs to have a parent.')
+  }
+
+  // Long-running script
+  var fiber = coscript.createFiber()
+
+  // Window size
+  var width = options.width || 800
+  var height = options.height || 600
+  var mainScreenRect = NSScreen.screens().firstObject().frame()
+  var cocoaBounds = NSMakeRect(
+    typeof options.x !== 'undefined'
+      ? options.x
+      : Math.round((NSWidth(mainScreenRect) - width) / 2),
+    typeof options.y !== 'undefined'
+      ? NSHeight(mainScreenRect) - options.y
+      : Math.round((NSHeight(mainScreenRect) - height) / 2),
+    width,
+    height
+  )
+
+  if (options.titleBarStyle && options.titleBarStyle !== 'default') {
+    options.frame = false
+  }
+
+  var useStandardWindow = options.windowType !== 'textured'
+  var styleMask = NSTitledWindowMask
+
+  // this is commented out because the toolbar doesn't appear otherwise :thinking-face:
+  // if (!useStandardWindow || options.frame === false) {
+  //   styleMask = NSFullSizeContentViewWindowMask
+  // }
+  if (options.minimizable !== false) {
+    styleMask |= NSMiniaturizableWindowMask
+  }
+  if (options.closable !== false) {
+    styleMask |= NSClosableWindowMask
+  }
+  if (options.resizable !== false) {
+    styleMask |= NSResizableWindowMask
+  }
+  if (!useStandardWindow || options.transparent || options.frame === false) {
+    styleMask |= NSTexturedBackgroundWindowMask
+  }
+
+  var panel = NSPanel.alloc().initWithContentRect_styleMask_backing_defer(
+    cocoaBounds,
+    styleMask,
+    NSBackingStoreBuffered,
+    true
+  )
+
+  // this would be nice but it's crashing on macOS 11.0
+  // panel.releasedWhenClosed = true
+
+  var wkwebviewConfig = WKWebViewConfiguration.alloc().init()
+  var webView = WKWebView.alloc().initWithFrame_configuration(
+    CGRectMake(0, 0, options.width || 800, options.height || 600),
+    wkwebviewConfig
+  )
+  injectClientMessaging(webView)
+  webView.setAutoresizingMask(NSViewWidthSizable | NSViewHeightSizable)
+
+  buildBrowserAPI(browserWindow, panel, webView)
+  buildWebAPI(browserWindow, panel, webView)
+  setDelegates(browserWindow, panel, webView, options)
+
+  if (options.windowType === 'desktop') {
+    panel.setLevel(kCGDesktopWindowLevel - 1)
+    // panel.setCanBecomeKeyWindow(false)
+    panel.setCollectionBehavior(
+      NSWindowCollectionBehaviorCanJoinAllSpaces |
+        NSWindowCollectionBehaviorStationary |
+        NSWindowCollectionBehaviorIgnoresCycle
+    )
+  }
+
+  if (
+    typeof options.minWidth !== 'undefined' ||
+    typeof options.minHeight !== 'undefined'
+  ) {
+    browserWindow.setMinimumSize(options.minWidth || 0, options.minHeight || 0)
+  }
+
+  if (
+    typeof options.maxWidth !== 'undefined' ||
+    typeof options.maxHeight !== 'undefined'
+  ) {
+    browserWindow.setMaximumSize(
+      options.maxWidth || 10000,
+      options.maxHeight || 10000
+    )
+  }
+
+  // if (options.focusable === false) {
+  //   panel.setCanBecomeKeyWindow(false)
+  // }
+
+  if (options.transparent || options.frame === false) {
+    panel.titlebarAppearsTransparent = true
+    panel.titleVisibility = NSWindowTitleHidden
+    panel.setOpaque(0)
+    panel.isMovableByWindowBackground = true
+    var toolbar2 = NSToolbar.alloc().initWithIdentifier(
+      'titlebarStylingToolbar'
+    )
+    toolbar2.setShowsBaselineSeparator(false)
+    panel.setToolbar(toolbar2)
+  }
+
+  if (options.titleBarStyle === 'hiddenInset') {
+    var toolbar = NSToolbar.alloc().initWithIdentifier('titlebarStylingToolbar')
+    toolbar.setShowsBaselineSeparator(false)
+    panel.setToolbar(toolbar)
+  }
+
+  if (options.frame === false || !options.useContentSize) {
+    browserWindow.setSize(width, height)
+  }
+
+  if (options.center) {
+    browserWindow.center()
+  }
+
+  if (options.alwaysOnTop) {
+    browserWindow.setAlwaysOnTop(true)
+  }
+
+  if (options.fullscreen) {
+    browserWindow.setFullScreen(true)
+  }
+  browserWindow.setFullScreenable(!!options.fullscreenable)
+
+  let title = options.title
+  if (options.frame === false) {
+    title = undefined
+  } else if (
+    typeof title === 'undefined' &&
+    typeof __command !== 'undefined' &&
+    __command.pluginBundle()
+  ) {
+    title = __command.pluginBundle().name()
+  }
+
+  if (title) {
+    browserWindow.setTitle(title)
+  }
+
+  var backgroundColor = options.backgroundColor
+  if (options.transparent) {
+    backgroundColor = NSColor.clearColor()
+  }
+  if (!backgroundColor && options.frame === false && options.vibrancy) {
+    backgroundColor = NSColor.clearColor()
+  }
+
+  browserWindow._setBackgroundColor(
+    backgroundColor || NSColor.windowBackgroundColor()
+  )
+
+  if (options.hasShadow === false) {
+    browserWindow.setHasShadow(false)
+  }
+
+  if (typeof options.opacity !== 'undefined') {
+    browserWindow.setOpacity(options.opacity)
+  }
+
+  options.webPreferences = options.webPreferences || {}
+
+  webView
+    .configuration()
+    .preferences()
+    .setValue_forKey(
+      options.webPreferences.devTools !== false,
+      'developerExtrasEnabled'
+    )
+  webView
+    .configuration()
+    .preferences()
+    .setValue_forKey(
+      options.webPreferences.javascript !== false,
+      'javaScriptEnabled'
+    )
+  webView
+    .configuration()
+    .preferences()
+    .setValue_forKey(!!options.webPreferences.plugins, 'plugInsEnabled')
+  webView
+    .configuration()
+    .preferences()
+    .setValue_forKey(
+      options.webPreferences.minimumFontSize || 0,
+      'minimumFontSize'
+    )
+
+  if (options.webPreferences.zoomFactor) {
+    webView.setMagnification(options.webPreferences.zoomFactor)
+  }
+
+  var contentView = panel.contentView()
+
+  if (options.frame !== false) {
+    webView.setFrame(contentView.bounds())
+    contentView.addSubview(webView)
+  } else {
+    // In OSX 10.10, adding subviews to the root view for the NSView hierarchy
+    // produces warnings. To eliminate the warnings, we resize the contentView
+    // to fill the window, and add subviews to that.
+    // http://crbug.com/380412
+    contentView.setAutoresizingMask(NSViewWidthSizable | NSViewHeightSizable)
+    fitSubviewToView(contentView, contentView.superview())
+
+    webView.setFrame(contentView.bounds())
+    contentView.addSubview(webView)
+
+    // The fullscreen button should always be hidden for frameless window.
+    if (panel.standardWindowButton(NSWindowFullScreenButton)) {
+      panel.standardWindowButton(NSWindowFullScreenButton).setHidden(true)
+    }
+
+    if (!options.titleBarStyle || options.titleBarStyle === 'default') {
+      // Hide the window buttons.
+      panel.standardWindowButton(NSWindowZoomButton).setHidden(true)
+      panel.standardWindowButton(NSWindowMiniaturizeButton).setHidden(true)
+      panel.standardWindowButton(NSWindowCloseButton).setHidden(true)
+
+      // Some third-party macOS utilities check the zoom button's enabled state to
+      // determine whether to show custom UI on hover, so we disable it here to
+      // prevent them from doing so in a frameless app window.
+      panel.standardWindowButton(NSWindowZoomButton).setEnabled(false)
+    }
+  }
+
+  if (options.vibrancy) {
+    browserWindow.setVibrancy(options.vibrancy)
+  }
+
+  // Set maximizable state last to ensure zoom button does not get reset
+  // by calls to other APIs.
+  browserWindow.setMaximizable(options.maximizable !== false)
+
+  panel.setHidesOnDeactivate(options.hidesOnDeactivate !== false)
+
+  if (options.remembersWindowFrame) {
+    panel.setFrameAutosaveName(identifier)
+    panel.setFrameUsingName_force(panel.frameAutosaveName(), false)
+  }
+
+  if (options.acceptsFirstMouse) {
+    browserWindow.on('focus', function (event) {
+      if (event.type() === NSEventTypeLeftMouseDown) {
+        browserWindow.webContents
+          .executeJavaScript(dispatchFirstClick(webView, event))
+          .catch(() => {})
+      }
+    })
+  }
+
+  executeJavaScript.injectScript(webView)
+  movableArea.injectScript(webView)
+  movableArea.setupHandler(browserWindow)
+
+  if (options.show !== false) {
+    browserWindow.show()
+  }
+
+  browserWindow.on('closed', function () {
+    browserWindow._destroyed = true
+    threadDictionary.removeObjectForKey(identifier)
+    var observer = threadDictionary[identifier + '.themeObserver']
+    if (observer) {
+      NSApplication.sharedApplication().removeObserver_forKeyPath(
+        observer,
+        'effectiveAppearance'
+      )
+      threadDictionary.removeObjectForKey(identifier + '.themeObserver')
+    }
+    fiber.cleanup()
+  })
+
+  threadDictionary[identifier] = panel
+
+  fiber.onCleanup(function () {
+    if (!browserWindow._destroyed) {
+      browserWindow.destroy()
+    }
+  })
+
+  return browserWindow
+}
+
+BrowserWindow.fromId = function (identifier) {
+  var threadDictionary = NSThread.mainThread().threadDictionary()
+
+  if (threadDictionary[identifier]) {
+    return BrowserWindow.fromPanel(threadDictionary[identifier], identifier)
+  }
+
+  return undefined
+}
+
+BrowserWindow.fromPanel = function (panel, identifier) {
+  var browserWindow = new EventEmitter()
+  browserWindow.id = identifier
+
+  if (!panel || !panel.contentView) {
+    throw new Error('needs to pass an NSPanel')
+  }
+
+  var webView = null
+  var subviews = panel.contentView().subviews()
+  for (var i = 0; i < subviews.length; i += 1) {
+    if (
+      !webView &&
+      !subviews[i].isKindOfClass(WKInspectorWKWebView) &&
+      subviews[i].isKindOfClass(WKWebView)
+    ) {
+      webView = subviews[i]
+    }
+  }
+
+  if (!webView) {
+    throw new Error('The panel needs to have a webview')
+  }
+
+  buildBrowserAPI(browserWindow, panel, webView)
+  buildWebAPI(browserWindow, panel, webView)
+
+  return browserWindow
+}
+
+module.exports = BrowserWindow
+
+
+/***/ }),
+
+/***/ "./node_modules/sketch-module-web-view/lib/inject-client-messaging.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/sketch-module-web-view/lib/inject-client-messaging.js ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var CONSTANTS = __webpack_require__(/*! ./constants */ "./node_modules/sketch-module-web-view/lib/constants.js")
+
+module.exports = function (webView) {
+  var source =
+    'window.originalPostMessage = window.postMessage;' +
+    'window.postMessage = function(actionName) {' +
+    '  if (!actionName) {' +
+    "    throw new Error('missing action name')" +
+    '  }' +
+    '  var id = String(Math.random()).replace(".", "");' +
+    '    var args = [].slice.call(arguments);' +
+    '    args.unshift(id);' +
+    '  return new Promise(function (resolve, reject) {' +
+    '    window["' +
+    CONSTANTS.JS_BRIDGE_RESULT_SUCCESS +
+    '" + id] = resolve;' +
+    '    window["' +
+    CONSTANTS.JS_BRIDGE_RESULT_ERROR +
+    '" + id] = reject;' +
+    '    window.webkit.messageHandlers.' +
+    CONSTANTS.JS_BRIDGE +
+    '.postMessage(JSON.stringify(args));' +
+    '  });' +
+    '}'
+  var script = WKUserScript.alloc().initWithSource_injectionTime_forMainFrameOnly(
+    source,
+    0,
+    true
+  )
+  webView.configuration().userContentController().addUserScript(script)
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/sketch-module-web-view/lib/movable-area.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/sketch-module-web-view/lib/movable-area.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var CONSTANTS = __webpack_require__(/*! ./constants */ "./node_modules/sketch-module-web-view/lib/constants.js")
+
+module.exports.injectScript = function (webView) {
+  var source =
+    '(function () {' +
+    "document.addEventListener('mousedown', onMouseDown);" +
+    '' +
+    'function shouldDrag(target) {' +
+    '  if (!target || (target.dataset || {}).appRegion === "no-drag") { return false }' +
+    '  if ((target.dataset || {}).appRegion === "drag") { return true }' +
+    '  return shouldDrag(target.parentElement)' +
+    '};' +
+    '' +
+    'function onMouseDown(e) {' +
+    '  if (e.button !== 0 || !shouldDrag(e.target)) { return }' +
+    '  window.postMessage("' +
+    CONSTANTS.START_MOVING_WINDOW +
+    '");' +
+    '};' +
+    '})()'
+  var script = WKUserScript.alloc().initWithSource_injectionTime_forMainFrameOnly(
+    source,
+    0,
+    true
+  )
+  webView.configuration().userContentController().addUserScript(script)
+}
+
+module.exports.setupHandler = function (browserWindow) {
+  var initialMouseLocation = null
+  var initialWindowPosition = null
+  var interval = null
+
+  function moveWindow() {
+    // if the user released the button, stop moving the window
+    if (!initialWindowPosition || NSEvent.pressedMouseButtons() !== 1) {
+      clearInterval(interval)
+      initialMouseLocation = null
+      initialWindowPosition = null
+      return
+    }
+
+    var mouse = NSEvent.mouseLocation()
+    browserWindow.setPosition(
+      initialWindowPosition.x + (mouse.x - initialMouseLocation.x),
+      initialWindowPosition.y + (initialMouseLocation.y - mouse.y), // y is inverted
+      false
+    )
+  }
+
+  browserWindow.webContents.on(CONSTANTS.START_MOVING_WINDOW, function () {
+    initialMouseLocation = NSEvent.mouseLocation()
+    var position = browserWindow.getPosition()
+    initialWindowPosition = {
+      x: position[0],
+      y: position[1],
+    }
+
+    interval = setInterval(moveWindow, 1000 / 60) // 60 fps
+  })
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/sketch-module-web-view/lib/parseWebArguments.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/sketch-module-web-view/lib/parseWebArguments.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function (webArguments) {
+  var args = null
+  try {
+    args = JSON.parse(webArguments)
+  } catch (e) {
+    // malformed arguments
+  }
+
+  if (
+    !args ||
+    !args.constructor ||
+    args.constructor !== Array ||
+    args.length == 0
+  ) {
+    return null
+  }
+
+  return args
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/sketch-module-web-view/lib/set-delegates.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/sketch-module-web-view/lib/set-delegates.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(Promise) {var ObjCClass = __webpack_require__(/*! mocha-js-delegate */ "./node_modules/mocha-js-delegate/index.js")
+var parseWebArguments = __webpack_require__(/*! ./parseWebArguments */ "./node_modules/sketch-module-web-view/lib/parseWebArguments.js")
+var CONSTANTS = __webpack_require__(/*! ./constants */ "./node_modules/sketch-module-web-view/lib/constants.js")
+
+// We create one ObjC class for ourselves here
+var WindowDelegateClass
+var NavigationDelegateClass
+var WebScriptHandlerClass
+var ThemeObserverClass
+
+// TODO: events
+// - 'page-favicon-updated'
+// - 'new-window'
+// - 'did-navigate-in-page'
+// - 'will-prevent-unload'
+// - 'crashed'
+// - 'unresponsive'
+// - 'responsive'
+// - 'destroyed'
+// - 'before-input-event'
+// - 'certificate-error'
+// - 'found-in-page'
+// - 'media-started-playing'
+// - 'media-paused'
+// - 'did-change-theme-color'
+// - 'update-target-url'
+// - 'cursor-changed'
+// - 'context-menu'
+// - 'select-bluetooth-device'
+// - 'paint'
+// - 'console-message'
+
+module.exports = function (browserWindow, panel, webview, options) {
+  if (!ThemeObserverClass) {
+    ThemeObserverClass = new ObjCClass({
+      utils: null,
+
+      'observeValueForKeyPath:ofObject:change:context:': function (
+        keyPath,
+        object,
+        change
+      ) {
+        const newAppearance = change[NSKeyValueChangeNewKey]
+        const isDark =
+          String(
+            newAppearance.bestMatchFromAppearancesWithNames([
+              'NSAppearanceNameAqua',
+              'NSAppearanceNameDarkAqua',
+            ])
+          ) === 'NSAppearanceNameDarkAqua'
+
+        this.utils.executeJavaScript(
+          "document.body.classList.remove('__skpm-" +
+            (isDark ? 'light' : 'dark') +
+            "'); document.body.classList.add('__skpm-" +
+            (isDark ? 'dark' : 'light') +
+            "')"
+        )
+      },
+    })
+  }
+
+  if (!WindowDelegateClass) {
+    WindowDelegateClass = new ObjCClass({
+      utils: null,
+      panel: null,
+
+      'windowDidResize:': function () {
+        this.utils.emit('resize')
+      },
+
+      'windowDidMiniaturize:': function () {
+        this.utils.emit('minimize')
+      },
+
+      'windowDidDeminiaturize:': function () {
+        this.utils.emit('restore')
+      },
+
+      'windowDidEnterFullScreen:': function () {
+        this.utils.emit('enter-full-screen')
+      },
+
+      'windowDidExitFullScreen:': function () {
+        this.utils.emit('leave-full-screen')
+      },
+
+      'windowDidMove:': function () {
+        this.utils.emit('move')
+        this.utils.emit('moved')
+      },
+
+      'windowShouldClose:': function () {
+        var shouldClose = 1
+        this.utils.emit('close', {
+          get defaultPrevented() {
+            return !shouldClose
+          },
+          preventDefault: function () {
+            shouldClose = 0
+          },
+        })
+        return shouldClose
+      },
+
+      'windowWillClose:': function () {
+        this.utils.emit('closed')
+      },
+
+      'windowDidBecomeKey:': function () {
+        this.utils.emit('focus', this.panel.currentEvent())
+      },
+
+      'windowDidResignKey:': function () {
+        this.utils.emit('blur')
+      },
+    })
+  }
+
+  if (!NavigationDelegateClass) {
+    NavigationDelegateClass = new ObjCClass({
+      state: {
+        wasReady: 0,
+      },
+      utils: null,
+
+      // // Called when the web view begins to receive web content.
+      'webView:didCommitNavigation:': function (webView) {
+        this.utils.emit('will-navigate', {}, String(String(webView.URL())))
+      },
+
+      // // Called when web content begins to load in a web view.
+      'webView:didStartProvisionalNavigation:': function () {
+        this.utils.emit('did-start-navigation')
+        this.utils.emit('did-start-loading')
+      },
+
+      // Called when a web view receives a server redirect.
+      'webView:didReceiveServerRedirectForProvisionalNavigation:': function () {
+        this.utils.emit('did-get-redirect-request')
+      },
+
+      // // Called when the web view needs to respond to an authentication challenge.
+      // 'webView:didReceiveAuthenticationChallenge:completionHandler:': function(
+      //   webView,
+      //   challenge,
+      //   completionHandler
+      // ) {
+      //   function callback(username, password) {
+      //     completionHandler(
+      //       0,
+      //       NSURLCredential.credentialWithUser_password_persistence(
+      //         username,
+      //         password,
+      //         1
+      //       )
+      //     )
+      //   }
+      //   var protectionSpace = challenge.protectionSpace()
+      //   this.utils.emit(
+      //     'login',
+      //     {},
+      //     {
+      //       method: String(protectionSpace.authenticationMethod()),
+      //       url: 'not implemented', // TODO:
+      //       referrer: 'not implemented', // TODO:
+      //     },
+      //     {
+      //       isProxy: !!protectionSpace.isProxy(),
+      //       scheme: String(protectionSpace.protocol()),
+      //       host: String(protectionSpace.host()),
+      //       port: Number(protectionSpace.port()),
+      //       realm: String(protectionSpace.realm()),
+      //     },
+      //     callback
+      //   )
+      // },
+
+      // Called when an error occurs during navigation.
+      // 'webView:didFailNavigation:withError:': function(
+      //   webView,
+      //   navigation,
+      //   error
+      // ) {},
+
+      // Called when an error occurs while the web view is loading content.
+      'webView:didFailProvisionalNavigation:withError:': function (
+        webView,
+        navigation,
+        error
+      ) {
+        this.utils.emit('did-fail-load', error)
+      },
+
+      // Called when the navigation is complete.
+      'webView:didFinishNavigation:': function () {
+        if (this.state.wasReady == 0) {
+          this.state.wasReady = 1
+          this.utils.emitBrowserEvent('ready-to-show')
+        }
+        this.utils.emit('did-navigate')
+        this.utils.emit('did-frame-navigate')
+        this.utils.emit('did-stop-loading')
+        this.utils.emit('did-finish-load')
+        this.utils.emit('did-frame-finish-load')
+      },
+
+      // Called when the web view’s web content process is terminated.
+      'webViewWebContentProcessDidTerminate:': function () {
+        this.utils.emit('dom-ready')
+      },
+
+      // Decides whether to allow or cancel a navigation.
+      // webView:decidePolicyForNavigationAction:decisionHandler:
+
+      // Decides whether to allow or cancel a navigation after its response is known.
+      // webView:decidePolicyForNavigationResponse:decisionHandler:
+    })
+  }
+
+  if (!WebScriptHandlerClass) {
+    WebScriptHandlerClass = new ObjCClass({
+      utils: null,
+      'userContentController:didReceiveScriptMessage:': function (_, message) {
+        var args = this.utils.parseWebArguments(String(message.body()))
+        if (!args) {
+          return
+        }
+        if (!args[0] || typeof args[0] !== 'string') {
+          return
+        }
+        args[0] = String(args[0])
+
+        this.utils.emit.apply(this, args)
+      },
+    })
+  }
+
+  var themeObserver = ThemeObserverClass.new({
+    utils: {
+      executeJavaScript(script) {
+        webview.evaluateJavaScript_completionHandler(script, null)
+      },
+    },
+  })
+
+  var script = WKUserScript.alloc().initWithSource_injectionTime_forMainFrameOnly(
+    "document.addEventListener('DOMContentLoaded', function() { document.body.classList.add('__skpm-" +
+      (typeof MSTheme !== 'undefined' && MSTheme.sharedTheme().isDark()
+        ? 'dark'
+        : 'light') +
+      "') }, false)",
+    0,
+    true
+  )
+  webview.configuration().userContentController().addUserScript(script)
+
+  NSApplication.sharedApplication().addObserver_forKeyPath_options_context(
+    themeObserver,
+    'effectiveAppearance',
+    NSKeyValueObservingOptionNew,
+    null
+  )
+
+  var threadDictionary = NSThread.mainThread().threadDictionary()
+  threadDictionary[browserWindow.id + '.themeObserver'] = themeObserver
+
+  var navigationDelegate = NavigationDelegateClass.new({
+    utils: {
+      setTitle: browserWindow.setTitle.bind(browserWindow),
+      emitBrowserEvent() {
+        try {
+          browserWindow.emit.apply(browserWindow, arguments)
+        } catch (err) {
+          if (
+            typeof process !== 'undefined' &&
+            process.listenerCount &&
+            process.listenerCount('uncaughtException')
+          ) {
+            process.emit('uncaughtException', err, 'uncaughtException')
+          } else {
+            console.error(err)
+            throw err
+          }
+        }
+      },
+      emit() {
+        try {
+          browserWindow.webContents.emit.apply(
+            browserWindow.webContents,
+            arguments
+          )
+        } catch (err) {
+          if (
+            typeof process !== 'undefined' &&
+            process.listenerCount &&
+            process.listenerCount('uncaughtException')
+          ) {
+            process.emit('uncaughtException', err, 'uncaughtException')
+          } else {
+            console.error(err)
+            throw err
+          }
+        }
+      },
+    },
+    state: {
+      wasReady: 0,
+    },
+  })
+
+  webview.setNavigationDelegate(navigationDelegate)
+
+  var webScriptHandler = WebScriptHandlerClass.new({
+    utils: {
+      emit(id, type) {
+        if (!type) {
+          webview.evaluateJavaScript_completionHandler(
+            CONSTANTS.JS_BRIDGE_RESULT_SUCCESS + id + '()',
+            null
+          )
+          return
+        }
+
+        var args = []
+        for (var i = 2; i < arguments.length; i += 1) args.push(arguments[i])
+
+        var listeners = browserWindow.webContents.listeners(type)
+
+        Promise.all(
+          listeners.map(function (l) {
+            return Promise.resolve().then(function () {
+              return l.apply(l, args)
+            })
+          })
+        )
+          .then(function (res) {
+            webview.evaluateJavaScript_completionHandler(
+              CONSTANTS.JS_BRIDGE_RESULT_SUCCESS +
+                id +
+                '(' +
+                JSON.stringify(res) +
+                ')',
+              null
+            )
+          })
+          .catch(function (err) {
+            webview.evaluateJavaScript_completionHandler(
+              CONSTANTS.JS_BRIDGE_RESULT_ERROR +
+                id +
+                '(' +
+                JSON.stringify(err) +
+                ')',
+              null
+            )
+          })
+      },
+      parseWebArguments: parseWebArguments,
+    },
+  })
+
+  webview
+    .configuration()
+    .userContentController()
+    .addScriptMessageHandler_name(webScriptHandler, CONSTANTS.JS_BRIDGE)
+
+  var utils = {
+    emit() {
+      try {
+        browserWindow.emit.apply(browserWindow, arguments)
+      } catch (err) {
+        if (
+          typeof process !== 'undefined' &&
+          process.listenerCount &&
+          process.listenerCount('uncaughtException')
+        ) {
+          process.emit('uncaughtException', err, 'uncaughtException')
+        } else {
+          console.error(err)
+          throw err
+        }
+      }
+    },
+  }
+  if (options.modal) {
+    // find the window of the document
+    var msdocument
+    if (options.parent.type === 'Document') {
+      msdocument = options.parent.sketchObject
+    } else {
+      msdocument = options.parent
+    }
+    if (msdocument && String(msdocument.class()) === 'MSDocumentData') {
+      // we only have an MSDocumentData instead of a MSDocument
+      // let's try to get back to the MSDocument
+      msdocument = msdocument.delegate()
+    }
+    utils.parentWindow = msdocument.windowForSheet()
+  }
+
+  var windowDelegate = WindowDelegateClass.new({
+    utils: utils,
+    panel: panel,
+  })
+
+  panel.setDelegate(windowDelegate)
+}
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@skpm/promise/index.js */ "./node_modules/@skpm/promise/index.js")))
+
+/***/ }),
+
+/***/ "./node_modules/sketch-module-web-view/lib/webview-api.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/sketch-module-web-view/lib/webview-api.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var EventEmitter = __webpack_require__(/*! events */ "events")
+var executeJavaScript = __webpack_require__(/*! ./execute-javascript */ "./node_modules/sketch-module-web-view/lib/execute-javascript.js")
+
+// let's try to match https://github.com/electron/electron/blob/master/docs/api/web-contents.md
+module.exports = function buildAPI(browserWindow, panel, webview) {
+  var webContents = new EventEmitter()
+
+  webContents.loadURL = browserWindow.loadURL
+
+  webContents.loadFile = function (/* filePath */) {
+    // TODO:
+    console.warn(
+      'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
+    )
+  }
+
+  webContents.downloadURL = function (/* filePath */) {
+    // TODO:
+    console.warn(
+      'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
+    )
+  }
+
+  webContents.getURL = function () {
+    return String(webview.URL())
+  }
+
+  webContents.getTitle = function () {
+    return String(webview.title())
+  }
+
+  webContents.isDestroyed = function () {
+    // TODO:
+    console.warn(
+      'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
+    )
+  }
+
+  webContents.focus = browserWindow.focus
+  webContents.isFocused = browserWindow.isFocused
+
+  webContents.isLoading = function () {
+    return !!webview.loading()
+  }
+
+  webContents.isLoadingMainFrame = function () {
+    // TODO:
+    return !!webview.loading()
+  }
+
+  webContents.isWaitingForResponse = function () {
+    return !webview.loading()
+  }
+
+  webContents.stop = function () {
+    webview.stopLoading()
+  }
+  webContents.reload = function () {
+    webview.reload()
+  }
+  webContents.reloadIgnoringCache = function () {
+    webview.reloadFromOrigin()
+  }
+  webContents.canGoBack = function () {
+    return !!webview.canGoBack()
+  }
+  webContents.canGoForward = function () {
+    return !!webview.canGoForward()
+  }
+  webContents.canGoToOffset = function (offset) {
+    return !!webview.backForwardList().itemAtIndex(offset)
+  }
+  webContents.clearHistory = function () {
+    // TODO:
+    console.warn(
+      'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
+    )
+  }
+  webContents.goBack = function () {
+    webview.goBack()
+  }
+  webContents.goForward = function () {
+    webview.goForward()
+  }
+  webContents.goToIndex = function (index) {
+    var backForwardList = webview.backForwardList()
+    var backList = backForwardList.backList()
+    var backListLength = backList.count()
+    if (backListLength > index) {
+      webview.loadRequest(NSURLRequest.requestWithURL(backList[index]))
+      return
+    }
+    var forwardList = backForwardList.forwardList()
+    if (forwardList.count() > index - backListLength) {
+      webview.loadRequest(
+        NSURLRequest.requestWithURL(forwardList[index - backListLength])
+      )
+      return
+    }
+    throw new Error('Cannot go to index ' + index)
+  }
+  webContents.goToOffset = function (offset) {
+    if (!webContents.canGoToOffset(offset)) {
+      throw new Error('Cannot go to offset ' + offset)
+    }
+    webview.loadRequest(
+      NSURLRequest.requestWithURL(webview.backForwardList().itemAtIndex(offset))
+    )
+  }
+  webContents.isCrashed = function () {
+    // TODO:
+    console.warn(
+      'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
+    )
+  }
+  webContents.setUserAgent = function (/* userAgent */) {
+    // TODO:
+    console.warn(
+      'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
+    )
+  }
+  webContents.getUserAgent = function () {
+    const userAgent = webview.customUserAgent()
+    return userAgent ? String(userAgent) : undefined
+  }
+  webContents.insertCSS = function (css) {
+    var source =
+      "var style = document.createElement('style'); style.innerHTML = " +
+      css.replace(/"/, '\\"') +
+      '; document.head.appendChild(style);'
+    var script = WKUserScript.alloc().initWithSource_injectionTime_forMainFrameOnly(
+      source,
+      0,
+      true
+    )
+    webview.configuration().userContentController().addUserScript(script)
+  }
+  webContents.insertJS = function (source) {
+    var script = WKUserScript.alloc().initWithSource_injectionTime_forMainFrameOnly(
+      source,
+      0,
+      true
+    )
+    webview.configuration().userContentController().addUserScript(script)
+  }
+  webContents.executeJavaScript = executeJavaScript(webview, browserWindow)
+  webContents.setIgnoreMenuShortcuts = function () {
+    // TODO:??
+    console.warn(
+      'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
+    )
+  }
+  webContents.setAudioMuted = function (/* muted */) {
+    // TODO:??
+    console.warn(
+      'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
+    )
+  }
+  webContents.isAudioMuted = function () {
+    // TODO:??
+    console.warn(
+      'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
+    )
+  }
+  webContents.setZoomFactor = function (factor) {
+    webview.setMagnification_centeredAtPoint(factor, CGPointMake(0, 0))
+  }
+  webContents.getZoomFactor = function (callback) {
+    callback(Number(webview.magnification()))
+  }
+  webContents.setZoomLevel = function (level) {
+    // eslint-disable-next-line no-restricted-properties
+    webContents.setZoomFactor(Math.pow(1.2, level))
+  }
+  webContents.getZoomLevel = function (callback) {
+    // eslint-disable-next-line no-restricted-properties
+    callback(Math.log(Number(webview.magnification())) / Math.log(1.2))
+  }
+  webContents.setVisualZoomLevelLimits = function (/* minimumLevel, maximumLevel */) {
+    // TODO:??
+    console.warn(
+      'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
+    )
+  }
+  webContents.setLayoutZoomLevelLimits = function (/* minimumLevel, maximumLevel */) {
+    // TODO:??
+    console.warn(
+      'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
+    )
+  }
+
+  // TODO:
+  // webContents.undo = function() {
+  //   webview.undoManager().undo()
+  // }
+  // webContents.redo = function() {
+  //   webview.undoManager().redo()
+  // }
+  // webContents.cut = webview.cut
+  // webContents.copy = webview.copy
+  // webContents.paste = webview.paste
+  // webContents.pasteAndMatchStyle = webview.pasteAsRichText
+  // webContents.delete = webview.delete
+  // webContents.replace = webview.replaceSelectionWithText
+
+  webContents.send = function () {
+    const script =
+      'window.postMessage({' +
+      'isSketchMessage: true,' +
+      "origin: '" +
+      String(__command.identifier()) +
+      "'," +
+      'args: ' +
+      JSON.stringify([].slice.call(arguments)) +
+      '}, "*")'
+    webview.evaluateJavaScript_completionHandler(script, null)
+  }
+
+  webContents.getNativeWebview = function () {
+    return webview
+  }
+
+  browserWindow.webContents = webContents
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/sketch-module-web-view/remote.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/sketch-module-web-view/remote.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* globals NSThread */
+var threadDictionary = NSThread.mainThread().threadDictionary()
+
+module.exports.getWebview = function (identifier) {
+  return __webpack_require__(/*! ./lib */ "./node_modules/sketch-module-web-view/lib/index.js").fromId(identifier) // eslint-disable-line
+}
+
+module.exports.isWebviewPresent = function isWebviewPresent(identifier) {
+  return !!threadDictionary[identifier]
+}
+
+module.exports.sendToWebview = function sendToWebview(identifier, evalString) {
+  if (!module.exports.isWebviewPresent(identifier)) {
+    return
+  }
+
+  var panel = threadDictionary[identifier]
+  var webview = null
+  var subviews = panel.contentView().subviews()
+  for (var i = 0; i < subviews.length; i += 1) {
+    if (
+      !webview &&
+      !subviews[i].isKindOfClass(WKInspectorWKWebView) &&
+      subviews[i].isKindOfClass(WKWebView)
+    ) {
+      webview = subviews[i]
+    }
+  }
+
+  if (!webview || !webview.evaluateJavaScript_completionHandler) {
+    throw new Error('Webview ' + identifier + ' not found')
+  }
+
+  webview.evaluateJavaScript_completionHandler(evalString, null)
+}
+
+
+/***/ }),
+
+/***/ "./resources/webview.html":
+/*!********************************!*\
+  !*** ./resources/webview.html ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "file://" + String(context.scriptPath).split(".sketchplugin/Contents/Sketch")[0] + ".sketchplugin/Contents/Resources/_webpack_resources/d185e74ad4e53236afd37ba858a0bf3b.html";
+
+/***/ }),
+
+/***/ "./src/ddMath.js":
+/*!***********************!*\
+  !*** ./src/ddMath.js ***!
+  \***********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Vector2d; });
+// Extend Math //
+
+Math.rad = Math.PI / 180;
+Math.degrees = function (deg) {
+  return (deg + 360) % 360;
+};
+Math.factorial = function (num) {
+  var rval = 1;
+  for (var i = 2; i <= num; i++) rval = rval * i;
+  return rval;
+};
+Math.triangle = function (num) {
+  return num * (num + 1) / 2;
+};
+Math.decimal = function (num) {
+  var decimal = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  return Math.round(num * Math.pow(10, decimal)) / Math.pow(10, decimal);
+};
+// Circulair easing
+Math.ease = function (timing, steps) {
+  var transition = {
+    start: 0,
+    step: 0,
+    latter: 0,
+    factor: 1,
+    points: new Array()
+  };
+  switch (timing) {
+    case "ease":
+      transition.step = Math.PI / steps;
+      transition.factor = 2;
+      break;
+    case "ease-in":
+      transition.start = Math.PI / 2, transition.step = Math.PI / 2 / steps;
+      break;
+    case "ease-out":
+      transition.step = Math.PI / 2 / steps;
+      break;
+    default:
+  }
+  if (transition.step) {
+    transition.latter = (Math.cos(transition.start) + 1) / transition.factor;
+    for (var i = 0; i <= steps; i++) {
+      var cos = (Math.cos(transition.start) + 1) / transition.factor;
+      var dif = i == 0 ? 0 : Math.abs(cos - transition.latter);
+      transition.start += transition.step;
+      transition.latter = cos;
+      if (i) {
+        transition.points.push(dif);
+      }
+    }
+    transition.points.push(0);
+    return transition.points;
+  } else {
+    return false;
+  }
+};
+// Logarithmic easing
+Math.easePower = function (timing, power, steps) {
+  if (timing == 'linear') return false;
+  var transition = new Array();
+  var total = 0;
+  for (var x = 0; x <= steps; x++) {
+    var y = timing == 'ease' && x > steps / 2 ? Math.pow(steps + 1 - x, power) : Math.pow(x, power);
+    if (x) {
+      total += y;
+      if (timing == 'ease-in') {
+        transition.unshift(y);
+      } else {
+        transition.push(y);
+      }
+    }
+  }
+  for (var i = 0; i < steps; i++) {
+    transition[i] = Math.decimal(transition[i] /= total, 6);
+  }
+  transition.push(0);
+  return transition;
+};
+
+// Vector 2D //
+
+function Vector2d(x, y) {
+  this.x = x || 0;
+  this.y = y || 0;
+}
+Vector2d.prototype = {
+  add: function add(point) {
+    this.x += point.x;
+    this.y += point.y;
+  },
+  angle: function angle() {
+    return Math.degrees(270 - Math.atan2(this.y, -this.x) * 180 / Math.PI);
+  },
+  multiplier: function multiplier(testAngle) {
+    var angle = Math.degrees(this.angle() - testAngle);
+    var radians = Math.rad * angle;
+    var multiplier = Math.decimal(Math.cos(radians), 9);
+    return multiplier;
+  },
+  radius: function radius() {
+    return Math.sqrt(this.x * this.x + this.y * this.y);
+  },
+  root: function root() {
+    if (Math.abs(this.x) > Math.abs(this.y)) {
+      this.y = this.y / Math.abs(this.x);
+      this.x = this.x / Math.abs(this.x);
+    } else {
+      this.x = this.x / Math.abs(this.y);
+      this.y = this.y / Math.abs(this.y);
+    }
+  },
+  rotate: function rotate(center, angle) {
+    var radians = Math.rad * angle,
+      cos = Math.cos(radians),
+      sin = Math.sin(radians),
+      x = this.x,
+      y = this.y;
+    this.x = cos * (x - center.x) + sin * (y - center.y) + center.x;
+    this.y = cos * (y - center.y) - sin * (x - center.x) + center.y;
+  },
+  substract: function substract(point) {
+    this.x -= point.x;
+    this.y -= point.y;
+  }
+};
+
+/***/ }),
+
+/***/ "./src/ddSpiral.js":
+/*!*************************!*\
+  !*** ./src/ddSpiral.js ***!
+  \*************************/
+/*! exports provided: default, onShutdown, onSelectionChanged */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "onShutdown", function() { return onShutdown; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "onSelectionChanged", function() { return onSelectionChanged; });
+/* harmony import */ var sketch_module_web_view__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sketch-module-web-view */ "./node_modules/sketch-module-web-view/lib/index.js");
+/* harmony import */ var sketch_module_web_view__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sketch_module_web_view__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sketch-module-web-view/remote */ "./node_modules/sketch-module-web-view/remote.js");
+/* harmony import */ var sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _ddMath_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ddMath.js */ "./src/ddMath.js");
+// Init
+var sketch = __webpack_require__(/*! sketch */ "sketch");
+var Settings = __webpack_require__(/*! sketch/settings */ "sketch/settings");
+var UI = __webpack_require__(/*! sketch/ui */ "sketch/ui");
+
+
+
+var uniqueCommIdentifier = 'comm.ddSpiral.webview';
+var uniqueSettingIdentifier = 'ddSpiralID';
+var _openShapes = ['MSShapePathLayer', 'MSRectangleShape', 'MSOvalShape', 'MSTriangleShape', 'MSPolygonShape', 'MSStarShape'];
+var openShapes = ['Custom', 'Rectangle', 'Oval', 'Triangle', 'Polygon', 'Star'];
+var shapeNames = ['custom shape', 'rectangle', 'oval', 'triangle', 'polygon', 'star'];
+var settingIdentifiers = ['loops', 'points', 'smooth', 'timing', 'power', 'squeeze', 'mirror', 'clockwise', 'auto'];
+var appcast = "https://raw.githubusercontent.com/Design-Dude/ddSpiral/master/.appcast.xml";
+
+// Not working with skpm BrowserWindow
+// var fiber;
+
+/* harmony default export */ __webpack_exports__["default"] = (function (context) {
+  // Keep script alive after js finish
+  // if(!fiber) {
+  // 	fiber = Async.createFiber();
+  // 	fiber.onCleanup(() => {
+  // 		UI.cleanup();
+  // 	});
+  // }
+
+  // Webview options
+  var options = {
+    identifier: uniqueCommIdentifier,
+    width: 240,
+    height: 554,
+    show: false,
+    backgroundColor: '#ffffffff',
+    alwaysOnTop: true,
+    resizable: false,
+    titleBarStyle: 'default',
+    maximizable: false,
+    minimizable: false
+  };
+  var browserWindow = new sketch_module_web_view__WEBPACK_IMPORTED_MODULE_0___default.a(options);
+
+  // Only show the window when the page has loaded to avoid a white flash
+  browserWindow.once('ready-to-show', function () {
+    // Activate plugin
+    Settings.setSettingForKey(uniqueSettingIdentifier + 'window', true);
+    // Show window
+    browserWindow.show();
+  });
+
+  // Only show the window when the page has loaded to avoid a white flash
+  browserWindow.once('close', function () {
+    // Deactivate plugin
+    Settings.setSettingForKey(uniqueSettingIdentifier + 'window', false);
+  });
+  var webContents = browserWindow.webContents;
+
+  // Do something after page load
+  webContents.on('did-finish-load', function () {
+    // Handle current selection and tell webview 
+    handleSelection();
+  });
+
+  // Listener for link requests from the webview
+  webContents.on('followLink', function (url) {
+    NSWorkspace.sharedWorkspace().openURL(NSURL.URLWithString(url));
+  });
+
+  // Listener for calls from the webview
+  webContents.on('internalRequest', function (requestData) {
+    requestData = JSON.parse(requestData);
+    if (requestData.action) {
+      switch (requestData.action) {
+        case "getSelection":
+          // The webview may ask for the current selection
+          handleSelection();
+          break;
+        case "spiralise":
+          // The webview may ask for the current selection
+          spiral(requestData);
+          break;
+        case "clear":
+          // The webview may ask for the current selection
+          clearSelection(requestData);
+          break;
+      }
+    }
+  });
+
+  // Load webview
+  browserWindow.loadURL(__webpack_require__(/*! ../resources/webview.html */ "./resources/webview.html"));
+});
+
+// Close webview plugin is shutdown by Sketch
+function onShutdown() {
+  var existingWebview = Object(sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_1__["getWebview"])(uniqueCommIdentifier);
+  if (existingWebview) {
+    existingWebview.close();
+  }
+}
+
+// Return message to the corresponding listener in the webview
+function respondToWebview(message) {
+  var listener = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'internalResponse';
+  message = JSON.stringify(message);
+  if (Object(sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_1__["isWebviewPresent"])(uniqueCommIdentifier)) {
+    Object(sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_1__["sendToWebview"])(uniqueCommIdentifier, "".concat(listener, "(").concat(message, ")"));
+  }
+}
+
+// Listens to Sketch event
+function onSelectionChanged(context) {
+  // Forget about context = oldschool
+  // Only handle selection changes if plugin is active
+  if (Settings.settingForKey(uniqueSettingIdentifier + 'window')) {
+    handleSelection();
+  }
+}
+
+// Handle current selection data and send to webview
+function handleSelection() {
+  // Get selected document and layers from Sketch API
+  var document = sketch.getSelectedDocument();
+  var selectedLayers = document.selectedLayers.layers;
+
+  // Reset spiralID
+  Settings.setSettingForKey(uniqueSettingIdentifier, false);
+
+  // Local data collection
+  var collection = {
+    objects: 0,
+    shapes: 0,
+    rects: 0,
+    paths: 0,
+    parentObj: false,
+    startObj: false,
+    endObj: false
+  };
+
+  // Collect settings for webview
+  var selection = {
+    theme: 'light',
+    type: 0,
+    shape: '',
+    clear: false,
+    isSpiral: false,
+    startID: '',
+    endID: '',
+    pathID: '',
+    parentID: ''
+  };
+  for (var _i in settingIdentifiers) {
+    var getSetting = Settings.settingForKey(uniqueSettingIdentifier + settingIdentifiers[_i]);
+    selection[settingIdentifiers[_i]] = getSetting || getSetting === false ? getSetting : 'undefined';
+  }
+  var start_val = {
+    x: 0,
+    y: 0,
+    w: 0,
+    h: 0,
+    deg: 0,
+    worldDeg: 0
+  };
+  var end_val = {
+    x: 0,
+    y: 0,
+    w: 0,
+    h: 0,
+    deg: 0,
+    worldDeg: 0
+  };
+
+  // Keep track of first object
+  var firstObj = true;
+
+  // Loop through selected layers and collect start and end values
+  for (var i = 0; i < selectedLayers.length; i++) {
+    // Get the layer
+    var selectedLayer = selectedLayers[i];
+    // Get layer type
+    var typeName = selectedLayer.shapeType;
+
+    // Open shape?
+    if (openShapes.indexOf(typeName) > -1 && !selectedLayer.closed) {
+      // Count paths
+      collection.paths++;
+      if (collection.paths == 1) {
+        // Is shape spiral
+        selection.isSpiral = Settings.layerSettingForKey(selectedLayer, uniqueSettingIdentifier);
+        // Store parent
+        collection.parentObj = selectedLayer.parent;
+        selection.parentID = selectedLayer.parent.id;
+        // Get the native Sketch object
+        var nativeLayer = selectedLayer.sketchObject;
+        // Get the path as CG object
+        var path = NSBezierPath.bezierPathWithCGPath(nativeLayer.pathInFrameWithTransforms().CGPath());
+        // Set default radius based on length
+        var defaultRadius = path.length() / 10;
+        defaultRadius = defaultRadius > 50 ? 50 : defaultRadius;
+        // Remember paths layer id
+        selection.pathID = selectedLayer.id;
+        // Use 
+        if (firstObj) {
+          start_val.w = defaultRadius;
+          start_val.h = defaultRadius;
+          start_val.deg = Math.degrees(selectedLayer.transform.rotation - 0);
+          end_val.w = defaultRadius;
+          end_val.h = defaultRadius;
+          end_val.deg = Math.degrees(selectedLayer.transform.rotation - 0);
+        }
+      }
+    } else {
+      // Do we have a closed shape?
+      if (openShapes.indexOf(typeName) > -1) {
+        collection.shapes++;
+        // Remember the name of the shape
+        selection.shape = shapeNames[openShapes.indexOf(typeName)];
+        if (typeName == 'Rectangle') collection.rects++;
+      } else {
+        // Some other object
+        collection.objects++;
+      }
+      if (!collection.paths) {
+        // Store parent if we don't have a path yet
+        collection.parentObj = selectedLayer.parent;
+        selection.parentID = selectedLayer.parent.id;
+      }
+      if (firstObj) {
+        // First object is starting point
+        firstObj = false;
+        // Store start object parent
+        collection.startObj = selectedLayer.parent;
+        selection.startID = selectedLayer.id;
+        // Store start position, sizenand rotation
+        start_val.x = selectedLayer.frame.x + selectedLayer.frame.width / 2;
+        start_val.y = selectedLayer.frame.y + selectedLayer.frame.height / 2;
+        start_val.w = selectedLayer.frame.width * 0.5;
+        start_val.h = selectedLayer.frame.height * 0.5;
+        start_val.deg = Math.degrees(selectedLayer.transform.rotation - 0);
+        // Store end position, size and rotation
+        end_val.x = selectedLayer.frame.x + selectedLayer.frame.width / 2;
+        end_val.y = selectedLayer.frame.y + selectedLayer.frame.height / 2;
+        end_val.w = 0;
+        end_val.h = 0;
+        end_val.deg = Math.degrees(selectedLayer.transform.rotation - 0);
+      } else {
+        // Last object becomes target
+        // Store end object parent
+        collection.endObj = selectedLayer.parent;
+        selection.endID = selectedLayer.id;
+        // Update end position, size and rotation
+        end_val.x = selectedLayer.frame.x + selectedLayer.frame.width / 2;
+        end_val.y = selectedLayer.frame.y + selectedLayer.frame.height / 2;
+        end_val.w = selectedLayer.frame.width * 0.5;
+        end_val.h = selectedLayer.frame.height * 0.5;
+        end_val.deg = Math.degrees(selectedLayer.transform.rotation - 0);
+      }
+    }
+  }
+
+  // Set selection type
+  var o = collection.objects;
+  var s = collection.shapes;
+  var p = collection.paths;
+  var r = collection.rects;
+  selection.type = 0;
+  if (o == 1 && !s && !p) {
+    selection.type = 1; // single object
+  } else if (!o && s == 1 && !r && !p) {
+    selection.type = 2; // single shape, no rect
+  } else if (!o && s == 1 && r && !p) {
+    selection.type = 2; // single shape, rect
+    // always send type 2, change to 3 in webview if squeeze is true
+  } else if (o + s < 2 && p == 1) {
+    selection.type = 4; // zero or single object + path (center ease allowed)
+  } else if (o + s == 2 && !p) {
+    selection.type = 5; // two objects
+  } else if (o + s + p == 3 && p == 1) {
+    selection.type = 4; // two objects + path (is now same as #4)
+  }
+
+  // Set world coordinates
+  collection.parentObj = worldOrientation(collection.parentObj);
+  collection.startObj = worldOrientation(collection.startObj);
+  collection.endObj = worldOrientation(collection.endObj);
+
+  // Set world rotation for display in webview
+  start_val.worldDeg = collection.startObj.r;
+  end_val.worldDeg = collection.startObj.r;
+
+  // Relocate both objects to document level if parents differ
+  if (selection.type == 5 && collection.startObj && collection.endObj && collection.startObj.id != collection.endObj.id) {
+    start_val.x += collection.startObj.x;
+    start_val.y += collection.startObj.y;
+    start_val.deg = Math.degrees(start_val.deg + collection.startObj.r);
+    start_val.worldDeg = 0;
+    end_val.x += collection.endObj.x;
+    end_val.y += collection.endObj.y;
+    end_val.deg = Math.degrees(end_val.deg + collection.endObj.r);
+    end_val.worldDeg = 0;
+    selection.parentID = ''; //collection.endObj.id; // document level
+  }
+  // Relocate first objects in combination with path
+  if (selection.type == 4 && collection.startObj.id && collection.startObj.id != collection.parentObj.id) {
+    start_val.x += collection.startObj.x - collection.parentObj.x;
+    start_val.y += collection.startObj.y - collection.parentObj.y;
+    start_val.deg = Math.degrees(start_val.deg + collection.startObj.r - collection.parentObj.r);
+    start_val.worldDeg = collection.parentObj.r;
+    if (selection.type == 4 && collection.endObj.id && collection.endObj.id != collection.parentObj.id) {
+      end_val.x += collection.endObj.x - collection.parentObj.x;
+      end_val.y += collection.endObj.y - collection.parentObj.y;
+      end_val.deg = Math.degrees(end_val.deg + collection.endObj.r - collection.parentObj.r);
+    } else {
+      end_val.deg = start_val.deg;
+    }
+    end_val.worldDeg = collection.parentObj.r;
+  }
+
+  // Pass Sketch theme
+  selection.theme = UI.getTheme();
+
+  // Set the final message for the webview
+  var message = {
+    selection: selection,
+    start_val: start_val,
+    end_val: end_val
+  };
+
+  // Tell webview about selection
+  respondToWebview(message, 'setSelection');
+}
+
+// Set world coordinatates for object in target
+function worldOrientation(obj) {
+  var coor = {
+    id: obj.id ? obj.id : false,
+    x: 0,
+    y: 0,
+    r: 0
+  };
+  while (obj && obj.name) {
+    coor.x += obj.frame.x;
+    coor.y += obj.frame.y;
+    coor.r += obj.transform.rotation;
+    obj = obj.parent;
+  }
+  ;
+  return coor;
+}
+
+//////////////////////////////////////////////
+//////////////////////////////////////////////
+// 
+// Create actual spiral
+// 
+//////////////////////////////////////////////
+//////////////////////////////////////////////
+
+function spiral(data) {
+  // Get selected document and layers from Sketch API
+  var document = sketch.getSelectedDocument();
+
+  // Passed data from webview
+  var ret_start_val = data.start_val;
+  var ret_end_val = data.end_val;
+  var ret_settings = data.settings;
+
+  // Save settings to plugin
+  for (var i in settingIdentifiers) {
+    Settings.setSettingForKey(uniqueSettingIdentifier + settingIdentifiers[i], ret_settings[settingIdentifiers[i]]);
+  }
+
+  // Preset radius
+  var rad = {
+    length: new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](ret_start_val.w, ret_start_val.h),
+    step: new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](),
+    target: new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](ret_end_val.w, ret_end_val.h),
+    total: 0,
+    array: []
+  };
+  // Prevent 0 length for divisions
+  if (rad.length.x == 0 || rad.length.y == 0) {
+    rad.length.x = 0.0001;
+    rad.length.y = 0.0001;
+  }
+  if (rad.target.x == 0 || rad.target.y == 0) {
+    rad.target.x = 0.0001;
+    rad.target.y = 0.0001;
+  }
+  // Preset rotation
+  var rot = {
+    angle: Math.degrees(ret_start_val.deg),
+    step: 0,
+    target: Math.degrees(ret_end_val.deg)
+  };
+  // Preset translation
+  var trans = {
+    center: new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](ret_start_val.x, ret_start_val.y),
+    step: 0,
+    target: new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](ret_end_val.x, ret_end_val.y),
+    total: 0,
+    array: []
+  };
+
+  // Total steps
+  var steps = ret_settings.loops * ret_settings.points;
+
+  // Ease timing
+  var transition = Math.easePower(ret_settings.timing, ret_settings.power * 0.85, steps);
+
+  // GAP, fix for half paths from rectangles
+  var gap = {
+    first: false,
+    start: new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](),
+    length: 0
+  };
+
+  // Squeeze spiral into shape
+  if (ret_settings.squeeze) {
+    // Adjust loop setting
+    ret_settings.loops = Math.round(ret_settings.loops) + 0.5;
+    steps = ret_settings.loops * ret_settings.points;
+    transition = Math.easePower(ret_settings.timing, ret_settings.power * 0.85, steps);
+
+    // Get the shape as js object
+    var jsShape = document.getLayerWithID(ret_settings.startID);
+    var nativeShape = jsShape.sketchObject;
+    // Path from shape object
+    var pathInFrame = nativeShape.pathInFrameWithTransforms();
+    // Collection of point on path
+    var outl = {
+      top: false,
+      bottom: false,
+      array: []
+    };
+    // Collect all horizontal max and min points on the path
+    for (var j = 0; j <= Math.round(pathInFrame.length()); j++) {
+      var point = pathInFrame.pointOnPathAtLength(j);
+      var x = Math.round(point.x);
+      var y = Math.round(point.y);
+
+      //GAP
+      if (!gap.first) {
+        gap.first = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](x, y);
+      }
+      if (x == gap.start.x && y == gap.start.y && j != Math.round(pathInFrame.length())) {
+        gap.length++;
+      } else if (gap.length > 2 || j == Math.round(pathInFrame.length())) {
+        var gapDistance = Math.sqrt((gap.first.x - gap.start.x) * (gap.first.x - gap.start.x) + (gap.first.y - gap.start.y) * (gap.first.y - gap.start.y));
+        var gapStep = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"]((gap.first.x - gap.start.x) / gapDistance, (gap.first.y - gap.start.y) / gapDistance);
+        for (var d = 0; d < gapDistance; d++) {
+          var xx = Math.round(gap.start.x + d * gapStep.x);
+          var yy = Math.round(gap.start.y + d * gapStep.y);
+          var high = Math.ceil(outl.array[yy] ? xx > outl.array[yy].high ? xx : outl.array[yy].high : xx);
+          var low = Math.floor(outl.array[yy] ? xx < outl.array[yy].low ? xx : outl.array[yy].low : xx);
+          var radius = (high - low) / 2;
+          var center = low + radius;
+          outl.array[yy] = {
+            high: high,
+            low: low,
+            center: center,
+            radius: radius
+          };
+        }
+        gap.start = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](x, y);
+        gap.length = 0;
+      } else {
+        gap.start = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](x, y);
+        gap.length = 0;
+        var _high = Math.ceil(outl.array[y] ? x > outl.array[y].high ? x : outl.array[y].high : x);
+        var _low = Math.floor(outl.array[y] ? x < outl.array[y].low ? x : outl.array[y].low : x);
+        var _radius = (_high - _low) / 2;
+        var _center = _low + _radius;
+        outl.top = y < outl.top || outl.top === false ? y : outl.top;
+        outl.bottom = y > outl.bottom || outl.bottom === false ? y : outl.bottom;
+        outl.array[y] = {
+          high: _high,
+          low: _low,
+          center: _center,
+          radius: _radius
+        };
+      }
+    }
+    ;
+
+    // Rotation
+    rot.angle = 0;
+    rot.target = 0;
+
+    // Total distance
+    var distanceY = rad.length.y;
+    var radiusY = distanceY / (ret_settings.loops + 0);
+
+    // Prepare vertical translation
+    var easeRadius = ret_settings.timing == 'linear' ? false : true;
+    trans = {
+      center: new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](outl.array[outl.top].center, outl.top + (easeRadius ? ret_settings.timing == 'ease' || ret_settings.timing == 'ease-out' ? 0 : radiusY : radiusY)),
+      step: 0,
+      target: new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](outl.array[outl.bottom].center, outl.bottom - (easeRadius ? ret_settings.timing == 'ease' || ret_settings.timing == 'ease-in' ? 0 : radiusY : radiusY)),
+      total: 0,
+      array: []
+    };
+    trans.total = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](trans.target.x - trans.center.x, trans.target.y - trans.center.y);
+    trans.step = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](trans.total.x / steps, trans.total.y / steps);
+
+    // Prepare vertical radius
+    rad = {
+      length: new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](outl.array[outl.top].radius, easeRadius ? ret_settings.timing == 'ease' || ret_settings.timing == 'ease-out' ? 0 : radiusY : radiusY),
+      step: new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](),
+      target: new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](outl.array[outl.bottom].radius, easeRadius ? ret_settings.timing == 'ease' || ret_settings.timing == 'ease-in' ? 0 : radiusY : radiusY),
+      total: 0,
+      array: []
+    };
+
+    // Fill translation and radial arrays
+    var transTotal = 0;
+    var radTotal = 0;
+    var largestStep = 0;
+    for (var j = 0; j <= steps; j++) {
+      if (transition) {
+        transTotal += transition[j] * trans.total.y;
+        var transPoint = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](ret_start_val.x, trans.center.y + transTotal);
+        radTotal += transition[j];
+        var radPoint = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](rad.length.x, radiusY);
+        if (easeRadius) {
+          largestStep = transition[j] > largestStep ? transition[j] : largestStep;
+          radPoint.y = transition[j];
+        }
+      } else if (j < steps) {
+        var transPoint = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](ret_start_val.x, trans.center.y + (j + 1) * trans.step.y);
+        var radPoint = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](rad.length.x, radiusY);
+      }
+      // Lookup horizontal position and radius
+      var a = Math.cos(Math.rad * Math.degrees(ret_settings.loops * 360 / steps * j * (ret_settings.clockwise ? 1 : -1)));
+      var lookup = Math.round(transPoint.y + radPoint.y * -a);
+      var lookupCenter = Math.round(transPoint.y);
+      if (outl.array[lookupCenter]) {
+        transPoint.x = outl.array[lookup].center;
+        radPoint.x = outl.array[lookup].radius;
+      }
+      // Put points in arrays
+      trans.array.push(transPoint);
+      rad.array.push(radPoint);
+    }
+    ;
+
+    // Rescale radius to max
+    if (easeRadius) {
+      for (var _i2 = 0; _i2 < rad.array.length; _i2++) {
+        // if(i < rad.array.length - 1) {
+        // 	rad.array[i].x = (rad.array[i].x + rad.array[i+1].x) / 2;
+        // }
+        rad.array[_i2].y *= radiusY / largestStep;
+      }
+    }
+  }
+
+  // Adjust step settings to user input
+  var angle = (ret_settings.clockwise ? 1 : -1) * ret_settings.loops * 360 / steps; // angle per point
+
+  // Rotation
+  rot.step = Math.degrees(360 + rot.target) - Math.degrees(360 + rot.angle); // rotation from first to second object
+  if (rot.step > 180) {
+    rot.step = -(360 - rot.step);
+  } else if (rot.step < -180) {
+    rot.step = 360 + rot.step;
+  }
+  if (rot.step > 0 && !ret_settings.clockwise) {
+    rot.step -= 360;
+  }
+  if (rot.step < 0 && ret_settings.clockwise) {
+    rot.step += 360;
+  }
+  rot.step /= steps;
+  // Translation
+  trans.total = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](trans.target.x - trans.center.x, trans.target.y - trans.center.y);
+  trans.step = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](trans.total.x / steps, trans.total.y / steps);
+
+  // Get the points on an open path
+  if (ret_settings.pathID != '') {
+    // Get the path as js object
+    var jsPath = document.getLayerWithID(ret_settings.pathID);
+    var nativePath = jsPath.sketchObject;
+    // Path object
+    var _pathInFrame = nativePath.pathInFrameWithTransforms();
+    // Step length on path
+    var pathStep = _pathInFrame.length() / steps;
+
+    // First point at start of line
+    point = _pathInFrame.pointOnPathAtLength(0);
+    trans.center = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](point.x, point.y);
+    if (transition) {
+      trans.array.push(new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](point.x, point.y));
+    }
+    var total = 0;
+    for (var j = 0; j <= steps; j++) {
+      if (transition) {
+        total += transition[j] * _pathInFrame.length();
+        var point = _pathInFrame.pointOnPathAtLength(total);
+      } else {
+        var point = _pathInFrame.pointOnPathAtLength(pathStep * j);
+      }
+      trans.array.push(new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](point.x, point.y));
+    }
+    ;
+  }
+
+  // Radius
+  rad.total = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](rad.target.x - rad.length.x, rad.target.y - rad.length.y);
+  rad.step = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](rad.total.x / steps, rad.total.y / steps);
+  rad.max = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](rad.length.x, rad.length.y);
+
+  // Setup path
+  var path = NSBezierPath.bezierPath();
+
+  // Fill path
+  for (var s = 0; s <= steps; s++) {
+    // Get current radius and scale factor
+    var maxRadius = rad.length.x > rad.length.y ? rad.length.x : rad.length.y;
+    var scale = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](rad.length.x / maxRadius, rad.length.y / maxRadius);
+
+    // Get degree and vector
+    var deg = s * angle;
+    var vec = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](Math.sin(Math.rad * deg) * rad.length.x, Math.cos(Math.rad * deg) * -rad.length.y);
+
+    // Translate and rotate
+    vec.add(trans.center);
+    vec.rotate(trans.center, -rot.angle);
+
+    // Tangents
+    if (ret_settings.smooth) {
+      // Tangent factor to current point
+      var rotationDelta = rot.step + angle;
+      var tangent = Math.tan(Math.PI / (2 * (360 / rotationDelta))) / 3 * 4;
+      // Tangent length
+      var vTangent = deg + 90;
+      vTangent = Math.degrees(vTangent);
+      var newTangent = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](Math.sin(Math.rad * vTangent) * rad.length.x * tangent, Math.cos(Math.rad * vTangent) * -rad.length.y * tangent);
+      // Get step factor from tangent
+      var _a = rad.length.x;
+      var b = rad.length.y;
+      var h = (_a - b) * (_a - b) / ((_a + b) * (_a + b)) * 3;
+      var circumference = Math.PI * (_a + b) * (1 + h / (10 + Math.sqrt(4 - h)));
+      if (isNaN(circumference)) circumference = 0;
+      var tLength = Math.sqrt(newTangent.x * newTangent.x + newTangent.y * newTangent.y);
+      var degInLoops = ret_settings.loops * ret_settings.clockwise ? 360 : -360;
+      var rotationInDeg = steps * rot.step;
+      var absoluteRotation = degInLoops + rotationInDeg;
+      var rotationFactor = degInLoops / absoluteRotation;
+      var stepFactor = circumference ? tLength / (circumference / ret_settings.points) * rotationFactor : 0;
+
+      // Calculate translation vector
+      var vTranslate = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](0, 0);
+      if (trans.array.length) {
+        if (s != Math.floor(steps)) {
+          vTranslate = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"]((trans.array[s + 1].x - trans.array[s].x) * stepFactor, (trans.array[s + 1].y - trans.array[s].y) * stepFactor);
+        } else {
+          // Repeat previous direction for last point
+          vTranslate = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"]((trans.array[s].x - trans.array[s - 1].x) * stepFactor, (trans.array[s].y - trans.array[s - 1].y) * stepFactor);
+        }
+      } else {
+        if (transition) {
+          vTranslate = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](transition[s] * trans.total.x * stepFactor, transition[s] * trans.total.y * stepFactor);
+        } else {
+          vTranslate = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](trans.step.x * stepFactor, trans.step.y * stepFactor);
+        }
+      }
+      vTranslate.rotate(new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](), rot.angle);
+      // Add translation vector to tangent
+      newTangent.add(vTranslate);
+
+      // Calculate radius vector
+      var centerVector2d = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](vec.x,
+      // - trans.center.x,
+      vec.y // - trans.center.y
+      );
+
+      centerVector2d.substract(trans.center);
+      centerVector2d.rotate(new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](), rot.angle);
+      var radiusAngle = centerVector2d.angle(); // - deg;
+      //const radiusAngle = deg;
+      if (rad.array.length) {
+        if (s != Math.floor(steps)) {
+          radiusTangent = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"]((rad.array[s].x - rad.array[s].x) * stepFactor, (rad.array[s].y - rad.array[s].y) * stepFactor);
+        } else {
+          // Repeat previous direction for last point
+          radiusTangent = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"]((rad.array[s].x - rad.array[s - 1].x) * stepFactor, (rad.array[s].y - rad.array[s - 1].y) * stepFactor);
+        }
+      } else if (transition) {
+        if (ret_settings.type == 4 && ret_settings.mirror) {
+          if (s < transition.length / 2) {
+            var t = transition[s * 2];
+            var radiusTangent = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](Math.sin(Math.rad * radiusAngle) * t * rad.total.x * 2 * stepFactor, Math.cos(Math.rad * radiusAngle) * t * -rad.total.y * 2 * stepFactor);
+          } else {
+            var _t = transition[(transition.length - 1 - s) * 2];
+            var radiusTangent = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](Math.sin(Math.rad * radiusAngle) * -(_t * rad.total.x * 2) * stepFactor, Math.cos(Math.rad * radiusAngle) * -(_t * -rad.total.y * 2) * stepFactor);
+          }
+        } else {
+          var _t2 = transition[s];
+          if (!_t2) _t2 = transition[s - 1];
+          var radiusTangent = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](Math.sin(Math.rad * radiusAngle) * _t2 * rad.total.x * stepFactor, Math.cos(Math.rad * radiusAngle) * _t2 * -rad.total.y * stepFactor);
+        }
+      } else {
+        if (ret_settings.mirror) {
+          if (s < steps / 2) {
+            var radiusTangent = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](Math.sin(Math.rad * radiusAngle) * rad.step.x * 2 * stepFactor, Math.cos(Math.rad * radiusAngle) * -rad.step.y * 2 * stepFactor);
+          } else {
+            var radiusTangent = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](Math.sin(Math.rad * radiusAngle) * rad.step.x * -2 * stepFactor, Math.cos(Math.rad * radiusAngle) * -rad.step.y * -2 * stepFactor);
+          }
+        } else {
+          var radiusTangent = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](Math.sin(Math.rad * radiusAngle) * rad.step.x * stepFactor, Math.cos(Math.rad * radiusAngle) * -rad.step.y * stepFactor);
+        }
+      }
+      // Add radius vector to tangent
+      newTangent.add(radiusTangent);
+
+      // Scale according to smoothness
+      newTangent.x *= ret_settings.smooth;
+      newTangent.y *= ret_settings.smooth;
+
+      // Temporary store tangent for next loop
+      var tempTangent = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](newTangent.x, newTangent.y);
+
+      // Translate and rotate
+      newTangent.add(vec);
+      newTangent.rotate(vec, -rot.angle + 180);
+    } else {
+      oldTangent = vec;
+      newTangent = vec;
+      tempTangent = vec;
+    }
+
+    // Add point to path
+    if (!s) {
+      // First point
+      path.moveToPoint(NSMakePoint(vec.x, vec.y));
+    } else {
+      // Other points
+      //[path curveToPoint:NSMakePoint(vec.x,vec.y) controlPoint1:NSMakePoint(oldTangent.x,oldTangent.y) controlPoint2:NSMakePoint(newTangent.x,newTangent.y)];
+      path.curveToPoint_controlPoint1_controlPoint2(NSMakePoint(vec.x, vec.y), NSMakePoint(oldTangent.x, oldTangent.y), NSMakePoint(newTangent.x, newTangent.y));
+    }
+
+    // store tangent for next loop
+    var oldTangent = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](tempTangent.x, tempTangent.y);
+    if (trans.array.length && !s) {// Forget about first tangent when array is used
+      //oldTangent = new Vector2d();
+    }
+    oldTangent.add(vec);
+    oldTangent.rotate(vec, -rot.angle); // vec + rotation
+
+    // Add steps
+    rot.angle += rot.step;
+    if (trans.array.length) {
+      if (s != Math.floor(steps)) {
+        trans.center = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](trans.array[s + 1].x, trans.array[s + 1].y);
+      }
+    } else {
+      if (transition) {
+        if (ret_settings.type == 4 && ret_settings.mirror) {
+          trans.center.x += transition[s] * trans.total.x;
+          trans.center.y += transition[s] * trans.total.y;
+        } else {
+          trans.center.x += transition[s] * trans.total.x;
+          trans.center.y += transition[s] * trans.total.y;
+        }
+      } else {
+        trans.center.add(trans.step);
+      }
+    }
+    if (rad.array.length) {
+      if (s != Math.floor(steps)) {
+        rad.length = new _ddMath_js__WEBPACK_IMPORTED_MODULE_2__["default"](rad.array[s + 1].x, rad.array[s + 1].y);
+      }
+    } else {
+      if (transition) {
+        if (ret_settings.type == 4 && ret_settings.mirror) {
+          // && ret_settings.timing == 'ease') {
+          if (s < transition.length / 2) {
+            var _t3 = transition[s * 2];
+            rad.length.x += _t3 * rad.total.x * 2;
+            rad.length.y += _t3 * rad.total.y * 2;
+          } else {
+            var _t4 = transition[(transition.length - 1 - s) * 2];
+            rad.length.x -= _t4 * rad.total.x * 2;
+            rad.length.y -= _t4 * rad.total.y * 2;
+          }
+        } else {
+          var _t5 = transition[s];
+          rad.length.x += _t5 * rad.total.x;
+          rad.length.y += _t5 * rad.total.y;
+        }
+      } else {
+        if (ret_settings.mirror) {
+          if (s < steps / 2) {
+            rad.length.x += rad.step.x * 2;
+            rad.length.y += rad.step.y * 2;
+          } else {
+            rad.length.x -= rad.step.x * 2;
+            rad.length.y -= rad.step.y * 2;
+          }
+        } else {
+          rad.length.x += rad.step.x;
+          rad.length.y += rad.step.y;
+        }
+      }
+    }
+    if (rad.length.x == 0 || rad.length.y == 0) {
+      rad.length.x = 0.0001;
+      rad.length.y = 0.0001;
+    }
+  }
+
+  // Finalise path
+  var shape = MSShapePathLayer.layerWithPath(MSPath.pathWithBezierPath(path));
+  var border = shape.style().addStylePartOfType(1);
+  //border.color = MSColor.colorWithRGBADictionary({r: 0.1, g: 0.1, b: 1, a: 1});
+  border.thickness = 1;
+  shape.style().borderOptions().setLineCapStyle(1);
+  // Set layer as type spiral
+  Settings.setLayerSettingForKey(shape, uniqueSettingIdentifier, 'spiral');
+
+  // SEEK layer by id to remove it
+  var activeSpiral = Settings.settingForKey(uniqueSettingIdentifier);
+  if (activeSpiral) {
+    var spiralLayer = document.getLayerWithID(activeSpiral);
+    spiralLayer.remove();
+  }
+
+  // Save new shape id
+  Settings.setSettingForKey(uniqueSettingIdentifier, shape.objectID());
+  if (ret_settings.parentID != '') {
+    // Get the parent as js object
+    var parent = document.getLayerWithID(ret_settings.parentID);
+    // Make it native
+    parent = parent.sketchObject;
+    parent.addLayers([shape]);
+  } else {
+    // Make doc native
+    document = document.sketchObject;
+    document.currentPage().addLayers([shape]);
+  }
+}
+
+//////////////////////////////////////////////
+// 
+// Clear selected objects on blur
+// 
+//////////////////////////////////////////////
+
+function clearSelection(data) {
+  // Get selected document and layers from Sketch API
+  var document = sketch.getSelectedDocument();
+
+  // Passed data from webview
+  var ret_settings = data.settings;
+
+  // Clear objects if clear is set
+  if (ret_settings.pathID != '') {
+    var pathId = document.getLayerWithID(ret_settings.pathID);
+    pathId.remove();
+  }
+  if (ret_settings.startID != '') {
+    var startID = document.getLayerWithID(ret_settings.startID);
+    startID.remove();
+  }
+  if (ret_settings.endID != '') {
+    var endID = document.getLayerWithID(ret_settings.endID);
+    endID.remove();
+  }
+}
+
+/***/ }),
+
+/***/ "events":
+/*!*************************!*\
+  !*** external "events" ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("events");
+
+/***/ }),
+
+/***/ "sketch":
+/*!*************************!*\
+  !*** external "sketch" ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("sketch");
+
+/***/ }),
+
+/***/ "sketch/settings":
+/*!**********************************!*\
+  !*** external "sketch/settings" ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("sketch/settings");
+
+/***/ }),
+
+/***/ "sketch/ui":
+/*!****************************!*\
+  !*** external "sketch/ui" ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("sketch/ui");
+
+/***/ })
+
+/******/ });
+    if (key === 'default' && typeof exports === 'function') {
+      exports(context);
+    } else if (typeof exports[key] !== 'function') {
+      throw new Error('Missing export named "' + key + '". Your command should contain something like `export function " + key +"() {}`.');
+    } else {
+      exports[key](context);
+    }
+  } catch (err) {
+    if (typeof process !== 'undefined' && process.listenerCount && process.listenerCount('uncaughtException')) {
+      process.emit("uncaughtException", err, "uncaughtException");
+    } else {
+      throw err
+    }
+  }
+}
+globalThis['onRun'] = __skpm_run.bind(this, 'default');
+globalThis['onShutdown'] = __skpm_run.bind(this, 'onShutdown');
+globalThis['onSelectionChanged'] = __skpm_run.bind(this, 'onSelectionChanged')
+
+//# sourceMappingURL=__ddSpiral.js.map

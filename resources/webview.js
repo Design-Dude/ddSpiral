@@ -1,6 +1,6 @@
 // Settings
 const local = false;
-const currentVersion = "v1.1.0";
+const currentVersion = "v1.1.2";
 const server = 'https://www.design-dude.nl/apps/ddSpiral/';
 
 var selection = {

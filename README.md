@@ -54,10 +54,10 @@ The spiral is stretched from the first object to the second, using their coordin
 - Automatic cleaning service to remove pre-selected objects.
 
 ## TODOs
-[ ] Standalone js version
-[ ] Spinning option for arti spirals.
-[ ] Rotating version of the forced spiral.
-[ ] Additional path adjustments.
+- [ ] Standalone js version
+- [ ] Spinning option for arti spirals.
+- [ ] Rotating version of the forced spiral.
+- [ ] Additional path adjustments.
 
 ## Privacy
 ddPlugin will ping the ddServer for updates upon activation. No data is sent to the server. By using the plugin, you automatically agree to this fait accompli (or you can strip the functionality and build your own version of the plugin).

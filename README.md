@@ -60,7 +60,7 @@ The spiral is stretched from the first object to the second, using their coordin
 - [ ] Additional path adjustments.
 
 ## Privacy
-ddPlugin will ping the ddServer for updates upon activation. No data is sent to the server. By using the plugin, you automatically agree to this fait accompli (or you can strip the functionality and build your own version of the plugin).
+ddPlugin will ping the ddServer for updates upon activation. However, no data whatsoever is sent to this server. By using the plugin, you automatically agree to this fait accompli (or you can strip the functionality and build your own version of the plugin).
 
 ## Known issues
 1. See [issues.](https://github.com/Design-Dude/ddSpiral/issues)

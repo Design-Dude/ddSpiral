@@ -68,14 +68,14 @@ ddPlugin will ping the ddServer for updates upon activation. However, no data wh
 2. There is a known side effect that you can sometimes resolve yourself. Paths are made with bézier curves. The smoothness depends on the length of the path, in combination with the number of loops as well as the number of points per loop. If the combination doesn't match you can get unexpected turns and bends. Especially if the route along an open path contains long or sharp turns. Try changing the path, number of loops or points for a better result. If you set the number of points very high you can see how the curve should actually run. However, many points is completely unnecessary. 4 points per loop is more than enough in most cases. Manually removing and adjusting the tangents afterwards is also always an option.
 
 3. The _Force into shape_ option is a work in progress.
-- Logically, this option also suffers from the sharp corners and varying radii described above. ddSpiral is not very good in tight spaces, especially at the beginning and end where the direction is indeterminate. Subsequent adjustments are often necessary. Keep it simple is the motto.
+- Logically, this option also suffers from the sharp corners and varying radii described above. ddSpiral is not very good in tight spaces, especially at the beginning and the end where the direction is indeterminate. Subsequent adjustments are often necessary. Keep it simple is the motto. Always.
 - The spiral is never interrupted, so no gaps or notches are taken into account.
 - For now, the spiral will only run from top to bottom, not in any other direction. You can of course rotate your object before running ddSpiral.
-- Filling large objects with ddSpiral can take some time because the perimeter must first be meticulously unraveled in its entirety. Turn off auto update if that is the case.
+- Filling large objects with ddSpiral can take some time because the perimeter must first be meticulously unraveled in its entirety, which takes time and resources. You'd better turn off auto update in such cases.
 
 ## On the drawing board
 - Smooth hand-drawn paths.
-- Turn lines into pencil drawing
+- Turn lines into pencil drawings
 - Decorating paths and repeating object in various patterns.
 - Unit calculator (there is a plugin for that, perhaps it's good enough).
 

@@ -21,7 +21,7 @@ Just select up to 2 objects and/or an open path and run 🌀 ddSpiral from 🧰 
 - transition (linear, ease in and out, ease-in or ease-out),
 - and easing rate (0=linear, 1=standard css easing, >1-10=exponetial).
 
-You must always click the _Spiralize_ button first to start the drawing process. Subsequent updates can be automated by checking the _Auto update_ option. The operations are terminated as soon as the ddSPiral overlay is closed or loses its focus. The last option _Remove pre-selected objects_ automatically starts a cleaning process during this final termination.
+You must always click the _Spiralize_ button first to start the drawing process. Subsequent updates can be automated by checking the _Auto update_ option. The operations are terminated as soon as the ddSpiral overlay is closed or loses its focus. The last option _Remove pre-selected objects_ automatically starts a cleaning process during this final termination.
 
 ### 1. Select a single object, such as an image, group, or symbol, and then run ddSpiral
 If you select 1 object, not a path, the spiral rotates from the bounding box to the center of the object. Position, size and rotation are inherited from the selected object. The spiral is drawn on top of the object in the same group.

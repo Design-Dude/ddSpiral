@@ -56,10 +56,11 @@ The spiral is stretched from the first object to the second, using their coordin
 ## TODOs
 - [ ] Rescale tension and ease rate to % for beter usability
 - [ ] Rename info for Sketch database
+- [ ] Add pure js instead of cocoa script for length measurements
 - [ ] Standalone js version
 - [ ] Spinning option for arti spirals.
 - [ ] Rotating version of the forced spiral.
-- [ ] Additional path adjustments.
+- [ ] Additional path adjustments (ddBilb).
 
 ## Privacy
 ddPlugin will ping the ddServer for updates upon activation. However, no data whatsoever is sent to this server. By using the plugin, you automatically agree to this fait accompli (or you can strip the functionality and build your own version of the plugin).

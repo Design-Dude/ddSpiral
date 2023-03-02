@@ -54,6 +54,8 @@ The spiral is stretched from the first object to the second, using their coordin
 - Automatic cleaning service to remove pre-selected objects.
 
 ## TODOs
+- [ ] Rescale tension and ease rate to % for beter usability
+- [ ] Rename info for Sketch database
 - [ ] Standalone js version
 - [ ] Spinning option for arti spirals.
 - [ ] Rotating version of the forced spiral.

@@ -95,7 +95,9 @@
 
 // Settings
 var local = false;
-var currentVersion = "v1.1.2";
+// Set version 3x times, here, in package.json and manifest.json
+var currentVersion = "v1.1.3";
+var description = "Magically shapes almost any kind of 🌀 spiral.";
 var server = 'https://www.design-dude.nl/apps/ddSpiral/';
 var selection = {
   type: 4,
@@ -131,8 +133,8 @@ var clearObjects = {
 var loops = 10;
 var points = 4;
 var timing = 'linear';
-var smooth = 1;
-var power = 1;
+var smooth = 100;
+var power = 100;
 var clockwise = true;
 var squeeze = false;
 var mirror = false;
@@ -408,11 +410,11 @@ function handleSelection(response) {
   document.getElementById('loops').value = loops;
   points = selection.points != 'undefined' && selection.points ? selection.points : points;
   document.getElementById('points').value = points;
-  smooth = selection.smooth != 'undefined' && selection.smooth ? selection.smooth : smooth;
+  smooth = selection.smooth != 'undefined' && selection.smooth ? selection.smooth * 100 : smooth; // rescaled from 1 to 100%
   document.getElementById('smooth').value = smooth;
   timing = selection.timing != 'undefined' && selection.timing ? selection.timing : timing;
   document.getElementById('timing').value = timing;
-  power = selection.power != 'undefined' && selection.power ? selection.power : power;
+  power = selection.power != 'undefined' && selection.power ? selection.power * 50 : power; // rescaled from 1 to 50%
   document.getElementById('power').value = power;
   squeeze = selection.squeeze != 'undefined' ? selection.squeeze : squeeze;
   if (squeeze && (selection.type == 1 || selection.type > 3)) squeeze = false;
@@ -784,7 +786,7 @@ document.getElementById("mirror").addEventListener("change", function (e) {
 document.getElementById("smooth").addEventListener("change", function (e) {
   var newVal = Math.decimal(parseFloat(e.target.value), 2);
   if (isNaN(newVal)) newVal = smooth;
-  if (newVal > 10) newVal = 10;
+  if (newVal > 500) newVal = 500;
   if (newVal < 0) newVal = 0;
   smooth = newVal;
   e.target.value = smooth;
@@ -795,7 +797,7 @@ document.getElementById("smooth").addEventListener("change", function (e) {
 document.getElementById("power").addEventListener("change", function (e) {
   var newVal = Math.decimal(parseFloat(e.target.value), 2);
   if (isNaN(newVal)) newVal = smooth;
-  if (newVal > 10) newVal = 10;
+  if (newVal > 500) newVal = 500;
   if (newVal < 0) newVal = 0;
   power = newVal;
   e.target.value = power;

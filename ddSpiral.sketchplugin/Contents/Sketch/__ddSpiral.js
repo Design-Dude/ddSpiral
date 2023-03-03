@@ -2541,7 +2541,7 @@ module.exports.sendToWebview = function sendToWebview(identifier, evalString) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "file://" + String(context.scriptPath).split(".sketchplugin/Contents/Sketch")[0] + ".sketchplugin/Contents/Resources/_webpack_resources/d185e74ad4e53236afd37ba858a0bf3b.html";
+module.exports = "file://" + String(context.scriptPath).split(".sketchplugin/Contents/Sketch")[0] + ".sketchplugin/Contents/Resources/_webpack_resources/a5d2968b3e607e6849a869308eb0b70b.html";
 
 /***/ }),
 
@@ -3066,6 +3066,10 @@ function spiral(data) {
   var ret_start_val = data.start_val;
   var ret_end_val = data.end_val;
   var ret_settings = data.settings;
+
+  // Rescale before safe to keep old values working
+  ret_settings.smooth /= 100;
+  ret_settings.power /= 50;
 
   // Save settings to plugin
   for (var i in settingIdentifiers) {

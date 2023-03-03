@@ -367,6 +367,10 @@ function spiral(data) {
 	var ret_start_val = data.start_val;
 	var ret_end_val = data.end_val;
 	var ret_settings = data.settings;
+
+	// Rescale before safe to keep old values working
+	ret_settings.smooth /= 100;
+	ret_settings.power /= 50;
 	
 	// Save settings to plugin
 	for(let i in settingIdentifiers) {

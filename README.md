@@ -1,5 +1,5 @@
 # ddSpiral
-Make almost any kind of spiral appear magically in [Sketch.](https:www.sketch.com)
+Magically shapes almost any kind of 🌀 spiral in [Sketch.](https:www.sketch.com)
 
 ![Screenshot](repository_images/overlay.png)
 

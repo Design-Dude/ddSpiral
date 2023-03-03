@@ -54,8 +54,8 @@ The spiral is stretched from the first object to the second, using their coordin
 - Automatic cleaning service to remove pre-selected objects.
 
 ## TODOs
-- [ ] Rescale tension and ease rate to % for beter usability
-- [ ] Rewrite description with 🌀 for Sketch database
+- [x] Rescale tension and ease rate to % for beter usability (v1.1.3)
+- [x] Rewrite description with 🌀 for Sketch database (v1.1.3)
 - [ ] Add pure js instead of cocoa script for length measurements
 - [ ] Standalone js version
 - [ ] Spinning option for arti spirals.

@@ -97,8 +97,8 @@ window.addEventListener("load", () => {
 
 	// Set version
 	setTimeout(function() {
-			document.getElementById("ddVersion").setAttribute('version', currentVersion);
-	}, 10);
+			document.getElementById("ddVersion").setAttribute('version', '  '+currentVersion+'  ');
+	}, 250);
 	
 	// Get info from server for footer info
 	requestUpdateInfo(server + 'info.php')

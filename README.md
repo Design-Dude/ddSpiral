@@ -17,9 +17,9 @@ Just select up to 2 objects and/or an open path and run 🌀 ddSpiral from 🧰 
 - direction (clockwise or counterclockwise),
 - number of loops,
 - number of points per loop (tangents),
-- tension (0=sharp corners, 1=optimal curves, >1-10=experimental loose curves).
+- tension (0%=sharp corners, 100%=optimal curves, <500%=experimental loose curves).
 - transition (linear, ease in and out, ease-in or ease-out),
-- and easing rate (0=linear, 1=standard css easing, >1-10=exponetial).
+- and easing rate (0%=linear, 50%=standard css easing, <500%=exponetial).
 
 You must always click the _Spiralize_ button first to start the drawing process. Subsequent updates can be automated by checking the _Auto update_ option. The operations are terminated as soon as the ddSpiral overlay is closed or loses its focus. The last option _Remove pre-selected objects_ automatically starts a cleaning process during this final termination.
 
@@ -54,8 +54,6 @@ The spiral is stretched from the first object to the second, using their coordin
 - Automatic cleaning service to remove pre-selected objects.
 
 ## TODOs
-- [x] Rescale tension and ease rate to % for beter usability (v1.1.3)
-- [x] Rewrite description with 🌀 for Sketch database (v1.1.3)
 - [ ] Add pure js instead of cocoa script for length measurements
 - [ ] Standalone js version
 - [ ] Spinning option for arti spirals.

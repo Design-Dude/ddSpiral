@@ -272,7 +272,6 @@ hr[version]:after {
 	font-size: 9px;
 	content: attr(version);
 	margin:-5px auto 0;
-	white-space: pre;
 }
 
 #apply-btn {

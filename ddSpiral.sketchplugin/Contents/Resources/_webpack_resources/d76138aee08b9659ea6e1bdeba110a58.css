@@ -261,19 +261,18 @@ hr {
 	margin-top: 10px;
 	text-align: center;
 }
-hr[version] {
-	display: flex;
-	align-content: center;
-}
-hr[version]:after {
-	height: 12px;
-	background-color: white;
-	color: #999999;
-	font-size: 9px;
-	content: attr(version);
-	margin:-5px auto 0;
-	white-space: pre;
-}
+	hr[version]:after {
+		position: absolute;
+		width: 30px;
+		height: 12px;
+		background-color: white;
+		color: #999999;
+		font-size: 9px;
+		content: attr(version);
+		left: 50%;
+		margin:-5px auto 0;
+		text-align: center;
+	}
 
 #apply-btn {
 	display: block;
